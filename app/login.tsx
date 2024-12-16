@@ -1,6 +1,4 @@
 // Feature folder for front end
-
-
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { NavigationProp } from '@react-navigation/native';
