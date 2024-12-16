@@ -22,7 +22,11 @@
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
     "@react-navigation/stack": "^7.0.18",
+<<<<<<< HEAD
+    "aswenna": "file:",
+=======
     "axios": "^1.7.9",
+>>>>>>> 1b2d33d79d0f56b2fd4e5569b9ed9985e5dcff04
     "expo": "~52.0.11",
     "expo-blur": "~14.0.1",
     "expo-constants": "~17.0.3",
