@@ -46,10 +46,13 @@ const RegisterScreen2: React.FC = () => {
 
       return (
         <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.formContainer}>
-            <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Registration</Text>
-    
-          
+
+        <View style={styles.container}>
+        <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Registration</Text>
+        </View>
+
+        <View style={styles.formContainer}>
+        
             <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Email*</Text>
             <View >
                 <Image
@@ -182,7 +185,7 @@ const RegisterScreen2: React.FC = () => {
 
     icon: {
         position: 'relative',
-        left: 300,
+        left: 270,
         top: '95%',
         transform: [{ translateY: -50 }] ,
         width: 20,
