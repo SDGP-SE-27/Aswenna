@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-const WelcomeScreen: React.FC = () => {
+const Welcome: React.FC = () => {
   // Use state
   const [progress, setProgress] = useState<number>(0);
   const [progressText, setProgressText] = useState<string>("Loading... 0%");
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeScreen;
+export default Welcome;
