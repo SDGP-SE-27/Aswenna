@@ -181,7 +181,7 @@
             marginTop: 5,
             fontSize: 12,
             fontWeight: '600',
-            color: 'green',
+            color: '#000',
             textAlign: 'center',
           },
 
