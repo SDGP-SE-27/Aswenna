@@ -1,3 +1,4 @@
+import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
@@ -5,6 +6,10 @@ const Welcome: React.FC = () => {
   // Use state
   const [progress, setProgress] = useState<number>(0);
   const [progressText, setProgressText] = useState<string>("Loading... 0%");
+
+  const[fontsLoaded] = useFonts({'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Bold.ttf'),});
+  const[fontsLoaded2] = useFonts({'Poppins-Regular': require('../assets/fonts/Poppins/Poppins-Regular.ttf'),});
+  const[fontsLoaded3] = useFonts({'Poppins-SemiBold': require('../assets/fonts/Poppins/Poppins-SemiBold.ttf'),});
 
   // Simulate the progress increment (Logic)
   useEffect(() => {
