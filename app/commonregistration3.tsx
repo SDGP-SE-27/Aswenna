@@ -90,10 +90,12 @@ const RegisterScreen3: React.FC = () => {
 
     return (
     <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.formContainer}>
-            <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Registration</Text>  
+        <View style={styles.container}>
+        <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Registration</Text>  
+        </View>
 
-        
+        <View style={styles.formContainer}>
+            
           <Text style={[styles.label , {fontFamily: 'Poppins-Bold'}]}>Upload Profile Picture</Text>
     
           {/* Image Preview */}
