@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // Define the structure of a Crop object
 type Crop = {
@@ -15,41 +15,53 @@ type Crop = {
   image: any; // You might want to use a more specific type for image resources
 };
 
-const MarketPrice1 = () => {
+// Define the RootStackParamList (for navigation)
+type RootStackParamList = {
+  MarketPrice1: undefined;
+  // ... other screens in your app
+};
+
+// Define the props for this screen component
+type MarketPrice1Props = NativeStackScreenProps<
+  RootStackParamList,
+  'MarketPrice1'
+>;
+
+const MarketPrice1: React.FC<MarketPrice1Props> = ({
+  navigation,
+  route,
+}) => {
   const crops: Crop[] = [
     {
       name: 'Long Bean',
-      image: require('./assets/Long_Bean.png'),
+      image: require('../assets/images/long_bean.png'),
     },
     {
       name: 'Bitter Gourd',
-      image: require('./assets/Bitter_Gourd.png'),
+      image: require('../assets/images/bitter_gourd.png'),
     },
     {
       name: 'Snake Gourd',
-      image: require('./assets/Snake_Gourd.png'),
+      image: require('../assets/images/snake_gourd.png'),
     },
     {
       name: 'Brinjals',
-      image: require('./assets/Brinjals.png'),
+      image: require('../assets/images/brinjals.png'),
     },
     {
       name: 'Lady Finger Okra',
-      image: require('./assets/Lady_Finger_Okra.png'),
+      image: require('../assets/images/lady_finger_okra.png'),
     },
   ];
 
   return (
     <View style={styles.container}>
-      {/* ADD THIS: Hide default header */}
-      <Stack.Screen options={{ headerShown: false }} />
-
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={require('./assets/left_arrow.png')} // Replace with your arrow image
-            style={styles.backButtonArrow}
+            source={require('../assets/left_arrow.png')} // Replace with your arrow image
+            style={styles.backButton}
           />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Market Price Prediction</Text>
@@ -63,44 +75,61 @@ const MarketPrice1 = () => {
           {crops.map((crop, index) => (
             <TouchableOpacity key={index} style={styles.cropItem}>
               <View style={styles.cropImageContainer}>
-                {/* FIX: Use resizeMode as a direct prop */}
-                <Image
-                  source={crop.image}
-                  style={styles.cropImage}
-                  resizeMode="contain"
-                />
+                <Image source={crop.image} style={styles.cropImage} />
               </View>
               <Text style={styles.cropName}>{crop.name}</Text>
             </TouchableOpacity>
           ))}
 
           {/* Vegetables Button */}
-          <TouchableOpacity style={styles.fruitsButton}>
-            <Image
-              source={require('./assets/right_arrow.png')}
-              style={styles.fruitsButtonArrow}
-              resizeMode="contain"
-            />
+          <TouchableOpacity
+            style={styles.fruitsButton}
+            onPress={() => {
+              /* Navigate to the Vegetables screen */
+            }}
+          >
+
+            <View style={styles.backButtonContainer}>
+              <TouchableOpacity style={styles.backButton}>  
+                <Text> Fruits &lt;</Text>
+              </TouchableOpacity>
+            </View>
+
             <Text style={styles.fruitsButtonText}>Fruits</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
       {/* Bottom Navigation (Placeholder) */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>🏠</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>🔗</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>💲</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>👤</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.footer}>
+                      <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                      <Image
+                          source={require("../assets/images/home-icon.png")}
+                          style={styles.footerIcon}
+                      />
+                      </TouchableOpacity>
+      
+                      <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                      <Image
+                          source={require("../assets/images/disease-icon.png")}
+                          style={styles.footerIcon}
+                      />
+                      </TouchableOpacity>
+      
+                      <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                      <Image
+                          source={require("../assets/images/finance-icon.png")}
+                          style={styles.footerIcon}
+                      />
+                      </TouchableOpacity>
+      
+                      <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                      <Image
+                          source={require("../assets/images/profile-icon.png")}
+                          style={styles.footerIcon}
+                      />
+                      </TouchableOpacity>
+                  </View>
     </View>
   );
 };
@@ -118,10 +147,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
   },
-  backButtonArrow: {
+  backButton: {
     width: 24,
     height: 24,
     marginRight: 10,
+  },
+  backButtonContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   headerTitle: {
     fontSize: 22,
@@ -145,9 +181,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    // FIX: Use boxShadow instead of shadow* properties
-    boxShadow: '0px 2px 3.84px rgba(0, 0, 0, 0.15)',
-    elevation: 5, // This is for Android
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   cropImageContainer: {
     backgroundColor: '#F0FFF0',
@@ -158,7 +199,7 @@ const styles = StyleSheet.create({
   cropImage: {
     width: 75,
     height: 75,
-    // FIX: Remove resizeMode from here
+    resizeMode: 'contain',
   },
   cropName: {
     fontSize: 16,
@@ -180,7 +221,7 @@ const styles = StyleSheet.create({
   fruitsButtonArrow: {
     width: 20,
     height: 20,
-    // FIX: Remove resizeMode from here
+    resizeMode: 'contain',
     transform: [{ rotate: '180deg' }],
   },
   bottomNav: {
@@ -191,12 +232,19 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#d3d3d3',
   },
-  navItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
   },
-  navItemText: {
-    fontSize: 24,
+  footerIcon: {
+    width: 30,
+    height: 30,
   },
 });
 
