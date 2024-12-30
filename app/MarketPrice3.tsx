@@ -52,7 +52,7 @@ const App = () => {
       {/* Chart */}
       <View style={styles.chartContainer}>
         <Image
-          source={require('./assets/chart.png')}
+          //source={require('./assets/chart.png')}
           style={styles.chartImage}
         />
       </View>
@@ -112,25 +112,25 @@ const App = () => {
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require('./assets/home.png')}
+            source={require('../assets/images/home-icon.png')}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require('./assets/capsicum.png')}
+            //source={require('../assets/images/capsicum.png')}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require('./assets/dollar.png')}
+            //source={require('./assets/images/dollar.png')}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require('./assets/profile.png')}
+            source={require('../assets/images/profile-icon.png')}
             style={styles.navIcon}
           />
         </TouchableOpacity>

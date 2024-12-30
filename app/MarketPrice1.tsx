@@ -34,23 +34,23 @@ const MarketPrice1: React.FC<MarketPrice1Props> = ({
   const crops: Crop[] = [
     {
       name: 'Long Bean',
-      image: require('../assets/images/long_bean.png'),
+      image: require('../assets/images/long_bean.jpg'),
     },
     {
       name: 'Bitter Gourd',
-      image: require('../assets/images/bitter_gourd.png'),
+      image: require('../assets/images/bitter_gourd.jpg'),
     },
     {
       name: 'Snake Gourd',
-      image: require('../assets/images/snake_gourd.png'),
+      image: require('../assets/images/snake_gourd.jpg'),
     },
     {
       name: 'Brinjals',
-      image: require('../assets/images/brinjals.png'),
+      image: require('../assets/images/brinjals.jpg'),
     },
     {
       name: 'Lady Finger Okra',
-      image: require('../assets/images/lady_finger_okra.png'),
+      image: require('../assets/images/lady_finger_okra.jpg'),
     },
   ];
 
@@ -58,11 +58,8 @@ const MarketPrice1: React.FC<MarketPrice1Props> = ({
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require('../assets/left_arrow.png')} // Replace with your arrow image
-            style={styles.backButton}
-          />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <Text>{"<"}</Text>;  // Replace with your arrow image
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Market Price Prediction</Text>
       </View>

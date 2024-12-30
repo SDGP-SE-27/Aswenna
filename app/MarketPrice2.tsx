@@ -35,16 +35,16 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
     
     {
       name: 'Pineapple',
-      image: require('./assets/Pineapple.png'),
+      image: require('../assets/images/Pineapple.jpg'), 
     },
     {
       name: 'TOM JC Mango',
-      image: require('./assets/tom_jc_Mango.png'),
+      image: require('../assets/images/tom_jc_mango.jpg'),
     },
    
     {
       name: 'Papaya',
-      image: require('./assets/papaya.png'),
+      image: require('../assets/images/Papaya.png'),
     },
   ];
 
@@ -52,11 +52,8 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require('./assets/left_arrow.png')} // Replace with your arrow image
-            style={styles.backButtonArrow}
-          />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButtonArrow}>
+          <Text>{"<"}</Text>;  // Replace with your arrow image
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Market Price Prediction</Text>
       </View>
@@ -82,10 +79,9 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
               /* Navigate to the fruits screen */
             }}
           >
-            <Image
-              source={require('./assets/left_arrow.png')}
-              style={styles.fruitsButtonArrow}
-            />
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.fruitsButtonArrow}>
+              <Text>{"<"}</Text>;  // Replace with your arrow image
+            </TouchableOpacity>
             <Text style={styles.fruitsButtonText}>Fruits</Text>
           </TouchableOpacity>
         </View>

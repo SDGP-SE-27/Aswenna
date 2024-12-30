@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-import axios from "axios";
+import axios from 'axios';
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState<any[]>([]); // Array to hold messages
