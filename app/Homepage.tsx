@@ -31,7 +31,7 @@
           
         ];
 
-        const Homepage: React.FC = () => {
+        const Homepage = ({ navigation }: any) => {
           return (
             <View style={styles.container}>
               {/* Header Section */}
