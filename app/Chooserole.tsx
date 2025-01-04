@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Pressable, TouchableOpacity, Image } from "react-native";
 
+export default function Chooserole({ navigation }: any) {
 function RoleSelection() {
 
     const [selectedRole, setSelectedRole] = useState("");
@@ -69,7 +70,7 @@ function RoleSelection() {
 
 }
 
-export default RoleSelection
+
 
 const styles = StyleSheet.create({
     container: {
@@ -192,3 +193,4 @@ const styles = StyleSheet.create({
         width: "100%",
     }
 });
+}

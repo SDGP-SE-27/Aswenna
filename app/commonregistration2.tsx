@@ -1,8 +1,9 @@
 import React, { ChangeEventHandler, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity , Image} from 'react-native';
 import { useFonts } from 'expo-font';
+import { NavigationProp } from '@react-navigation/native';
 
-const RegisterScreen2: React.FC = () => {
+export default function commonregistration2({ navigation }: { navigation: NavigationProp<any> }) {
     const [Email, setEmail] = useState<string>('');
     const [Password, setPassword] = useState<string>('');
     const [ConfirmPassword, setConfirmPassword] = useState<string>('');
@@ -194,4 +195,4 @@ const RegisterScreen2: React.FC = () => {
     
     });
     
-    export default RegisterScreen2;
+    

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useFonts } from 'expo-font';
+import { NavigationProp } from '@react-navigation/native';
 
-const RegisterScreen: React.FC = () => {
+export default function commonregistration1({ navigation }: { navigation: NavigationProp<any> }) {
+
   const [name, setName] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [address, setAddress] = useState<string>('');
@@ -159,4 +161,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default RegisterScreen;

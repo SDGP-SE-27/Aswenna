@@ -2,9 +2,11 @@ import React, { ChangeEventHandler, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity , Image} from 'react-native';
 import { useFonts } from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
-import {MaterialIcons} from '@expo/vector-icons'; 
+import {MaterialIcons} from '@expo/vector-icons';
+import { NavigationProp } from '@react-navigation/native';
 
-const RegisterScreen3: React.FC = () => {
+export default function commonregistration3({ navigation }: { navigation: NavigationProp<any> }) { 
+
     const [imageSelecetd , setSelectedImage] = useState<string | null>(null);
 
     const[fontsLoaded] = useFonts({'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Bold.ttf'),});
@@ -244,4 +246,4 @@ const RegisterScreen3: React.FC = () => {
           }  
         
 });
-        export default RegisterScreen3;
+       
