@@ -33,11 +33,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen}/>
+      {/* <Stack.Screen name="Home" component={Homepage}/> */}
         <Stack.Screen name="login" component={login}/>
-        <Stack.Screen name="Common registration 1 " component={commonregistration1} />
-        <Stack.Screen name="Common registration 2 " component={commonregistration2} />
-        <Stack.Screen name= "Common registration3" component={commonregistration3}/>
+        <Stack.Screen name="CommonRegistration1" component={commonregistration1} />
+        <Stack.Screen name="CommonRegistration2" component={commonregistration2} />
+        <Stack.Screen name= "CommonRegistration3" component={commonregistration3}/>
+        {/* <Stack.Screen name= "CommonRegistration3" component={PersonalFinanceTracker}/> */}
         <Stack.Screen name="DiseaseIdentification" component={DiseaseIdentificationScreen} />
         <Stack.Screen name="Buildyourfarmland" component={Buildyourfarmland} />
         <Stack.Screen name="Chatscreen" component={chatscreen} />

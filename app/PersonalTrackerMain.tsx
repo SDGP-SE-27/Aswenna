@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const PersonalFinanceTracker = () => {
+const PersonalFinanceTracker = ({navigation}: any) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -23,7 +23,7 @@ const PersonalFinanceTracker = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+          <Ionicons name="arrow-back" size={24} color="black" onPress={() => navigation.navigate("Home")} />
         </TouchableOpacity>
         <Text style={styles.title}>Personal Finance Tracker</Text>
       </View>

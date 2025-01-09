@@ -24,7 +24,7 @@ export default function commonregistration2({ navigation }: { navigation: Naviga
         return Password == ConfirmPassword
     }; 
 
-    const handleSubmit = (): void => {
+    const handleSubmit = ({navigation}: any): void => {
         if (!Email || !Password || !ConfirmPassword) {
           Alert.alert('Error', 'Please fill in all fields');
           return;
@@ -43,6 +43,7 @@ export default function commonregistration2({ navigation }: { navigation: Naviga
             setPasswordError('');
         }
         Alert.alert('Registration Success', `Email: ${Email}\nPassword: ${Password}\nConfirmPassword: ${ConfirmPassword}`);
+        navigation.navigate("CommonRegistration2");
       };
 
       return (

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-
 // Define the structure of a Crop object
 type Crop = {
   name: string;

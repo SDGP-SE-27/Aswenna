@@ -1,18 +1,35 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
+
+// Define the parameter types for stack navigation
+type RootStackParamList = {
+  SelectLanguage: undefined;
+  HomeScreen: { selectedLanguage: string };
+};
+
+// Define the navigation prop type for this component
+type SelectLanguageScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "SelectLanguage"
+>;
 
 const SelectLanguage = () => {
   const [language, setLanguage] = useState<string>("English");
-  const navigation = useNavigation();
+  const navigation = useNavigation<SelectLanguageScreenNavigationProp>();
 
-  const[fontsLoaded] = useFonts({'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Bold.ttf'),});
-    const[fontsLoaded2] = useFonts({'Poppins-Regular': require('../assets/fonts/Poppins/Poppins-Regular.ttf'),});
-    const[fontsLoaded3] = useFonts({'Poppins-SemiBold': require('../assets/fonts/Poppins/Poppins-SemiBold.ttf'),});
+  const [fontsLoaded] = useFonts({
+    "Poppins-Bold": require("../assets/fonts/Poppins/Poppins-Bold.ttf"),
+    "Poppins-Regular": require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
+    "Poppins-SemiBold": require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
+  });
 
   const handleNext = () => {
     console.log("Selected Language:", language);
+    // Navigate to HomeScreen and pass the selected language as a parameter
+    navigation.navigate("HomeScreen", { selectedLanguage: language });
   };
 
   return (
@@ -71,7 +88,7 @@ const SelectLanguage = () => {
       {/* Footer */}
       <View style={styles.footer}>
         <Image
-          source={require("../assets/images/select.png")} // Replace with your image path
+          source={require("../assets/images/select.png")}
           style={styles.footerImage}
         />
         <Text style={styles.footerText}>Powered By Innovatech.</Text>
@@ -105,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#4CAF50",
     textAlign: "center",
-    marginTop:9,
+    marginTop: 9,
   },
   listContainer: {
     borderColor: "#dcd5d5eb",
@@ -176,7 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerImage: {
-    marginTop:12,
+    marginTop: 12,
     width: 160,
     height: 160,
     resizeMode: "contain",
