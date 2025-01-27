@@ -15,20 +15,20 @@ const API_KEY = "YOUR_API_KEY"; // Replace with your OpenWeatherMap API key
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 const WeatherForecasting = () => {
-  const [currentWeather, setCurrentWeather] = useState(null);
-  const [forecast, setForecast] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [currentWeather, setCurrentWeather]: any = useState(null);
+  const [forecast, setForecast]: any = useState([]);
+  const [loading, setLoading]: any = useState(true);
 
   // Fetch weather data
   const fetchWeatherData = async () => {
     try {
       const location = "Colombo"; // You can make it dynamic or use device location
-      const response = await axios.get(
+      const response: any = await axios.get(
         `${BASE_URL}/weather?q=${location}&appid=${API_KEY}&units=metric`
       );
       setCurrentWeather(response.data);
 
-      const forecastResponse = await axios.get(
+      const forecastResponse: any = await axios.get(
         `${BASE_URL}/forecast?q=${location}&appid=${API_KEY}&units=metric`
       );
       setForecast(forecastResponse.data.list.slice(0, 5)); // Get next 5 forecasts
@@ -99,7 +99,7 @@ const WeatherForecasting = () => {
       {/* Next Forecast */}
       <Text style={styles.nextForecastTitle}>Next Forecast</Text>
       <View style={styles.forecastContainer}>
-        {forecast.map((item, index) => (
+        {forecast.map((item, index)=> (
           <View key={index} style={styles.forecastItem}>
             <Text style={styles.forecastDay}>
               {new Date(item.dt_txt).toLocaleDateString("en-US", {
@@ -170,6 +170,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   locationText: { marginLeft: 8, fontSize: 16 },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff", // Optional: Set a background color
+  },  
   weatherToday: {
     alignItems: "center",
     backgroundColor: "#f0f0f0",

@@ -13,7 +13,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.Aswenna"
     },
     "web": {
       "bundler": "metro",
