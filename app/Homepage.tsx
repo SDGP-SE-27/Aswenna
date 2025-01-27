@@ -37,7 +37,7 @@ const categories = [
   {
     icon: require("../assets/icons/weather alerts.png"),
     label: "Weather Alerts",
-    screen: "", // Add corresponding screen here
+    screen: "WeatherForcast", // Add corresponding screen here
   },
 ];
 

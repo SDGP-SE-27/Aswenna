@@ -23,7 +23,8 @@ import CropListScreen from "./SupplementReminder1";
 import ReminderHistoryScreen from "./SupplementReminder2";
 import Welcome from "./Welcome";
 import Buildyourfarmland from "./Buildyourfarmland";
-import Chooserole from "./Chooserole";
+// import Chooserole from "./Chooserole";
+import WeatherForecasting from "./WeatherForecast";
 
 
 
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen name="DiseaseIdentification" component={DiseaseIdentificationScreen} />
         <Stack.Screen name="Buildyourfarmland" component={Buildyourfarmland} />
         <Stack.Screen name="Chatscreen" component={chatscreen} />
+        <Stack.Screen name="WeatherForcast" component={WeatherForecasting} />
 
       </Stack.Navigator>
     </NavigationContainer>
