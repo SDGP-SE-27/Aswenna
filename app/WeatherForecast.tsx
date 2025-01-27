@@ -18,7 +18,6 @@ const WeatherForecasting = () => {
   const [currentWeather, setCurrentWeather]: any = useState(null);
   const [forecast, setForecast]: any = useState([]);
   const [loading, setLoading]: any = useState(true);
-
   // Fetch weather data
   const fetchWeatherData = async () => {
     try {
@@ -99,7 +98,7 @@ const WeatherForecasting = () => {
       {/* Next Forecast */}
       <Text style={styles.nextForecastTitle}>Next Forecast</Text>
       <View style={styles.forecastContainer}>
-        {forecast.map((item: any, index: any)=> (
+        {forecast.map((item: any, index:any)=> (
           <View key={index} style={styles.forecastItem}>
             <Text style={styles.forecastDay}>
               {new Date(item.dt_txt).toLocaleDateString("en-US", {
