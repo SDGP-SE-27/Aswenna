@@ -48,6 +48,7 @@ export default function LoginScreen({ navigation }: { navigation: NavigationProp
 
     if (isValid) {
       Alert.alert("Login Successful", `Welcome, ${email}!`);
+      navigation.navigate("Home")
     }
   };
 
