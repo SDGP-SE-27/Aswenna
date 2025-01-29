@@ -53,7 +53,7 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButtonArrow}>
-          <Text>{"<"}</Text>;  // Replace with your arrow image
+          <Text>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Market Price Prediction</Text>
       </View>
@@ -80,9 +80,9 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
             }}
           >
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.fruitsButtonArrow}>
-              <Text>{"<"}</Text>;  // Replace with your arrow image
+              <Text>{"<"}</Text>
             </TouchableOpacity>
-            <Text style={styles.fruitsButtonText}>Fruits</Text>
+            <Text style={styles.fruitsButtonText}>Vegetable</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

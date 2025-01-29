@@ -60,7 +60,7 @@ const MarketPrice1: React.FC<MarketPrice1Props> = ({
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Text>{"<"}</Text>;  // Replace with your arrow image
+            <Text>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Market Price Prediction</Text>
       </View>
