@@ -55,7 +55,7 @@ function SellerDashBoard() {
         >
           <View key={id}>
             <Image
-              source={require("../../assets/images/product_img.jpeg")}
+              source={require("../assets/images/product_img.jpeg")}
               style={styles.product_img}
             />
 
@@ -75,7 +75,7 @@ function SellerDashBoard() {
       <View style={styles.header}>
         <Text style={styles.title}>Dashboard</Text>
         <Image
-          source={require("../../assets/images/farmer.png")}
+          source={require("../assets/images/farmer.jpg")}
           style={styles.user_icon}
         />
       </View>
@@ -90,7 +90,7 @@ function SellerDashBoard() {
           onPress={() => setAddFarmerModalVisible(true)}
         >
           <Image
-            source={require("../../assets/images/add_icon.png")}
+            source={require("../assets/images/add_icon.png")}
             style={styles.add_icon}
           />
         </TouchableOpacity>

@@ -20,9 +20,9 @@ function ProductPage() {
   const [viewImageVisible, setViewImageVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([
-    require("../../assets/images/product_img.jpeg"),
-    require("../../assets/images/react-logo.png"),
-    require("../../assets/images/icon.png"),
+    require("../assets/images/product_img.jpeg"),
+    require("../assets/images/logo.png"),
+    require("../assets/images/Papaya.png"),
   ]);
 
   console.log("Product received:", product);
@@ -46,7 +46,7 @@ function ProductPage() {
       <View style={styles.header}>
         <Text style={styles.title}>My Product</Text>
         <Image
-          source={require("../../assets/images/farmer.png")}
+          source={require("../assets/images/farmer.jpg")}
           style={styles.user_icon}
         />
       </View>
