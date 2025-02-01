@@ -15,7 +15,7 @@ const MapScreen = () => {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      setLocation(userLocation.coords); // ✅ No TypeScript error now
+      setLocation(userLocation.coords);
     })();
   }, []);
 
@@ -24,8 +24,8 @@ const MapScreen = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: location ? location.latitude : 6.9271, // Default to Colombo
-          longitude: location ? location.longitude : 79.8612,
+          latitude: location?.latitude || 6.9271, // Default to Colombo
+          longitude: location?.longitude || 79.8612,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
