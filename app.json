@@ -7,18 +7,23 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.Aswenna"
+      "package": "com.anonymous.Aswenna",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBLSmnhahYc-ehz6kvDe7D24IthNtZqFN8"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
       "output": "static"
+    },
+    "extra": {
+      "googleMapsApiKey": "AIzaSyBLSmnhahYc-ehz6kvDe7D24IthNtZqFN8"
     },
     "plugins": [
       "expo-router",

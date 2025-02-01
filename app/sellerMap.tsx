@@ -1,70 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Alert } from "react-native";
+import MapView, { Marker, Circle } from "react-native-maps";
+import * as Location from "expo-location";
 
-const SellerMap = () => {
-  const [sellers, setSellers] = useState([
-    {
-      id: '1',
-      name: 'Seller 1',
-      latitude: 6.927079,
-      longitude: 79.861244,
-    },
-    // Add more sellers here
-  ]);
-
-  const [region, setRegion] = useState({
-    latitude: 6.927079,
-    longitude: 79.861244,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+const MapScreen = () => {
+  const [location, setLocation] = useState<Location.LocationObjectCoords | null>(null);
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setRegion({
-          ...region,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      error => console.log(error),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
+    (async () => {
+      let permissionResponse = await Location.requestForegroundPermissionsAsync();
+      if (permissionResponse.status !== "granted") {
+        Alert.alert("Permission Denied", "Location access is required for this feature.");
+        return;
+      }
+
+      let userLocation = await Location.getCurrentPositionAsync({});
+      setLocation(userLocation.coords); // ✅ No TypeScript error now
+    })();
   }, []);
 
   return (
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_GOOGLE}
         style={styles.map}
-        region={region}
-        showsUserLocation={true}
+        initialRegion={{
+          latitude: location ? location.latitude : 6.9271, // Default to Colombo
+          longitude: location ? location.longitude : 79.8612,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
       >
-        {sellers.map(seller => (
-          <Marker
-            key={seller.id}
-            coordinate={{
-              latitude: seller.latitude,
-              longitude: seller.longitude,
-            }}
-            title={seller.name}
-          />
-        ))}
+        {location && (
+          <>
+            <Marker coordinate={{ latitude: location.latitude, longitude: location.longitude }} title="You" />
+            <Circle
+              center={{ latitude: location.latitude, longitude: location.longitude }}
+              radius={1000} // 1km range
+              strokeColor="rgba(0, 255, 0, 0.5)"
+              fillColor="rgba(0, 255, 0, 0.2)"
+            />
+          </>
+        )}
+
+        {/* Example Shop Markers */}
+        <Marker coordinate={{ latitude: 6.9303, longitude: 79.8612 }} title="Shop 1" />
+        <Marker coordinate={{ latitude: 6.9253, longitude: 79.8655 }} title="Shop 2" />
       </MapView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-  },
+  container: { flex: 1 },
+  map: { width: "100%", height: "100%" },
 });
 
-export default SellerMap;
+export default MapScreen;
