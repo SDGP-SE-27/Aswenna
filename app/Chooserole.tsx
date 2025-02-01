@@ -1,15 +1,33 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Pressable, TouchableOpacity, Image } from "react-native";
+import { RootStackParamList } from "./types";
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import commonregistration1 from "./commonregistration1";
 
-function RoleSelection() {
 
+type ChooseroleScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Chooserole'
+>;
+
+const Chooserole = () =>{
+    const navigation = useNavigation<ChooseroleScreenProp>();
     const [selectedRole, setSelectedRole] = useState("");
+    const route = useRoute<RouteProp<RootStackParamList, "commonregistration1">>();
+    const { username, phoneNumber, address, district } = route.params; 
 
     function registerToRole () {
         if (selectedRole === "seller") {
             console.log("You are now registering as a seller");
         } else if (selectedRole === "farmer") {
             console.log("You are now registering as a farmer");
+            navigation.navigate("commonregistration1" , {
+                username, 
+                phoneNumber, 
+                address,
+                district, 
+            });
         } else {
             console.log("No role specified");
         }
@@ -69,7 +87,6 @@ function RoleSelection() {
 
 }
 
-export default RoleSelection
 
 const styles = StyleSheet.create({
     container: {
@@ -192,3 +209,6 @@ const styles = StyleSheet.create({
         width: "100%",
     }
 });
+
+
+export default Chooserole; 

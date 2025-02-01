@@ -8,8 +8,21 @@ import {
   ScrollView,
 } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-const App = () => {
+type MarketPrice3ScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'MarketPrice3'
+>;
+
+const MarketPrice3= () => {
+  const navigation = useNavigation<MarketPrice3ScreenProp>();
+  const route = useRoute<RouteProp<RootStackParamList, "MarketPrice3">>();
+  
+
   // Sample data for the chart (replace with your actual data)
   const chartData = {
     labels: ['0', '1', '2', '3', '4', '5'],
@@ -32,18 +45,15 @@ const App = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          {/* Replace with your back button icon */}
-          <Text style={styles.backButtonText}>{'<'}</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Market Price Prediction</Text>
-      </View>
+      <TouchableOpacity 
+        onPress={() => navigation.navigate("MarketPrice2")} >
+      </TouchableOpacity>
+
+
+      <Text style={styles.productName}>Capsicum 1 kg</Text>
 
       {/* Product Information */}
       <View style={styles.productInfo}>
-        <Text style={styles.productName}>Capsicum 1 kg</Text>
         <Text style={styles.priceText}>Todays' s price = 93.00 LKR</Text>
         <Text style={styles.priceText}>Yesterday' s price = 87.50 LKR</Text>
         <Text style={styles.priceText}>Price difference =5.50 LKR</Text>
@@ -222,6 +232,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#90EE90',
     padding: 10,
+    marginTop: 160,
+    marginBottom : 0
   },
   navButton: {
     // Add styling for navigation buttons
@@ -232,4 +244,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default MarketPrice3;
+
+

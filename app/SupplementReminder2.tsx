@@ -1,11 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
+
+type SupplementReminder2ScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'SupplementReminder2'
+>;
 
 interface RouteParams {
     cropName: string;
 }
-export default function ReminderHistoryScreen({ route }: { route: { params: RouteParams } }) {
-  const { cropName } = route.params;
+
+const SupplementReminder2 = () => {
+  const navigation = useNavigation<SupplementReminder2ScreenProp>();
+  const route = useRoute<RouteProp<RootStackParamList, "SupplementReminder2">>();
+
   const reminders = [
     { id: '1', name: 'Supplement reminder history 4', time: '1 hour ago', text: '', image: null },
     { id: '2', name: 'Supplement reminder history 3', time: '1 day ago', text: '', image: null },
@@ -22,7 +35,7 @@ export default function ReminderHistoryScreen({ route }: { route: { params: Rout
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{cropName}</Text>
+      <Text style={styles.title}>{"cropName"}</Text>
       <FlatList data={reminders} keyExtractor={(item) => item.id} renderItem={renderItem} />
     </View>
   );
@@ -35,3 +48,4 @@ const styles = StyleSheet.create({
   reminderText: { fontSize: 16, fontWeight: 'bold' },
   reminderTime: { color: '#555' },
 });
+export default SupplementReminder2;

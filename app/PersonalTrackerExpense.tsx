@@ -1,3 +1,173 @@
+// import React, { useState } from 'react';
+// import {
+//   View,
+//   Text,
+//   TextInput,
+//   TouchableOpacity,
+//   StyleSheet,
+//   ScrollView,
+//   Alert
+// } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
+// import {Picker} from '@react-native-picker/picker';
+// import { RootStackParamList } from './types';
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+// type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
+//   RootStackParamList,
+//   'PersonalTrackerExpense'
+// >;
+
+// const PersonalTrackerExpense = () => {
+//   const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
+//   const [expenseType, setExpenseType] = useState('');
+//   const [amount, setAmount] = useState('');
+//   const [description, setDescription] = useState('');
+//   const [date, setDate] = useState('');
+
+//   const handleReset = () => {
+//     setExpenseType('');
+//     setAmount('');
+//     setDescription('');
+//     setDate('');
+//   };
+ 
+//   const handleConfirm = async () => {
+//     console.log("handleConfirm called");
+
+//     if (!expenseType || !amount) {
+//         Alert.alert('Error', 'Please enter all required fields.');
+//         return;
+//     }
+
+//     if (isNaN(Number(amount))) {
+//         Alert.alert('Error', 'Amount must be a valid number.');
+//         return;
+//     }
+
+//     const data = {
+//         expense_type: expenseType,
+//         amount: parseFloat(amount),
+//         description: description || '',
+//         date: date,
+//     };
+
+//     try {
+//         const token = await AsyncStorage.getItem('accessToken');
+//         console.log("Token:", token);
+
+//         if (!token) {
+//             Alert.alert('Error', 'You need to log in first.');
+//             return;
+//         }
+
+//         const response = await fetch('http://127.0.0.1:8000/personalFinanceTracker/add-expense/', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             body: JSON.stringify(data),
+//         });
+
+//         console.log("Response received:", response.status);
+
+//         if (response.ok) {
+//             const responseData = await response.json();
+//             console.log("Response data:", responseData);
+//             Alert.alert('Success', 'Expense saved successfully!');
+//             handleReset();
+//         } else {
+//             const errorData = await response.json();
+//             console.error("Error:", errorData);
+//             Alert.alert('Error', 'Failed to save the expense. Please try again.');
+//         }
+//     } catch (error) {
+//         console.error("Error:", error);
+//         Alert.alert('Error', 'Cannot connect to the server. Please try again later.');
+//     }
+// };
+
+
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       {/* Back Button */}
+//       <TouchableOpacity
+//         style={styles.backButton}
+//         onPress={() => navigation.goBack()}
+//       >
+//         <Text style={styles.backButtonText}>←Back</Text>
+//       </TouchableOpacity>
+
+//       <Text style={styles.header}>Personal Finance Tracker</Text>
+
+//       <Text style={styles.label}>Enter Date:</Text>
+//       {/* Allow manual input for date */}
+//       <TextInput
+//         style={styles.input}
+//         placeholder="YYYY-MM-DD" // Placeholder to guide the user
+//         value={date}
+//         onChangeText={(text) => setDate(text)}
+//       />
+
+//       <View style={styles.form}>
+//         <Text style={styles.label}>Choose expense type:</Text>
+//         <View style={styles.picker}>
+//           <Picker
+//             selectedValue={expenseType}
+//             onValueChange={(itemValue: React.SetStateAction<string>) => setExpenseType(itemValue)}
+//           >
+//             <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
+//             <Picker.Item label="Other Expense" value="Other Expense" />
+//             {/* Add more options here */}
+//           </Picker>
+//         </View>
+
+//         <Text style={styles.label}>Enter amount (Rs.):</Text>
+//         <TextInput
+//           style={styles.input}
+//           keyboardType="numeric"
+//           value={amount}
+//           onChangeText={(text) => setAmount(text)}
+//         />
+
+//         <Text style={styles.label}>Enter description (optional):</Text>
+//         <TextInput
+//           style={styles.textArea}
+//           value={description}
+//           onChangeText={(text) => setDescription(text)}
+//           multiline
+//           numberOfLines={4}
+//         />
+
+//         <View style={styles.buttonContainer}>
+//           <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
+//             <Text style={styles.buttonText}>Reset</Text>
+//           </TouchableOpacity>
+//           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+//             <Text style={styles.buttonText}>Confirm</Text>
+//           </TouchableOpacity>
+//         </View>
+
+//         <TouchableOpacity style={styles.addTransactionButton}> *
+//            <Text style={styles.buttonText}>Add new transaction</Text> */}
+//         </TouchableOpacity> */
+
+//         <TouchableOpacity
+//           style={styles.transactionHistory}
+//           onPress={() => navigation.navigate('TransactionHistory')}
+//           >
+//         <Text style={styles.transactionHistoryText}>Transaction History</Text>
+//         </TouchableOpacity>
+
+//       </View>
+//     </ScrollView>
+//   );
+// };
+
 import React, { useState } from 'react';
 import {
   View,
@@ -8,21 +178,116 @@ import {
   ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const PersonalFinanceTracker = () => {
-  const navigation = useNavigation();
-  const [expenseType, setExpenseType] = useState('Land Preparation expense');
+type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'PersonalTrackerExpense'
+>;
+
+const PersonalTrackerExpense = () => {
+  const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
+
+  // States for form fields
+  const [expenseType, setExpenseType] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
 
+  // State for validation errors
+  const [errors, setErrors] = useState({
+    expenseType: '',
+    amount: '',
+    date: '',
+  });
+
+  // Reset form fields
   const handleReset = () => {
+    setExpenseType('');
     setAmount('');
     setDescription('');
+    setDate('');
+    setErrors({ expenseType: '', amount: '', date: '' }); // Clear errors
   };
 
-  const handleConfirm = () => {
-    console.log('Expense Confirmed:', { expenseType, amount, description });
+  // Validation and submission
+  const handleSubmit = async (): Promise<boolean> => {
+    let isValid = true;
+    const newErrors = { expenseType: '', amount: '', date: '' };
+
+    // Validate expense type
+    if (!expenseType) {
+      newErrors.expenseType = 'Expense type is required.';
+      isValid = false;
+    }
+
+    // Validate amount
+    if (!amount) {
+      newErrors.amount = 'Amount is required.';
+      isValid = false;
+    } else if (isNaN(Number(amount)) || Number(amount) <= 0) {
+      newErrors.amount = 'Amount must be a valid positive number.';
+      isValid = false;
+    }
+
+    // Validate date
+    if (!date.trim()) {
+      newErrors.date = 'Date is required.';
+      isValid = false;
+    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      newErrors.date = 'Date must be in YYYY-MM-DD format.';
+      isValid = false;
+    }
+
+    // Update errors state
+    setErrors(newErrors);
+
+    // Stop submission if validation fails
+    if (!isValid) return false;
+
+    // Prepare data for submission
+    const data = {
+      expense_type: expenseType,
+      amount: parseFloat(amount),
+      description: description || '',
+      date: date,
+    };
+
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (!token) {
+        setErrors({ ...newErrors, amount: 'You need to log in first.' });
+        return false;
+      }
+
+      const response = await fetch('http://127.0.0.1:8000/personalFinanceTracker/add-expense/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Response data:', responseData);
+        handleReset(); // Reset form after successful submission
+        return true;
+      } else {
+        const errorData = await response.json();
+        console.error('Error saving expense:', errorData);
+        setErrors({ ...newErrors, amount: 'Failed to save the expense. Please try again.' });
+        return false;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setErrors({ ...newErrors, amount: 'Cannot connect to the server. Please try again later.' });
+      return false;
+    }
   };
 
   return (
@@ -30,65 +295,198 @@ const PersonalFinanceTracker = () => {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate("PersonalTrackerMain")}
       >
-        <Text style={styles.backButtonText}>← Back</Text>
+        <Text style={styles.backButtonText}>←Back</Text>
       </TouchableOpacity>
 
       <Text style={styles.header}>Personal Finance Tracker</Text>
-      
-      <View style={styles.form}>
-        <Text style={styles.label}>Choose expense type:</Text>
-        <View style={styles.picker}>
-          <Picker
-            selectedValue={expenseType}
-            onValueChange={(itemValue: React.SetStateAction<string>) => setExpenseType(itemValue)}
-          >
-            <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
-            <Picker.Item label="Other Expense" value="Other Expense" />
-            {/* Add more options here */}
-          </Picker>
-        </View>
 
-        <Text style={styles.label}>Enter amount (Rs.):</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-        />
+      {/* Date Input */}
+      <Text style={styles.label}>Enter Date:</Text>
+      <TextInput
+        style={[styles.input, errors.date ? styles.inputError : null]}
+        placeholder="YYYY-MM-DD"
+        value={date}
+        onChangeText={(text) => setDate(text)}
+      />
+      {errors.date ? <Text style={styles.errorText}>{errors.date}</Text> : null}
 
-        <Text style={styles.label}>Enter description (optional):</Text>
-        <TextInput
-          style={styles.textArea}
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-          multiline
-          numberOfLines={4}
-        />
+      {/* Expense Type Picker */}
+      <Text style={styles.label}>Choose Expense Type:</Text>
+      <View style={[styles.picker, errors.expenseType ? styles.inputError : null]}>
+        <Picker
+          selectedValue={expenseType}
+          onValueChange={(itemValue: React.SetStateAction<string>) => setExpenseType(itemValue)}
+        >
+          <Picker.Item label="Select an expense type" value="" />
+          <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
+          <Picker.Item label="Other Expense" value="Other Expense" />
+        </Picker>
+      </View>
+      {errors.expenseType ? <Text style={styles.errorText}>{errors.expenseType}</Text> : null}
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-            <Text style={styles.buttonText}>Reset</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-            <Text style={styles.buttonText}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Amount Input */}
+      <Text style={styles.label}>Enter Amount:</Text>
+      <TextInput
+        style={[styles.input, errors.amount ? styles.inputError : null]}
+        keyboardType="numeric"
+        value={amount}
+        onChangeText={(text) => setAmount(text)}
+      />
+      {errors.amount ? <Text style={styles.errorText}>{errors.amount}</Text> : null}
 
-        <TouchableOpacity style={styles.addTransactionButton}>
-          <Text style={styles.buttonText}>Add new transaction</Text>
+      {/* Description Input */}
+      <Text style={styles.label}>Enter Description (Optional):</Text>
+      <TextInput
+        style={styles.textArea}
+        value={description}
+        onChangeText={(text) => setDescription(text)}
+        multiline
+        numberOfLines={4}
+      />
+
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
+          <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.transactionHistory}>
-          <Text style={styles.transactionHistoryText}>Transaction History</Text>
+        <TouchableOpacity style={styles.confirmButton} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        style={styles.transactionHistory}
+        onPress={() => navigation.navigate('TransactionHistory')}
+      >
+        <Text style={styles.transactionHistoryText}>Transaction History</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
 
+
 const styles = StyleSheet.create({
+  // container: {
+  //   flexGrow: 1,
+  //   backgroundColor: '#D9FAD9',
+  //   alignItems: 'center',
+  //   padding: 20,
+  // },
+  // backButton: {
+  //   alignSelf: 'flex-start',
+  //   marginBottom: 10,
+  //   padding: 10,
+  // },
+  // backButtonText: {
+  //   fontSize: 16,
+  //   fontWeight: 'bold',
+  //   color: '#000',
+  // },
+  // header: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   marginBottom: 20,
+  // },
+  // form: {
+  //   width: '100%',
+  // },
+  // label: {
+  //   fontSize: 16,
+  //   marginVertical: 10,
+  //   marginRight:200,
+  
+  // },
+  // label1: {
+  //   fontSize: 16,
+  //   marginRight:260,
+  // },
+  // label2: {
+  //   fontSize: 16,
+  //   marginRight:260,
+  // },
+  // picker: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   borderColor: '#ccc',
+  //   padding: 5,
+  //   marginBottom: 15,
+  // },
+  // input: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   borderColor: '#ccc',
+  //   padding: 10,
+  //   marginBottom: 15,
+  // },
+  // textArea: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 5,
+  //   borderWidth: 1,
+  //   borderColor: '#ccc',
+  //   padding: 10,
+  //   textAlignVertical: 'top',
+  //   marginBottom: 15,
+  //   marginRight: 220
+  // },
+  // buttonContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   marginBottom: 15,
+  // },
+  // resetButton: {
+  //   backgroundColor: '#FFE4B5',
+  //   borderRadius: 10,
+  //   padding: 10,
+  //   flex: 1,
+  //   marginRight: 5,
+  // },
+  // confirmButton: {
+  //   backgroundColor: '#FFD700',
+  //   borderRadius: 10,
+  //   padding: 10,
+  //   flex: 1,
+  //   marginLeft: 5
+  // },
+  // buttonText: {
+  //   textAlign: 'center',
+  //   fontWeight: 'bold',
+  // },
+  // addTransactionButton: {
+  //   backgroundColor: '#A8E4A0',
+  //   borderRadius: 10,
+  //   padding: 10,
+  //   marginBottom: 15,
+  // },
+  // transactionHistory: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   borderColor: '#ccc',
+  //   padding: 10,
+  // },
+  // transactionHistoryText: {
+  //   textAlign: 'center',
+  // },
+
+  // dateButton: {
+  //   backgroundColor: '#fff',
+  //   padding: 15,
+  //   borderRadius: 10,
+  //   marginTop: 18,
+  //   marginRight: 250,
+  //   marginBottom: 10
+  // },
+
+  // dateButtonText: {
+  //   color: '#000',
+  //   fontSize: 16,
+  //   fontWeight: 'bold',
+  // },
+
   container: {
     flexGrow: 1,
     backgroundColor: '#D9FAD9',
@@ -116,6 +514,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginVertical: 10,
+  },
+  label1: {
+    fontSize: 16,
+    marginRight:250,
   },
   picker: {
     backgroundColor: '#fff',
@@ -151,15 +553,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFE4B5',
     borderRadius: 10,
     padding: 10,
-    flex: 1,
-    marginRight: 5,
+    flex: 4,
+    marginRight: 50,
   },
   confirmButton: {
     backgroundColor: '#FFD700',
     borderRadius: 10,
     padding: 10,
-    flex: 1,
+    flex: 4,
     marginLeft: 5,
+   
   },
   buttonText: {
     textAlign: 'center',
@@ -181,6 +584,27 @@ const styles = StyleSheet.create({
   transactionHistoryText: {
     textAlign: 'center',
   },
+  dateButton: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 18,
+    marginRight: 250,
+    marginBottom: 10
+  },
+  dateButtonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  inputError: {
+    borderColor: 'red',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 10,
+  },
 });
 
-export default PersonalFinanceTracker;
+export default PersonalTrackerExpense;

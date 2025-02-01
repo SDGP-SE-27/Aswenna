@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, SafeAreaView, ScrollView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-export default function DiseaseIdentificationScreen({ navigation }: any) {
+
+type DiseaseIdentificationScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'DiseaseIdentification'
+>;
+
+const DiseaseIdentification = () => {
+  const navigation = useNavigation<DiseaseIdentificationScreenProp>();
+  const route = useRoute<RouteProp<RootStackParamList, "DiseaseIdentification">>();
   const [image, setImage] = useState<string | null>(null);
 
   // Function to open the camera
@@ -52,8 +64,8 @@ export default function DiseaseIdentificationScreen({ navigation }: any) {
         <View style={styles.container}>
             {/* Disease Identification Header */}
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Home")}>
-                <Text style={styles.backButtonText}>{"<"}</Text>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Homepage")}>
+                
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Disease Identification</Text>
             </View>
@@ -84,35 +96,35 @@ export default function DiseaseIdentificationScreen({ navigation }: any) {
             </ScrollView>
             
                 {/* Bottom Navigation */} 
-            <View style={styles.footer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                <Image
-                    source={require("../assets/images/home-icon.png")}
-                    style={styles.footerIcon}
-                />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification")}>
-                <Image
-                    source={require("../assets/images/disease-icon.png")}
-                    style={styles.footerIcon}
-                />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => navigation.navigate("MarketPrediction")}>
-                <Image
-                    source={require("../assets/images/finance-icon.png")}
-                    style={styles.footerIcon}
-                />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-                <Image
-                    source={require("../assets/images/profile-icon.png")}
-                    style={styles.footerIcon}
-                />
-                </TouchableOpacity>
-            </View>
+      <View style={styles.footer}>
+          <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+            <Image
+              source={require("../assets/images/home-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification")}>
+            <Image
+              source={require("../assets/images/disease-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
+            <Image
+              source={require("../assets/images/finance-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+            <Image
+              source={require("../assets/images/profile-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      </View>
         </View>
     </SafeAreaView>
   );
@@ -211,3 +223,8 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
+export default DiseaseIdentification; 
+
+
+
+

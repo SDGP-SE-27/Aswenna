@@ -7,30 +7,24 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { useFonts } from 'expo-font';
-import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/commonjs/src/types';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-// Define the structure of a Crop object
-type Crop = {
-  name: string;
-  image: any; // You might want to use a more specific type for image resources
-};
-
-// Define the RootStackParamList (for navigation)
-type RootStackParamList = {
-  MarketPrice2: undefined;
-  // ... other screens in your app
-};
-
-// Define the props for this screen component
-type MarketPrice2Props =NativeStackScreenProps<
+type MarketPrice2ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'MarketPrice2'
 >;
 
-const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
+type Crop = {
+  name: string;
+  image: any; 
+};
 
+const MarketPrice2= () => {
+  const navigation = useNavigation<MarketPrice2ScreenProp>();
+  const route = useRoute<RouteProp<RootStackParamList, "MarketPrice2">>();
   const crops: Crop[] = [
     
     {
@@ -38,7 +32,7 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
       image: require('../assets/images/Pineapple.jpg'), 
     },
     {
-      name: 'TOM JC Mango',
+      name: 'TOM EJC Mango',
       image: require('../assets/images/tom_jc_mango.jpg'),
     },
    
@@ -48,60 +42,71 @@ const MarketPrice2: React.FC<MarketPrice2Props> = ({navigation, route, }) => {
     },
   ];
 
+  const handleNavigation = (cropName: string) => {
+    navigation.navigate('MarketPrice3', { cropName });
+  };
+
+
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButtonArrow}>
-          <Text>{"<"}</Text>;  // Replace with your arrow image
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Market Price Prediction</Text>
-      </View>
 
       {/* Crop Selection */}
-      <ScrollView>
-        <View style={styles.cropSelectionContainer}>
-          <Text style={styles.sectionTitle}>Select your crop</Text>
-          {/* Crop Items */}
-          {crops.map((crop, index) => (
-            <TouchableOpacity key={index} style={styles.cropItem}>
-              <View style={styles.cropImageContainer}>
-                <Image source={crop.image} style={styles.cropImage} />
-              </View>
-              <Text style={styles.cropName}>{crop.name}</Text>
-            </TouchableOpacity>
-          ))}
-
-          {/* fruits Button */}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>Select a Crop</Text>
+      <View style={styles.gridContainer}>
+        {crops.map((crop, index) => (
           <TouchableOpacity
-            style={styles.fruitsButton}
-            onPress={() => {
-              /* Navigate to the fruits screen */
-            }}
+            key={index}
+            style={styles.cropContainer}
+            onPress={() => handleNavigation(crop.name)}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.fruitsButtonArrow}>
-              <Text>{"<"}</Text>;  // Replace with your arrow image
-            </TouchableOpacity>
-            <Text style={styles.fruitsButtonText}>Fruits</Text>
+            <Image source={crop.image} style={styles.cropImage} />
+            <Text style={styles.cropName}>{crop.name}</Text>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
+        ))}
+      </View>
+      <View>  
+         
+          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}
+            style={styles.fruitsButton}>
+            <Text style={styles.fruitsButtonText}>For Vegetables</Text>
+          </TouchableOpacity>
+      </View>
+    </ScrollView>
+
 
       {/* Bottom Navigation (Placeholder) */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>🏠</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>🔗</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>💲</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navItemText}>👤</Text>
-        </TouchableOpacity>
+      <View style={styles.footer}>
+          <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+            <Image
+              source={require("../assets/images/home-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification")}>
+            <Image
+              source={require("../assets/images/disease-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
+            <Image
+              source={require("../assets/images/finance-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+            <Image
+              source={require("../assets/images/profile-icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
       </View>
+
+
     </View>
   );
 };
@@ -114,30 +119,15 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
-  },
-  backButtonArrow: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize : 25 , 
   },
   cropSelectionContainer: {
     padding: 20,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    backgroundColor: '#FAEBD7',
-    padding: 10,
-    borderRadius: 10,
   },
   cropItem: {
     backgroundColor: '#FFFFFF',
@@ -171,23 +161,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   fruitsButton: {
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F5DEB3',
-    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
     borderRadius: 15,
-    marginTop: 10,
+    marginTop: 90,
+    marginLeft: 70, 
+    marginRight: 70
   },
   fruitsButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  fruitsButtonArrow: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain',
-    transform: [{ rotate: '180deg' }],
+    fontSize: 20,
+    fontWeight: 'bold', 
   },
   bottomNav: {
     flexDirection: 'row',
@@ -204,6 +189,43 @@ const styles = StyleSheet.create({
   navItemText: {
     fontSize: 24,
   },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  },
+  footerIcon: {
+    width: 30,
+    height: 30,
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  cropContainer: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
+  },
 });
 
 export default MarketPrice2;
+
+
+
+
+  
