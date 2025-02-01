@@ -66,6 +66,7 @@ import PersonalTrackerIncome from "./PersonalTrackerIncome";
 import PersonalTrackerMain from "./PersonalTrackerMain";
 import TransactionHistory from "./TransactionHistory";
 import Buildyourfarmland from "./Buildyourfarmland";
+<<<<<<< HEAD
 import Chooserole from "./Chooserole";
 import ProductPage from "./product";
 import MarketPrice1 from "./MarketPrice1";
@@ -75,6 +76,10 @@ import SupplementReminder1 from "./SupplementReminder1";
 import SupplementReminder2 from "./SupplementReminder2";
 import passwordReset from "./passwordReset";
 import DiseaseIdentification2 from "./DiseaseIdentification2";
+=======
+// import Chooserole from "./Chooserole";
+import WeatherForecasting from "./WeatherForecast";
+>>>>>>> 336ef44b9f0e3683464662afc2472a0d0e1024a1
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -89,6 +94,7 @@ const App = () => {
         <Stack.Screen name="commonregistration2" component={commonregistration2} /> 
         <Stack.Screen name="DiseaseIdentification" component={DiseaseIdentificationScreen} />
         <Stack.Screen name="Buildyourfarmland" component={Buildyourfarmland} />
+<<<<<<< HEAD
         {/* <Stack.Screen name="Chatscreen" component={chatscreen} /> */}
         <Stack.Screen name = "PersonalTrackerMain" component={PersonalTrackerMain}/>
         <Stack.Screen name = "PersonalTrackerIncome" component={PersonalTrackerIncome}/>
@@ -103,6 +109,11 @@ const App = () => {
         <Stack.Screen name = "SupplementReminder2" component={SupplementReminder2}/>
         <Stack.Screen name ="passwordReset" component={passwordReset}/>
         <Stack.Screen name="DiseaseIdentification2" component={DiseaseIdentification2}/>
+=======
+        <Stack.Screen name="Chatscreen" component={chatscreen} />
+        <Stack.Screen name="WeatherForcast" component={WeatherForecasting} />
+
+>>>>>>> 336ef44b9f0e3683464662afc2472a0d0e1024a1
       </Stack.Navigator>
     </NavigationContainer>
   );
