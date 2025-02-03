@@ -226,35 +226,72 @@ const Homepage = () => {
     fetchUserFarmland(); // Fetch farmland details when component loads
   }, []);
 
+  // const fetchUserFarmland = async () => {
+  //   try {
+  //     const username = await AsyncStorage.getItem("username");
+  
+  //     if (!username) {
+  //       Alert.alert("Error", "User is not logged in.");
+  //       return;
+  //     }
+  
+  //     const cropType = await AsyncStorage.getItem("cropType");
+  //     const landArea = await AsyncStorage.getItem("landArea");
+  
+  //     setUserData({
+  //       cropType: cropType || "Not set",
+  //       landArea: landArea || "Not set",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching farmland details:", error);
+  //     Alert.alert("Error", "Something went wrong. Try again.");
+  //   }
+  // };
+
   const fetchUserFarmland = async () => {
     try {
-      const username = await AsyncStorage.getItem("username");
-  
-      if (!username) {
-        Alert.alert("Error", "User is not logged in.");
-        return;
-      }
-  
-      const cropType = await AsyncStorage.getItem("cropType");
-      const landArea = await AsyncStorage.getItem("landArea");
-  
-      setUserData({
-        cropType: cropType || "Not set",
-        landArea: landArea || "Not set",
-      });
+        const username = await AsyncStorage.getItem("username");
+
+        if (!username) {
+            Alert.alert("Error", "User is not logged in.");
+            return;
+        }
+
+        console.log("Fetching farmland details for:", username); // Debugging log
+
+        const response = await fetch(`http://127.0.0.1:8000/api/homepage/farmland/${username}/`);
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Fetched Farmland Data:", data); // Debugging log
+
+            setUserData({
+                cropType: data.crop_type || "Not set",
+                landArea: data.land_area ? `${data.land_area} sq.ft` : "Not set",
+            });
+        } else {
+            const errorData = await response.json();
+            console.error("Error fetching farmland data:", errorData);
+            Alert.alert("Error", errorData.error || "Failed to fetch data.");
+        }
     } catch (error) {
-      console.error("Error fetching farmland details:", error);
-      Alert.alert("Error", "Something went wrong. Try again.");
+        console.error("Error fetching farmland details:", error);
+        Alert.alert("Error", "Something went wrong. Try again.");
     }
-  };
+};
+
   
   
   // Call fetchUserData when clicking the menu button
-  const handleMenuClick = async () => {
-    await fetchUserFarmland(); // Ensure data is fetched before showing modal
-    setModalVisible(true);
-};
+//   const handleMenuClick = async () => {
+//     await fetchUserFarmland(); 
+//     setModalVisible(true);
+// };
 
+const handleMenuClick = async () => {
+  await fetchUserFarmland();  // ✅ Ensure latest data is fetched
+  setModalVisible(true);
+};
 
   const categories: { icon: any; label: string; screen: keyof RootStackParamList | null }[] = [
     { icon: require("../assets/icons/disease_identification.png"), label: "Disease Identification", screen: "DiseaseIdentification2" },

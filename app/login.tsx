@@ -115,10 +115,12 @@ const login = () => {
 
             // ✅ Explicitly store the token
             await AsyncStorage.setItem("accessToken", data.access);
+            await AsyncStorage.setItem("username", data.username);
 
             // ✅ Verify storage
             const storedToken = await AsyncStorage.getItem("accessToken");
             console.log("Stored Token in AsyncStorage:", storedToken); // ✅ Check if token is saved
+            console.log("Username stored in AsyncStorage:", data.username);
             
             Alert.alert("Login Successful", `Welcome, ${email}!`);
             navigation.navigate("Homepage");

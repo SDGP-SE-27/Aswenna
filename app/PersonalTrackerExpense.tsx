@@ -362,6 +362,7 @@ const PersonalTrackerExpense = () => {
       >
         <Text style={styles.transactionHistoryText}>Transaction History</Text>
       </TouchableOpacity>
+
     </ScrollView>
   );
 };

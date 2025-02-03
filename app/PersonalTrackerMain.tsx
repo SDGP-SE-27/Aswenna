@@ -417,18 +417,22 @@ return (
       {/* Reports section */}
       <Text style={styles.label}>See Reports:</Text>
       <View style={styles.reportsContainer}>
-        <TouchableOpacity style={styles.reportButton}>
+
+        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('WeeklyReport')}>
           <Text style={styles.buttonText}>Weekly</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reportButton}>
+
+        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('MonthlyReport')}>
           <Text style={styles.buttonText}>Monthly</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reportButton}>
+
+        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('SeasonalReport')}>
           <Text style={styles.buttonText}>End of Season</Text>
         </TouchableOpacity>
+
       </View>
 
-            {/* Bottom Navigation (Placeholder) */}
+      {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
                 <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
                   <Image

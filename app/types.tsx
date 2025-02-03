@@ -40,6 +40,9 @@ export type RootStackParamList = {
     SupplementReminder1 : undefined; 
     SupplementReminder2 : undefined; 
     passwordReset : {email : string};
-    DiseaseIdentification2 : undefined; 
+    DiseaseIdentification2 : undefined;
+    WeeklyReport : undefined;
+    MonthlyReport : undefined;
+    SeasonalReport : undefined; 
   };
   
