@@ -16,16 +16,16 @@ import {
 
 function ProductPage() {
   const params = useSearchParams();
-  const product = params.product ? JSON.parse(params.product) : null;
+  //  const product = params.product ? JSON.parse(params.product) : null;
   const [viewImageVisible, setViewImageVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([
-    require("../assets/images/product_img.jpeg"),
-    require("../assets/images/logo.png"),
-    require("../assets/images/Papaya.png"),
+    require("../assets/images/apple-icon.png"),
+    require("../assets/images/apple-icon.png"),
+    require("../assets/images/apple-icon.png"),
   ]);
 
-  console.log("Product received:", product);
+  // console.log("Product received:", product);
 
   const renderItem = ({ item }: { item: any }) => (
     <TouchableOpacity
@@ -46,7 +46,7 @@ function ProductPage() {
       <View style={styles.header}>
         <Text style={styles.title}>My Product</Text>
         <Image
-          source={require("../assets/images/farmer.jpg")}
+          source={require("../assets/icons/farmer_2.png")}
           style={styles.user_icon}
         />
       </View>

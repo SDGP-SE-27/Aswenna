@@ -1,45 +1,236 @@
+// import React, { useState } from 'react';
+// import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
+// import { Picker } from '@react-native-picker/picker';
+// import { useNavigation } from '@react-navigation/native';
+// import { RootStackParamList } from './types';
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// type BuildyourfarmlandScreenProp = NativeStackNavigationProp<
+//   RootStackParamList,
+//   'Buildyourfarmland'
+// >;
+
+
+// const Buildyourfarmland = () => {
+//   const navigation = useNavigation<BuildyourfarmlandScreenProp>();
+//   const [cropType, setcropType] = useState<string>('');
+//   const [landarea, setLlandarea] = useState<string>('');
+//   const [errors, setErrors] = useState({
+//         cropType: "",
+//         landarea: "",
+//   });
+
+//   const handleSubmit = async (): Promise<boolean> => {
+//     let isValid = true; 
+//     const newErrors = { cropType: "", landarea: "" };
+  
+//     if (!cropType.trim()) {
+//       newErrors.cropType = "Crop Type is required.";
+//       isValid = false;
+//     }
+    
+//     if (!landarea.trim()) {
+//       newErrors.landarea = "Land area is required.";
+//       isValid = false;
+//     }
+  
+//     setErrors(newErrors);
+    
+//     if (!isValid) return false;
+  
+//     try {
+//       const token = await AsyncStorage.getItem("accessToken"); // Retrieve access token
+//       if (!token) {
+//         Alert.alert("Error", "You need to log in first.");
+//         return false;
+//       }
+  
+//       const response = await fetch("http://127.0.0.1:8000/farmland/create/", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`, // Send token for authentication
+//         },
+//         body: JSON.stringify({
+//           crop_type: cropType,
+//           district: cropType, // FIX: This should be `district`, not `cropType`
+//           land_area: landarea,
+//         }),
+//       });
+  
+//       if (response.ok) {
+//         Alert.alert("Success", "Farmland details saved successfully!");
+//         return true;
+//       } else {
+//         const errorData = await response.json();
+//         console.error("Error:", errorData);
+//         Alert.alert("Error", errorData.message || "Failed to save data.");
+//         return false;
+//       }
+//     } catch (error) {
+//       console.error("Error:", error);
+//       Alert.alert("Error", "Something went wrong. Try again.");
+//       return false;
+//     }
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+
+//     <View style={styles.container}>
+//     <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Build your</Text>
+//     <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}> Farmland</Text>  
+//     </View>
+
+//       <View style={styles.formContainer}>
+        
+        
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>Crop Type*</Text>
+//           <Picker
+//             selectedValue={cropType}
+//             onValueChange={(value) => setcropType(value)}
+//             style={[styles.picker, errors.cropType ? styles.inputError : null]}
+//           >
+//           <Picker.Item label="Long beans" value="Long beans" />
+//           <Picker.Item label="Bitter gourd" value="Bitter gourd" />
+//           <Picker.Item label="Snake gourd" value="Snake gourd" />
+//           <Picker.Item label="Brinjals" value="Brinjals" />
+//           <Picker.Item label="TOM EJC" value="TOM EJC" />
+//           <Picker.Item label="Pineapple" value="Pineapple" />
+//           <Picker.Item label="Papaya" value="Papaya" />
+//           </Picker>
+//           {errors.cropType ? (
+//             <Text style={styles.errorText}>{errors.cropType}</Text>
+//           ) : null}
+//         </View>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>Land area in sq.ft*</Text>
+//           <TextInput
+//             style={[styles.input, errors.landarea ? styles.inputError : null]}
+//             placeholder="Enter your land area"
+//             value={landarea}
+//             onChangeText={setLlandarea}
+//           />
+//           {errors.landarea ? <Text style={styles.errorText}>{errors.landarea}</Text> : null}
+//         </View>
+
+      
+//         <TouchableOpacity
+//         style={styles.button}
+//         onPress={async () => {
+//         const isValid = await handleSubmit(); // Await the result of handleSubmit
+//         if (isValid) {
+//             navigation.navigate("Homepage"); 
+//              // Navigate only if successful
+//         }
+//          }}
+//         >
+//         <Text style={styles.buttonText}>Next</Text>
+//         </TouchableOpacity>
+
+//       </View>
+//     </ScrollView>
+//   );
+// };
+
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Alert
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useFonts } from 'expo-font';
-import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 
-export default function Buildyourfarmland({ navigation }: { navigation: NavigationProp<any> }) {
-  const [cropType, setcropType] = useState<string>('');
-  const [landarea, setLlandarea] = useState<string>('');
+type BuildyourfarmlandScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Buildyourfarmland'
+>;
 
-  const[fontsLoaded] = useFonts({'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Bold.ttf'),});
-  const[fontsLoaded2] = useFonts({'Poppins-Regular': require('../assets/fonts/Poppins/Poppins-Regular.ttf'),});
-  const[fontsLoaded3] = useFonts({'Poppins-SemiBold': require('../assets/fonts/Poppins/Poppins-SemiBold.ttf'),});
+const Buildyourfarmland = () => {
+  const navigation = useNavigation<BuildyourfarmlandScreenProp>();
+  const route = useRoute<RouteProp<RootStackParamList, "Buildyourfarmland">>();  // ✅ Get route params
+  const username = route.params?.username || "";
+  const [cropType, setCropType] = useState<string>('');
+  const [landArea, setLandArea] = useState<string>('');
+  const [errors, setErrors] = useState({ cropType: '', landArea: '' });
 
+  /** ✅ Function to validate input fields */
+  const validateFields = (): boolean => {
+    let isValid = true;
+    const newErrors = { cropType: '', landArea: '' };
 
-
-  const handleSubmit = (): void => {
-    if (!cropType || !landarea) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
+    if (!cropType.trim()) {
+      newErrors.cropType = 'Crop Type is required.';
+      isValid = false;
     }
-    Alert.alert('Building the farmland is succesfully completed ', `CropType: ${cropType}\nLandarea: ${landarea}`);
+
+    if (!landArea.trim()) {
+      newErrors.landArea = 'Land area is required.';
+      isValid = false;
+    } else if (isNaN(Number(landArea))) {
+      newErrors.landArea = 'Land area must be a valid number.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
+
+  /** ✅ Function to submit farmland data */
+  const handleSubmit = async () => {
+    if (!validateFields()) return;
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/farmland/create/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,  // ✅ Send username received from registration
+                crop_type: cropType,
+                land_area: parseFloat(landArea),
+            }),
+        });
+
+        if (response.ok) {
+            Alert.alert('Success', 'Farmland details saved successfully!');
+            navigation.navigate('login'); // ✅ Redirect to login after success
+        } else {
+            const errorData = await response.json();
+            console.error('Error:', errorData);
+            Alert.alert('Error', errorData.error || 'Failed to save data.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        Alert.alert('Error', 'Something went wrong. Try again.');
+    }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-
-    <View style={styles.container}>
-    <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Build your</Text>
-    <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}> Farmland</Text>  
-    </View>
+      <View style={styles.container}>
+        <Text style={[styles.title, { fontFamily: 'Poppins-Bold' }]}>Build your Farmland</Text>
+      </View>
 
       <View style={styles.formContainer}>
-        <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Crop Type*</Text>
-        
+
+        {/* ✅ Crop Type Picker */}
+        <Text style={styles.label}>Crop Type*</Text>
         <Picker
           selectedValue={cropType}
-          onValueChange={(value) => setcropType(value)}
-          style= {[styles.picker,{fontFamily:'Poppins-Regular'}]}
-          
+          onValueChange={(value) => setCropType(value)}
+          style={[styles.picker, errors.cropType ? styles.inputError : null]}
         >
-            
           <Picker.Item label="Long beans" value="Long beans" />
           <Picker.Item label="Bitter gourd" value="Bitter gourd" />
           <Picker.Item label="Snake gourd" value="Snake gourd" />
@@ -48,23 +239,24 @@ export default function Buildyourfarmland({ navigation }: { navigation: Navigati
           <Picker.Item label="Pineapple" value="Pineapple" />
           <Picker.Item label="Papaya" value="Papaya" />
         </Picker>
+        {errors.cropType ? <Text style={styles.errorText}>{errors.cropType}</Text> : null}
 
-        <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Land area*</Text>
+        {/* ✅ Land Area Input */}
+        <Text style={styles.label}>Land area in sq.ft*</Text>
         <TextInput
-            style= {[styles.input,{fontFamily:'Poppins-Regular'}]}
-            value={landarea}
-            onChangeText={setLlandarea}
+          style={[styles.input, errors.landArea ? styles.inputError : null]}
+          placeholder="Enter your land area"
+          keyboardType="numeric"
+          value={landArea}
+          onChangeText={setLandArea}
         />
+        {errors.landArea ? <Text style={styles.errorText}>{errors.landArea}</Text> : null}
 
-      
+        {/* ✅ Submit Button */}
+        
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={[styles.button ,{fontFamily: 'Poppins-SemiBold'}]}>Next</Text>
-        </TouchableOpacity>  
-
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={[styles.button ,{fontFamily: 'Poppins-SemiBold'}]}>Add another crop</Text>
-        </TouchableOpacity>  
-
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -136,11 +328,26 @@ const styles = StyleSheet.create({
     color: '#ffff',
     fontFamily: 'poppins',
     fontSize: 18,
-  }
-
-
-
+  }, 
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 5,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });
+
+export default Buildyourfarmland;
 
 
         

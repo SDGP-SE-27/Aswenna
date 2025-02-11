@@ -55,7 +55,7 @@ function AIDashBoard() {
     return farmerList.map((farmer) => (
       <View style={styles.farmer} key={farmer[1]}>
         <Image
-          source={require("../assets/images/farmer.jpg")}
+          source={require("../assets/icons/farmer_2.png")}
           style={styles.farmer_icon}
         />
         <View style={{ flexDirection: "column", paddingLeft: 10 }}>
@@ -72,7 +72,7 @@ function AIDashBoard() {
           </View>
         </View>
         <Image
-          source={require("../assets/images/chat_icon.png")}
+          source={require("../assets/images/camera-icon.png")}
           style={styles.chat_icon}
         />
       </View>
@@ -89,7 +89,7 @@ function AIDashBoard() {
       <View style={styles.header}>
         <Text style={styles.title}>Dashboard</Text>
         <Image
-          source={require("../assets/images/farmer.jpg")}
+          source={require("../assets/icons/farmer_2.png")}
           style={styles.user_icon}
         />
       </View>
@@ -181,7 +181,7 @@ function AIDashBoard() {
         onPress={() => setAddFarmerModalVisible(true)}
       >
         <Image
-          source={require("../assets/images/add_icon.png")}
+          source={require("../assets/images/apple-icon.png")}
           style={styles.add_icon}
         />
       </TouchableOpacity>

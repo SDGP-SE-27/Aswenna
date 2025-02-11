@@ -3,22 +3,20 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
+import { RootStackParamList } from "./types";
 
-// Define the parameter types for stack navigation
-type RootStackParamList = {
-  SelectLanguage: undefined;
-  HomeScreen: { selectedLanguage: string };
-};
+
+
 
 // Define the navigation prop type for this component
-type SelectLanguageScreenNavigationProp = NativeStackNavigationProp<
+type SelectLanguageScreenProp = NativeStackNavigationProp<
   RootStackParamList,
-  "SelectLanguage"
+    'SelectLanguage'
 >;
 
 const SelectLanguage = () => {
   const [language, setLanguage] = useState<string>("English");
-  const navigation = useNavigation<SelectLanguageScreenNavigationProp>();
+  const navigation = useNavigation<SelectLanguageScreenProp>();
 
   const [fontsLoaded] = useFonts({
     "Poppins-Bold": require("../assets/fonts/Poppins/Poppins-Bold.ttf"),
@@ -29,7 +27,7 @@ const SelectLanguage = () => {
   const handleNext = () => {
     console.log("Selected Language:", language);
     // Navigate to HomeScreen and pass the selected language as a parameter
-    navigation.navigate("HomeScreen", { selectedLanguage: language });
+    navigation.navigate("Chooserole");
   };
 
   return (
