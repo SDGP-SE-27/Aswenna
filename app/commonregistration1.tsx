@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from './types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import Chooserole from "./Chooserole";
 
 
 type commonregistration1ScreenProp = NativeStackNavigationProp<
@@ -16,6 +17,8 @@ type commonregistration1ScreenProp = NativeStackNavigationProp<
   // State for inputs and errors
 const commonregistration1 = () => {
     const navigation = useNavigation<commonregistration1ScreenProp>();
+    const route = useRoute<RouteProp<RootStackParamList, "Chooserole">>();
+    const {role} = route.params; 
     const [username, setName] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [address, setAddress] = useState<string>("");
@@ -25,7 +28,9 @@ const commonregistration1 = () => {
       phoneNumber: "",
       address: "",
       district: "",
+      
     });
+    
 
   // Validation Functions
 const validatePhoneNumber = (phoneNumber: string) =>
@@ -182,7 +187,8 @@ return (
                 address,
                 district, 
                 Email : " ", 
-                Password: " "
+                Password: " ",
+                role: role.trim(),
             }); 
              // Navigate only if successful
         }

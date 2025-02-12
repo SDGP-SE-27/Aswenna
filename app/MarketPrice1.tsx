@@ -57,7 +57,7 @@ const MarketPrice1 = () => {
   return (
     <View style={styles.container}>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Homepage")} 
+        <TouchableOpacity onPress={() => navigation.navigate("Homepage", )} 
           style={styles.backButton}>
         </TouchableOpacity> 
 

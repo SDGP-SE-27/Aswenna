@@ -1,184 +1,3 @@
-// import React, { useState } from 'react';
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   StyleSheet,
-//   ScrollView,
-//   Alert
-// } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-// import {Picker} from '@react-native-picker/picker';
-// import { RootStackParamList } from './types';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import { useRoute, RouteProp } from '@react-navigation/native';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-// import TransactionHistory from './TransactionHistory';
-
-
-// type IncomeScreenRouteProp = RouteProp<RootStackParamList, 'PersonalTrackerIncome'>;
-
-// type PersonalTrackerMainScreenProp = NativeStackNavigationProp<
-//   RootStackParamList,
-//   'PersonalTrackerIncome'
-// >;
-
-// const PersonalTrackerIncome = () => {
-//   const navigation = useNavigation<PersonalTrackerMainScreenProp>();
-//   const [incomeType, setIncomeType] = useState('');
-//   const [amount, setAmount] = useState('');
-//   const [description, setDescription] = useState('');
-//   const route = useRoute<IncomeScreenRouteProp>();
-//   const [date, setDate] = useState<Date>(new Date());
-//   const [showPicker, setShowPicker] = useState(false);
- 
-
-//   const handleReset = () => {
-//     setIncomeType('');
-//     setAmount('');
-//     setDescription('');
-//   };
-
-//   const handleDateChange = (event: any, selectedDate?: Date) => {
-//     setShowPicker(false); // Hide picker after selection
-//     if (selectedDate) {
-//       setDate(selectedDate); // Update date state
-//     }
-//   }  
-
-
-//   const handleConfirm = async () => {
-//     if (!incomeType || !amount) {
-//       Alert.alert('Error', 'Please enter a valid amount.');
-//       return;
-//     }
-
-//     if(isNaN(Number(amount))){
-//       Alert.alert('Error' , 'Amount must be valid number'); 
-//       return;
-
-//     }
-
-//     const data = {
-//       income_type: incomeType,
-//       amount: parseFloat(amount), // Ensure amount is a number
-//       description,
-//     };
-
-//     try {
-//       const response = await fetch('http://127.0.0.1:8000/personalFinanceTracker/add-income', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-       
-//       });
-
-//       if (response.ok) {
-//         const responseData = await response.json();
-//         Alert.alert('Success', responseData.message || 'Income saved successfully!');
-//         handleReset(); // Reset fields after successful save
-//       } else {
-//         const errorData = await response.json();
-//         console.error('Error saving income:', errorData);
-//         Alert.alert('Error', 'Failed to save the income. Please try again.');
-//       }
-//     } catch (error) {
-//       console.error('Error:', error);
-//       Alert.alert('Error', 'Cannot connect to the server. Please try again later.');
-//     }
-//   };
-
-//   return (
-//     <ScrollView contentContainerStyle={styles.container}>
-//       {/* Back Button */}
-//       <TouchableOpacity
-//         style={styles.backButton}
-//         onPress={() => navigation.goBack()}
-//       >
-//         <Text style={styles.backButtonText}>←Back</Text>
-//       </TouchableOpacity>
-
-//       <Text style={styles.header}>Personal Finance Tracker</Text>
-      
-//       <Text style={styles.label1}>Choose Date</Text>
-
-//       <TouchableOpacity
-//         style={styles.dateButton}
-//         onPress={() => setShowPicker(true)}
-//       >
-//         <Text style={styles.dateButtonText}>
-//           {date.toISOString().split('T')[0]} {/* Display selected date */}
-//         </Text>
-//       </TouchableOpacity>
-      
-//       {showPicker && (
-//         <DateTimePicker
-//           value={date}
-//           mode="date"
-//           display="default" // "spinner" or "calendar"
-//           onChange={handleDateChange}
-//         />
-//       )} 
-      
-//       <View style={styles.form}>
-//         <Text style={styles.label}>Choose income type:</Text>
-//         <View style={styles.picker}>
-//           <Picker
-//             selectedValue={incomeType}
-//             onValueChange={(itemValue: React.SetStateAction<string>) => setIncomeType(itemValue)}
-//           >
-//             <Picker.Item label="Harvesting income" value="Harvesting income" />
-//             <Picker.Item label="Other income" value="Other income" />
-//             {/* Add more options here */}
-//           </Picker>
-//         </View>
-
-//         <Text style={styles.label}>Enter amount (Rs.):</Text>
-//         <TextInput
-//           style={styles.input}
-//           keyboardType="numeric"
-//           value={amount}
-//           onChangeText={(text) => setAmount(text)}
-//         />
-
-//         <Text style={styles.label}>Enter description (optional):</Text>
-//         <TextInput
-//           style={styles.textArea}
-//           value={description}
-//           onChangeText={(text) => setDescription(text)}
-//           multiline
-//           numberOfLines={4}
-//         />
-
-//         <View style={styles.buttonContainer}>
-//           <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-//             <Text style={styles.buttonText}>Reset</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-//             <Text style={styles.buttonText}>Confirm</Text>
-//           </TouchableOpacity>
-//         </View>
-
-//         <TouchableOpacity style={styles.addTransactionButton}>
-//           <Text style={styles.buttonText}>Add new transaction</Text>
-//         </TouchableOpacity>
-
-//         <TouchableOpacity
-//         style={styles.transactionHistory}
-//         onPress={() => navigation.navigate('TransactionHistory')}
-//         >
-//         <Text style={styles.transactionHistoryText}>Transaction History</Text>
-//         </TouchableOpacity>
-
-
-//       </View>
-//     </ScrollView>
-//   );
-// };
-
 import React, { useState } from 'react';
 import {
   View,
@@ -308,10 +127,12 @@ const PersonalTrackerIncome = () => {
         style={styles.backButton}
         onPress={() => navigation.navigate("PersonalTrackerMain")}
       >
-        <Text style={styles.backButtonText}>←Back</Text>
+
       </TouchableOpacity>
 
       <Text style={styles.header}>Personal Finance Tracker</Text>
+
+      <View style={styles.subcontainer}>
 
       {/* Date Input */}
       <Text style={styles.label}>Enter Date:</Text>
@@ -373,6 +194,7 @@ const PersonalTrackerIncome = () => {
       >
         <Text style={styles.transactionHistoryText}>Transaction History</Text>
       </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -381,9 +203,9 @@ const PersonalTrackerIncome = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#D9FAD9',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
   },
   backButton: {
     alignSelf: 'flex-start',
@@ -404,12 +226,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    fontSize: 16,
-    marginVertical: 10,
-  },
-  label1: {
-    fontSize: 16,
-    marginRight:250,
+    fontSize: 18.5,
+    marginVertical: 12,
+    marginRight:0
+    
   },
   picker: {
     backgroundColor: '#fff',
@@ -440,6 +260,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
+    paddingTop: 10
   },
   resetButton: {
     backgroundColor: '#FFE4B5',
@@ -447,6 +268,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     marginRight: 5,
+  
   },
   confirmButton: {
     backgroundColor: '#FFD700',
@@ -454,16 +276,12 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     marginLeft: 5,
+    
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: 'bold',
-  },
-  addTransactionButton: {
-    backgroundColor: '#A8E4A0',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 15,
+    fontSize: 18
   },
   transactionHistory: {
     backgroundColor: '#fff',
@@ -471,9 +289,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 10,
+    paddingTop: 10
   },
   transactionHistoryText: {
     textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   dateButton: {
     backgroundColor: '#fff',
@@ -496,6 +317,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 10,
   },
+  subcontainer:{
+    backgroundColor: '#77CB61', 
+    paddingLeft:70, 
+    paddingRight: 70,
+    paddingTop: 50,
+    paddingBottom: 85, 
+    borderRadius: 15
+  }
 });
 
 export default PersonalTrackerIncome;

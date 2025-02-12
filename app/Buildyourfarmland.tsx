@@ -204,7 +204,7 @@ const Buildyourfarmland = () => {
 
         if (response.ok) {
             Alert.alert('Success', 'Farmland details saved successfully!');
-            navigation.navigate('login'); // ✅ Redirect to login after success
+            navigation.navigate("login", { username }); // ✅ Redirect to login after success
         } else {
             const errorData = await response.json();
             console.error('Error:', errorData);
@@ -218,7 +218,7 @@ const Buildyourfarmland = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.container}>
+      <View style={styles.title}>
         <Text style={[styles.title, { fontFamily: 'Poppins-Bold' }]}>Build your Farmland</Text>
       </View>
 
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 400,
     backgroundColor: '#CFFFC2',
-    padding: 20,
+    padding: 50,
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -283,20 +283,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     fontFamily: 'poppins',
     fontSize: 20,
+    marginBottom: 50,
+    position: 'fixed'
   },
   title: {
     fontSize: 32,
-    marginBottom: 20,
+    marginBottom: 350,
     textAlign: 'center',
     fontFamily: 'poppins',
-    
   },
   label: {
     fontSize: 20,
     marginVertical: 10,
     fontFamily: 'poppins',
     color: 'F5F5F5'
-    
   },
   input: {
     borderWidth: 1,
@@ -322,12 +322,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#51B936', 
     borderRadius: 20,
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 35,
     marginBottom: 5,
-    padding: 5,
+    padding: 15,
     color: '#ffff',
     fontFamily: 'poppins',
-    fontSize: 18,
+    
   }, 
   inputError: {
     borderColor: "red",
@@ -343,10 +343,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
   },
 });
-
+254
 export default Buildyourfarmland;
 
 

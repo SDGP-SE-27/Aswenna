@@ -148,13 +148,14 @@ const WeeklyReport = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Weekly Report</Text>
+      <View style={styles.subcontainer}>
       {loading ? (
         <ActivityIndicator size="large" color="#51b936" />
       ) : reportData ? (
         <>
-        <Text>Total Income: {reportData?.total_income ?? "Loading..."}</Text>
-        <Text>Total Expenses: {reportData?.total_expenses ?? "Loading..."}</Text>
-        <Text>Balance: {reportData?.balance ?? "Loading..."}</Text>
+        <Text style={styles.label}>Total Income: {reportData?.total_income ?? "Loading..."}</Text>
+        <Text style={styles.label}>Total Expenses: {reportData?.total_expenses ?? "Loading..."}</Text>
+        <Text style={styles.label}>Balance: {reportData?.balance ?? "Loading..."}</Text>
 
         {reportData?.expense_breakdown && (
           <Text>Expense Breakdown: {JSON.stringify(reportData.expense_breakdown)}</Text>
@@ -164,7 +165,7 @@ const WeeklyReport = () => {
           <PieChart
             width={300}
             height={200}
-            backgroundColor="#ffff"
+            backgroundColor="#77CB61"
 
             chartConfig={{
                 backgroundGradientFrom: "#ffffff",
@@ -172,7 +173,7 @@ const WeeklyReport = () => {
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             }}
             accessor="amount"
-            paddingLeft="15"
+            paddingLeft="5"
             absolute
             
 
@@ -180,7 +181,7 @@ const WeeklyReport = () => {
               {
                 name: "Income",
                 amount: reportData.total_income,
-                color: "green",
+                color: "yellow",
                 legendFontColor: "#000",
                 legendFontSize: 14,
               },
@@ -204,16 +205,33 @@ const WeeklyReport = () => {
         </>
       ) : (
         <Text>No data available.</Text>
+        
       )}
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: { flexGrow: 1, padding: 20, backgroundColor: "#fff" },
-  header: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 10 },
-  text: { fontSize: 18, marginBottom: 5 },
+  header: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   subHeader: { fontSize: 20, fontWeight: "bold", marginTop: 10, color: "#333" },
+  label :{
+    fontSize: 18,
+     marginBottom: 5, 
+     fontWeight: 'semibold',
+     margin: 15, 
+     alignItems: 'center'
+  },
+  subcontainer:{
+    backgroundColor: '#77CB61', 
+    paddingLeft:70, 
+    paddingRight: 70,
+    paddingTop: 50,
+    paddingBottom: 200, 
+    borderRadius: 15,
+    marginTop: 50
+  }
   
 });
 

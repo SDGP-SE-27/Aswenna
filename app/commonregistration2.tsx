@@ -184,6 +184,8 @@ import { RootStackParamList } from "./types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import BuildyourFarmland from "./Buildyourfarmland";
+import seller_dashBoard from "./seller_dashboard";
+
 
 type commonregistration2ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -193,7 +195,9 @@ type commonregistration2ScreenProp = NativeStackNavigationProp<
 const commonregistration2 = () => {
   const navigation = useNavigation<commonregistration2ScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "commonregistration1">>();
-  const { username, phoneNumber, address, district } = route.params; 
+
+  const { username, phoneNumber, address, district ,role} = route.params; 
+  console.log("Received role in commonregistration2:", role);
 
   const [Email, setEmail] = useState<string>("");
   const [Password, setPassword] = useState<string>("");
@@ -210,6 +214,15 @@ const commonregistration2 = () => {
   const validatePasswords = (): boolean => {
     return Password === ConfirmPassword;
   };
+
+  const navigateBasedOnRole = () => {
+    if (role === "farmer") {
+        navigation.navigate("Buildyourfarmland", { username });  // ✅ Farmers go to Buildyourfarmland
+    } else {
+        navigation.navigate("login", { username });  // ✅ Sellers go to SellerDashboard
+    } 
+};
+
 
   // Function to handle registration submission
   const handleSubmit = async (): Promise<boolean> => {
@@ -232,6 +245,8 @@ const commonregistration2 = () => {
     setErrors(newErrors);
     if (!isValid) return false;
 
+    console.log("Sending role to backend:", role);
+
     try {
         const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
             method: "POST", // ✅ Ensure POST method is used
@@ -244,13 +259,18 @@ const commonregistration2 = () => {
                 address,
                 district,
                 email: Email,
-                password: Password
+                password: Password,
+                role
             }),
         });
 
         if (response.ok) {
-            Alert.alert("Registration Successful");
-            return true;
+          Alert.alert(
+              "Registration Successful",
+              `You have registered as a ${role}.`,
+              [{ text: "OK", onPress: () => navigateBasedOnRole() }]  // ✅ Navigate after clicking OK
+          );
+          return true;
         } else {
             const errorData = await response.json();
             console.error("Error:", errorData);
@@ -312,9 +332,7 @@ const commonregistration2 = () => {
             onPress={async () => {
               const isValid = await handleSubmit();
               if (isValid) {
-                navigation.navigate("Buildyourfarmland", {
-                  username
-                });
+                navigateBasedOnRole();  // ✅ Navigate based on the role
               }
             }}
           >
