@@ -8,6 +8,7 @@ export type RootStackParamList = {
       phoneNumber: string;
       address: string;
       district: string;
+      role: string
     }; 
     commonregistration2 : {
       username: string;
@@ -15,7 +16,8 @@ export type RootStackParamList = {
       address: string;
       district: string;
       Email : " ", 
-      Password: " "
+      Password: " ",
+      role:string
     };
     commonregistration3 : {
       username: string;
@@ -25,14 +27,14 @@ export type RootStackParamList = {
       Email: string;
       Password: string;
     };
-    login : undefined;
+    login : {username : string};
     Homepage : undefined;
     DiseaseIdentification: undefined;
     Fertilizerseller: undefined; 
     Weather : undefined;
     product : undefined;
     SelectLanguage : undefined;
-    Chooserole : undefined;
+    Chooserole : {role : string};
     Buildyourfarmland : {username : string};
     MarketPrice1 : undefined; 
     MarketPrice2 :undefined;
@@ -44,5 +46,6 @@ export type RootStackParamList = {
     WeeklyReport : undefined;
     MonthlyReport : undefined;
     SeasonalReport : undefined; 
+    seller_dashboard:{role : string}
   };
   
