@@ -1,173 +1,3 @@
-// import React, { useState } from 'react';
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   StyleSheet,
-//   ScrollView,
-//   Alert
-// } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-// import {Picker} from '@react-native-picker/picker';
-// import { RootStackParamList } from './types';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-// type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
-//   RootStackParamList,
-//   'PersonalTrackerExpense'
-// >;
-
-// const PersonalTrackerExpense = () => {
-//   const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
-//   const [expenseType, setExpenseType] = useState('');
-//   const [amount, setAmount] = useState('');
-//   const [description, setDescription] = useState('');
-//   const [date, setDate] = useState('');
-
-//   const handleReset = () => {
-//     setExpenseType('');
-//     setAmount('');
-//     setDescription('');
-//     setDate('');
-//   };
- 
-//   const handleConfirm = async () => {
-//     console.log("handleConfirm called");
-
-//     if (!expenseType || !amount) {
-//         Alert.alert('Error', 'Please enter all required fields.');
-//         return;
-//     }
-
-//     if (isNaN(Number(amount))) {
-//         Alert.alert('Error', 'Amount must be a valid number.');
-//         return;
-//     }
-
-//     const data = {
-//         expense_type: expenseType,
-//         amount: parseFloat(amount),
-//         description: description || '',
-//         date: date,
-//     };
-
-//     try {
-//         const token = await AsyncStorage.getItem('accessToken');
-//         console.log("Token:", token);
-
-//         if (!token) {
-//             Alert.alert('Error', 'You need to log in first.');
-//             return;
-//         }
-
-//         const response = await fetch('http://127.0.0.1:8000/personalFinanceTracker/add-expense/', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             body: JSON.stringify(data),
-//         });
-
-//         console.log("Response received:", response.status);
-
-//         if (response.ok) {
-//             const responseData = await response.json();
-//             console.log("Response data:", responseData);
-//             Alert.alert('Success', 'Expense saved successfully!');
-//             handleReset();
-//         } else {
-//             const errorData = await response.json();
-//             console.error("Error:", errorData);
-//             Alert.alert('Error', 'Failed to save the expense. Please try again.');
-//         }
-//     } catch (error) {
-//         console.error("Error:", error);
-//         Alert.alert('Error', 'Cannot connect to the server. Please try again later.');
-//     }
-// };
-
-
-
-//   return (
-//     <ScrollView contentContainerStyle={styles.container}>
-//       {/* Back Button */}
-//       <TouchableOpacity
-//         style={styles.backButton}
-//         onPress={() => navigation.goBack()}
-//       >
-//         <Text style={styles.backButtonText}>←Back</Text>
-//       </TouchableOpacity>
-
-//       <Text style={styles.header}>Personal Finance Tracker</Text>
-
-//       <Text style={styles.label}>Enter Date:</Text>
-//       {/* Allow manual input for date */}
-//       <TextInput
-//         style={styles.input}
-//         placeholder="YYYY-MM-DD" // Placeholder to guide the user
-//         value={date}
-//         onChangeText={(text) => setDate(text)}
-//       />
-
-//       <View style={styles.form}>
-//         <Text style={styles.label}>Choose expense type:</Text>
-//         <View style={styles.picker}>
-//           <Picker
-//             selectedValue={expenseType}
-//             onValueChange={(itemValue: React.SetStateAction<string>) => setExpenseType(itemValue)}
-//           >
-//             <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
-//             <Picker.Item label="Other Expense" value="Other Expense" />
-//             {/* Add more options here */}
-//           </Picker>
-//         </View>
-
-//         <Text style={styles.label}>Enter amount (Rs.):</Text>
-//         <TextInput
-//           style={styles.input}
-//           keyboardType="numeric"
-//           value={amount}
-//           onChangeText={(text) => setAmount(text)}
-//         />
-
-//         <Text style={styles.label}>Enter description (optional):</Text>
-//         <TextInput
-//           style={styles.textArea}
-//           value={description}
-//           onChangeText={(text) => setDescription(text)}
-//           multiline
-//           numberOfLines={4}
-//         />
-
-//         <View style={styles.buttonContainer}>
-//           <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-//             <Text style={styles.buttonText}>Reset</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-//             <Text style={styles.buttonText}>Confirm</Text>
-//           </TouchableOpacity>
-//         </View>
-
-//         <TouchableOpacity style={styles.addTransactionButton}> *
-//            <Text style={styles.buttonText}>Add new transaction</Text> */}
-//         </TouchableOpacity> */
-
-//         <TouchableOpacity
-//           style={styles.transactionHistory}
-//           onPress={() => navigation.navigate('TransactionHistory')}
-//           >
-//         <Text style={styles.transactionHistoryText}>Transaction History</Text>
-//         </TouchableOpacity>
-
-//       </View>
-//     </ScrollView>
-//   );
-// };
-
 import React, { useState } from 'react';
 import {
   View,
@@ -297,10 +127,12 @@ const PersonalTrackerExpense = () => {
         style={styles.backButton}
         onPress={() => navigation.navigate("PersonalTrackerMain")}
       >
-        <Text style={styles.backButtonText}>←Back</Text>
+   
       </TouchableOpacity>
 
       <Text style={styles.header}>Personal Finance Tracker</Text>
+
+       <View style={styles.subcontainer}>
 
       {/* Date Input */}
       <Text style={styles.label}>Enter Date:</Text>
@@ -362,250 +194,136 @@ const PersonalTrackerExpense = () => {
       >
         <Text style={styles.transactionHistoryText}>Transaction History</Text>
       </TouchableOpacity>
-
+      </View>
     </ScrollView>
   );
 };
 
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flexGrow: 1,
-  //   backgroundColor: '#D9FAD9',
-  //   alignItems: 'center',
-  //   padding: 20,
-  // },
-  // backButton: {
-  //   alignSelf: 'flex-start',
-  //   marginBottom: 10,
-  //   padding: 10,
-  // },
-  // backButtonText: {
-  //   fontSize: 16,
-  //   fontWeight: 'bold',
-  //   color: '#000',
-  // },
-  // header: {
-  //   fontSize: 20,
-  //   fontWeight: 'bold',
-  //   marginBottom: 20,
-  // },
-  // form: {
-  //   width: '100%',
-  // },
-  // label: {
-  //   fontSize: 16,
-  //   marginVertical: 10,
-  //   marginRight:200,
-  
-  // },
-  // label1: {
-  //   fontSize: 16,
-  //   marginRight:260,
-  // },
-  // label2: {
-  //   fontSize: 16,
-  //   marginRight:260,
-  // },
-  // picker: {
-  //   backgroundColor: '#fff',
-  //   borderRadius: 10,
-  //   borderWidth: 1,
-  //   borderColor: '#ccc',
-  //   padding: 5,
-  //   marginBottom: 15,
-  // },
-  // input: {
-  //   backgroundColor: '#fff',
-  //   borderRadius: 10,
-  //   borderWidth: 1,
-  //   borderColor: '#ccc',
-  //   padding: 10,
-  //   marginBottom: 15,
-  // },
-  // textArea: {
-  //   backgroundColor: '#fff',
-  //   borderRadius: 5,
-  //   borderWidth: 1,
-  //   borderColor: '#ccc',
-  //   padding: 10,
-  //   textAlignVertical: 'top',
-  //   marginBottom: 15,
-  //   marginRight: 220
-  // },
-  // buttonContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   marginBottom: 15,
-  // },
-  // resetButton: {
-  //   backgroundColor: '#FFE4B5',
-  //   borderRadius: 10,
-  //   padding: 10,
-  //   flex: 1,
-  //   marginRight: 5,
-  // },
-  // confirmButton: {
-  //   backgroundColor: '#FFD700',
-  //   borderRadius: 10,
-  //   padding: 10,
-  //   flex: 1,
-  //   marginLeft: 5
-  // },
-  // buttonText: {
-  //   textAlign: 'center',
-  //   fontWeight: 'bold',
-  // },
-  // addTransactionButton: {
-  //   backgroundColor: '#A8E4A0',
-  //   borderRadius: 10,
-  //   padding: 10,
-  //   marginBottom: 15,
-  // },
-  // transactionHistory: {
-  //   backgroundColor: '#fff',
-  //   borderRadius: 10,
-  //   borderWidth: 1,
-  //   borderColor: '#ccc',
-  //   padding: 10,
-  // },
-  // transactionHistoryText: {
-  //   textAlign: 'center',
-  // },
-
-  // dateButton: {
-  //   backgroundColor: '#fff',
-  //   padding: 15,
-  //   borderRadius: 10,
-  //   marginTop: 18,
-  //   marginRight: 250,
-  //   marginBottom: 10
-  // },
-
-  // dateButtonText: {
-  //   color: '#000',
-  //   fontSize: 16,
-  //   fontWeight: 'bold',
-  // },
-
-  container: {
-    flexGrow: 1,
-    backgroundColor: '#D9FAD9',
-    alignItems: 'center',
-    padding: 20,
-  },
-  backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 10,
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  form: {
-    width: '100%',
-  },
-  label: {
-    fontSize: 16,
-    marginVertical: 10,
-  },
-  label1: {
-    fontSize: 16,
-    marginRight:250,
-  },
-  picker: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 5,
-    marginBottom: 15,
-  },
-  input: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 15,
-  },
-  textArea: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    textAlignVertical: 'top',
-    marginBottom: 15,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  },
-  resetButton: {
-    backgroundColor: '#FFE4B5',
-    borderRadius: 10,
-    padding: 10,
-    flex: 4,
-    marginRight: 50,
-  },
-  confirmButton: {
-    backgroundColor: '#FFD700',
-    borderRadius: 10,
-    padding: 10,
-    flex: 4,
-    marginLeft: 5,
-   
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  addTransactionButton: {
-    backgroundColor: '#A8E4A0',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 15,
-  },
-  transactionHistory: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-  },
-  transactionHistoryText: {
-    textAlign: 'center',
-  },
-  dateButton: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 18,
-    marginRight: 250,
-    marginBottom: 10
-  },
-  dateButtonText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  inputError: {
-    borderColor: 'red',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginBottom: 10,
-  },
+    container: {
+      flexGrow: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      padding: 10,
+    },
+    backButton: {
+      alignSelf: 'flex-start',
+      marginBottom: 10,
+      padding: 10,
+    },
+    backButtonText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#000',
+    },
+    header: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 20,
+    },
+    form: {
+      width: '100%',
+    },
+    label: {
+      fontSize: 18.5,
+      marginVertical: 12,
+      marginRight:0
+      
+    },
+    picker: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 5,
+      marginBottom: 15,
+    },
+    input: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 10,
+      marginBottom: 15,
+    },
+    textArea: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 10,
+      textAlignVertical: 'top',
+      marginBottom: 15,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 15,
+      paddingTop: 10
+    },
+    resetButton: {
+      backgroundColor: '#FFE4B5',
+      borderRadius: 10,
+      padding: 10,
+      flex: 1,
+      marginRight: 5,
+    
+    },
+    confirmButton: {
+      backgroundColor: '#FFD700',
+      borderRadius: 10,
+      padding: 10,
+      flex: 1,
+      marginLeft: 5,
+      
+    },
+    buttonText: {
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: 18
+    },
+    transactionHistory: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 10,
+      paddingTop: 10
+    },
+    transactionHistoryText: {
+      textAlign: 'center',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    dateButton: {
+      backgroundColor: '#fff',
+      padding: 15,
+      borderRadius: 10,
+      marginTop: 18,
+      marginRight: 250,
+      marginBottom: 10
+    },
+    dateButtonText: {
+      color: '#000',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    inputError: {
+      borderColor: 'red',
+    },
+    errorText: {
+      color: 'red',
+      fontSize: 12,
+      marginBottom: 10,
+    },
+    subcontainer:{
+      backgroundColor: '#77CB61', 
+      paddingLeft:70, 
+      paddingRight: 70,
+      paddingTop: 50,
+      paddingBottom: 85, 
+      borderRadius: 15
+    }
 });
-
 export default PersonalTrackerExpense;
