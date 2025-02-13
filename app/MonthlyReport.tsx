@@ -63,13 +63,14 @@ const MonthlyReport = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Monthly Report</Text>
+      <View style={styles.subcontainer}>
       {loading ? (
         <ActivityIndicator size="large" color="#51b936" />
       ) : reportData ? (
         <>
-        <Text>Total Income: {reportData?.total_income ?? "Loading..."}</Text>
-        <Text>Total Expenses: {reportData?.total_expenses ?? "Loading..."}</Text>
-        <Text>Balance: {reportData?.balance ?? "Loading..."}</Text>
+        <Text style={styles.label}>Total Income: {reportData?.total_income ?? "Loading..."}</Text>
+        <Text style={styles.label}>Total Expenses: {reportData?.total_expenses ?? "Loading..."}</Text>
+        <Text style={styles.label}>Balance: {reportData?.balance ?? "Loading..."}</Text>
 
         {reportData?.expense_breakdown && (
           <Text>Expense Breakdown: {JSON.stringify(reportData.expense_breakdown)}</Text>
@@ -79,7 +80,7 @@ const MonthlyReport = () => {
           <PieChart
             width={300}
             height={200}
-            backgroundColor="#ffff"
+            backgroundColor="#77CB61"
 
             chartConfig={{
                 backgroundGradientFrom: "#ffffff",
@@ -87,14 +88,14 @@ const MonthlyReport = () => {
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             }}
             accessor="amount"
-            paddingLeft="15"
+            paddingLeft="5"
             absolute
 
             data={[
               {
                 name: "Income",
                 amount: reportData.total_income,
-                color: "green",
+                color: "yellow",
                 legendFontColor: "#000",
                 legendFontSize: 14,
               },
@@ -118,7 +119,9 @@ const MonthlyReport = () => {
         </>
       ) : (
         <Text>No data available.</Text>
+        
       )}
+      </View>
     </ScrollView>
   );
 };
@@ -128,6 +131,22 @@ const styles = StyleSheet.create({
   header: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 10 },
   text: { fontSize: 18, marginBottom: 5 },
   subHeader: { fontSize: 20, fontWeight: "bold", marginTop: 10, color: "#333" },
+  subcontainer:{
+    backgroundColor: '#77CB61', 
+    paddingLeft:70, 
+    paddingRight: 70,
+    paddingTop: 50,
+    paddingBottom: 200, 
+    borderRadius: 15,
+    marginTop: 50
+  },
+  label :{
+    fontSize: 18,
+     marginBottom: 5, 
+     fontWeight: 'semibold',
+     margin: 15, 
+     alignItems: 'center'
+  },
   
 });
 
