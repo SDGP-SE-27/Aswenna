@@ -27,7 +27,7 @@ export type RootStackParamList = {
   };
   login : undefined;
   Homepage : undefined;
-  DiseaseIdentification2 : undefined;
+  DiseaseIdentification2 : undefined; 
   DiseaseIdentification: { crop: string };
   ChatScreen: { message?: string }; // Optional message param
   IdentifiedDisease: { disease: string; confidence: number }; // results screen
