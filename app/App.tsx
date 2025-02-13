@@ -78,6 +78,7 @@ import DiseaseIdentification2 from "./DiseaseIdentification2";
 import WeeklyReport from "./WeeklyReport";
 import MonthlyReport from "./MonthlyReport";
 import SeasonalReport from "./SeasonalReport";
+import seller_dashboard from "./seller_dashboard"
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -109,6 +110,7 @@ const App = () => {
         <Stack.Screen name = "WeeklyReport" component={WeeklyReport}/>
         <Stack.Screen name = "MonthlyReport" component={MonthlyReport}/>
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
+        <Stack.Screen name="seller_dashboard" component={seller_dashboard}/>
         
       </Stack.Navigator>
     </NavigationContainer>
