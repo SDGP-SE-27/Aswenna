@@ -119,8 +119,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#DDD",
   },
-  backButton: { marginRight: 10, borderColor: "#DDD", borderWidth: 2, borderRadius: 15, paddingLeft: 13, paddingRight: 15,paddingBottom: 5, textAlign: "center" },
-  backText: { fontSize: 20, fontWeight: "bold" },
+  backButton: { 
+    marginRight: 10,
+    borderColor: "#DDD", 
+    borderWidth: 2, 
+    borderRadius: 15, 
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center" 
+  },
+  backText: { 
+    fontSize: 20, 
+    fontWeight: "bold" 
+  },
   headerTitle: { fontSize: 20, fontWeight: "bold", flex: 1, textAlign: "center" },
   messageList: { flex: 1, paddingHorizontal: 10 },
   messageContainer: { padding: 10, borderRadius: 10, marginVertical: 5, maxWidth: "70%" },
