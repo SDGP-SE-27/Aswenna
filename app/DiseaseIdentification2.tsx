@@ -7,21 +7,15 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { useFonts } from 'expo-font';
-import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/commonjs/src/types';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from './types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from './types';
 
-// Define the structure of a Crop object
 type Crop = {
   name: string;
-  image: any; // You might want to use a more specific type for image resources
+  image: any;
 };
 
-// Define the RootStackParamList (for navigation)
 type DiseaseIdentification2ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'DiseaseIdentification2'
@@ -29,57 +23,24 @@ type DiseaseIdentification2ScreenProp = NativeStackNavigationProp<
 
 const DiseaseIdentification2 = () => {
   const navigation = useNavigation<DiseaseIdentification2ScreenProp>();
-  const route = useRoute<RouteProp<RootStackParamList, "DiseaseIdentification2">>();
 
   const handleNavigation = (cropName: string) => {
-    navigation.navigate('DiseaseIdentification');
+    navigation.navigate('DiseaseIdentification', { crop: cropName }); // Pass the selected crop to the next screen
   };
 
   const crops: Crop[] = [
-    
-    {
-      name: 'Banana',
-      image: require('../assets/images/banana.jpg'), 
-    },
-    {
-      name: 'Mango',
-      image: require('../assets/images/tom_jc_mango.jpg'),
-    },
-   
-    {
-      name: 'Papaya',
-      image: require('../assets/images/Papaya.png'),
-    },
-
-    {
-      name: 'Snake Gourd',
-      image: require('../assets/images/snakeGourd.jpg'),
-    },
-
-    {
-      name: 'Eggplant',
-      image: require('../assets/images/eggPlant.jpg'),
-    },
-
-    {
-      name: 'Okra',
-      image: require('../assets/images/okra.jpg'),
-    },
+    { name: 'Banana', image: require('../assets/images/banana.jpg') },
+    { name: 'Mango', image: require('../assets/images/tom_jc_mango.jpg') },
+    { name: 'Papaya', image: require('../assets/images/Papaya.png') },
+    { name: 'Snake Gourd', image: require('../assets/images/snakeGourd.jpg') },
+    { name: 'Eggplant', image: require('../assets/images/eggPlant.jpg') },
+    { name: 'Okra', image: require('../assets/images/okra.jpg') },
   ];
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-            onPress={() => navigation.goBack()} style={styles.backButtonArrow}>
-        </TouchableOpacity>
-      </View>
-
-      {/* Crop Selection */}
-    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Select a Crop</Text>
-      <View style={styles.gridContainer}>
+      <ScrollView contentContainerStyle={styles.gridContainer}>
         {crops.map((crop, index) => (
           <TouchableOpacity
             key={index}
@@ -90,160 +51,26 @@ const DiseaseIdentification2 = () => {
             <Text style={styles.cropName}>{crop.name}</Text>
           </TouchableOpacity>
         ))}
-      </View> 
       </ScrollView>
-
-      {/* Bottom Navigation (Placeholder) */}
-      <View style={styles.footer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
-            <Image
-              source={require("../assets/images/home-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification")}>
-            <Image
-              source={require("../assets/images/disease-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
-            <Image
-              source={require("../assets/images/finance-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-            <Image
-              source={require("../assets/images/profile-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      </View>
-
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
-  container: {
-    flex: 1,
-    backgroundColor: '#F8F8F8',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-  },
-  backButtonArrow: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  cropSelectionContainer: {
-    padding: 20,
-  },
-  sectionTitle: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    backgroundColor: '#FAEBD7',
-    padding: 10,
-    borderRadius: 10,
-  },
-  cropItem: {
-    // grid
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 15,
-    padding: 10,
-    marginBottom: 15,
-    flexDirection: 'row',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cropImageContainer: {
-    backgroundColor: '#F0FFF0',
-    borderRadius: 15,
-    padding: 5,
-    marginRight: 15,
-  },
-  cropImage: {
-    width: 75,
-    height: 75,
-    resizeMode: 'contain',
-  },
-  cropName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 12,
-    backgroundColor: "#DFFFD8",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-  },
-  footerIcon: {
-    width: 30,
-    height: 30,
-  },
-  
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 15,
-    backgroundColor: '#E0F8E0',
-    borderTopWidth: 1,
-    borderTopColor: '#d3d3d3',
-  },
-  navItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navItemText: {
-    fontSize: 24,
-  },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
+  container: { flex: 1, backgroundColor: '#F8F8F8', padding: 20 },
+  header: { textAlign: 'center', fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
+  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
   cropContainer: {
-    width: '48%',
+    width: '45%',
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
-    marginBottom: 20,
+    margin: 10,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     elevation: 2,
   },
+  cropImage: { width: 75, height: 75, resizeMode: 'contain' },
+  cropName: { fontSize: 16, fontWeight: 'bold' },
 });
 
 export default DiseaseIdentification2;
