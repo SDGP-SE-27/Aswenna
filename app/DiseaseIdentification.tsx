@@ -58,12 +58,12 @@ const DiseaseIdentification = () => {
   
     // Map crop names to their respective API endpoints
     const cropEndpoints: { [key: string]: string } = {
-      "Banana": "http://127.0.0.1:8000/api/predict/banana",
-      "Mango": "http://127.0.0.1:8000/api/predict/mango",
-      "Papaya": "http://127.0.0.1:8000/api/predict/papaya",
-      "Snake Gourd": "http://127.0.0.1:8000/api/predict/snake_gourd",
-      "Eggplant": "http://127.0.0.1:8000/api/predict/eggplant",
-      "Okra": "http://127.0.0.1:8000/api/predict/okra",
+      "Banana": "http://127.0.0.1:8000/api/disease_detection/predict/banana/",
+      "Mango": "http://127.0.0.1:8000/api/disease_detection/predict/mango/",
+      "Papaya": "http://127.0.0.1:8000/api/disease_detection/predict/papaya/",
+      "Snake Gourd": "http://127.0.0.1:8000/api/disease_detection/predict/snake_gourd/",
+      "Eggplant": "http://127.0.0.1:8000/api/disease_detection/predict/eggplant/",
+      "Okra": "http://127.0.0.1:8000/api/disease_detection/predict/okra/",
     };
   
     // Get the corresponding endpoint based on the selected crop
