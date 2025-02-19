@@ -86,7 +86,7 @@ return (
                   />
                 </TouchableOpacity>
             
-                <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification")}>
+                <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification2")}>
                   <Image
                     source={require("../assets/images/disease-icon.png")}
                     style={styles.footerIcon}
