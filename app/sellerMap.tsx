@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { Alert, Button, Linking, Pressable, Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
@@ -83,7 +82,6 @@ const App = () => {
 };
 
 export default App;
-=======
 // import React, { useState, useEffect } from "react";
 // import { View, StyleSheet, Alert } from "react-native";
 // import MapView, { Marker, Circle } from "react-native-maps";
@@ -142,4 +140,3 @@ export default App;
 // });
 
 // export default MapScreen;
->>>>>>> db07f7999b7b1086e82724c80c62239ef6a20d72

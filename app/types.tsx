@@ -15,8 +15,8 @@ export type RootStackParamList = {
       phoneNumber: string;
       address: string;
       district: string;
-      Email : " ", 
-      Password: " ",
+      Email : string, 
+      Password: string,
       role:string
     };
     commonregistration3 : {
