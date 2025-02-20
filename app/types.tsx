@@ -1,4 +1,25 @@
 export type RootStackParamList = {
+<<<<<<< HEAD
+    PersonalTrackerMain : undefined;
+    PersonalTrackerIncome: undefined;
+    PersonalTrackerExpense: undefined;
+    TransactionHistory : undefined;
+    commonregistration1 : {
+      username: string;
+      phoneNumber: string;
+      address: string;
+      district: string;
+      role: string
+    }; 
+    commonregistration2 : {
+      username: string;
+      phoneNumber: string;
+      address: string;
+      district: string;
+      Email : string, 
+      Password: string,
+      role:string
+=======
   PersonalTrackerMain : undefined;
   PersonalTrackerIncome: undefined;
   PersonalTrackerExpense: undefined;
@@ -18,6 +39,7 @@ export type RootStackParamList = {
     Email : " ", 
     Password: " ", 
     role: string
+>>>>>>> 37cb20d1f29eee1311c05c02867e4eeca3881fbf
     };
   commonregistration3 : {
     username: string;
