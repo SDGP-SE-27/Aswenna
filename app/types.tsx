@@ -1,5 +1,4 @@
 export type RootStackParamList = {
-<<<<<<< HEAD
     PersonalTrackerMain : undefined;
     PersonalTrackerIncome: undefined;
     PersonalTrackerExpense: undefined;
@@ -19,27 +18,6 @@ export type RootStackParamList = {
       Email : string, 
       Password: string,
       role:string
-=======
-  PersonalTrackerMain : undefined;
-  PersonalTrackerIncome: undefined;
-  PersonalTrackerExpense: undefined;
-  TransactionHistory : undefined;
-  commonregistration1 : {
-    username: string;
-    phoneNumber: string;
-    address: string;
-    district: string;
-    role: string; 
-  }; 
-  commonregistration2 : {
-    username: string;
-    phoneNumber: string;
-    address: string;
-    district: string;
-    Email : " ", 
-    Password: " ", 
-    role: string
->>>>>>> 37cb20d1f29eee1311c05c02867e4eeca3881fbf
     };
   commonregistration3 : {
     username: string;
@@ -71,5 +49,5 @@ export type RootStackParamList = {
   MonthlyReport : undefined;
   SeasonalReport : undefined; 
   seller_dashboard : undefined;
-  WeatherForecast1 : undefined;
+  WeatherForecast : undefined;
 };
