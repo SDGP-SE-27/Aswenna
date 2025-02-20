@@ -156,7 +156,7 @@ const handlePasswordReset = async () => {
     { icon: require("../assets/icons/fertilizer_sellers.png"), label: "Fertilizer Sellers", screen: "Fertilizerseller" },
     { icon: require("../assets/icons/supplement_reminder.png"), label: "Supplement Reminder", screen: "SupplementReminder1" },
     { icon: require("../assets/icons/personal_finance_tracker.png"), label: "Personal Finance Tracker", screen: "PersonalTrackerMain" },
-    { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast1" },
+    { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast" },
   ]
 
   return (    
