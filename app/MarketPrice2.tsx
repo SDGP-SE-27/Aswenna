@@ -29,12 +29,12 @@ const MarketPrice2 = () => {
   const crops: Crop[] = [
     {
       name: "pineapple",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/Pineapple.jpg"),
     },
 
     {
       name: "papaya",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/Papaya.png"),
     },
   ];
 
@@ -75,16 +75,16 @@ const MarketPrice2 = () => {
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/home-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("DiseaseIdentification")}
+          onPress={() => navigation.navigate("DiseaseIdentification2")}
         >
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/disease-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
@@ -93,14 +93,14 @@ const MarketPrice2 = () => {
           onPress={() => navigation.navigate("PersonalTrackerMain")}
         >
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/finance-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/home-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>

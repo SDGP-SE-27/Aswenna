@@ -60,7 +60,7 @@ const MarketPrice3 = () => {
 
   useEffect(() => {
     axios
-      .get(
+      .get<{ prices: PriceEntry[] }>(
         `http://127.0.0.1:8000/marketPrice/${encodeURIComponent(
           formattedCropName
         )}/`
@@ -271,25 +271,25 @@ const MarketPrice3 = () => {
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/home-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            //source={require('../assets/images/capsicum.png')}
+            source={require("../assets/images/disease-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            //source={require('./assets/images/dollar.png')}
+            source={require("../assets/images/finance-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/weather_location.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>

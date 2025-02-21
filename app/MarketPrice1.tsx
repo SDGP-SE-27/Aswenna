@@ -29,23 +29,23 @@ const MarketPrice1 = () => {
   const crops: Crop[] = [
     {
       name: "long_beans",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/long_bean.jpg"),
     },
     {
       name: "bitter_gourd",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/bitter_gourd.jpg"),
     },
     {
       name: "snake_gourd",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/snake_gourd.jpg"),
     },
     {
       name: "brinjals",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/brinjals.jpg"),
     },
     {
       name: "lady_finger_okra",
-      image: require("../../assets/images/farmer.png"),
+      image: require("../assets/images/lady_finger_okra.jpg"),
     },
   ];
 
@@ -91,16 +91,16 @@ const MarketPrice1 = () => {
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/home-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("DiseaseIdentification")}
+          onPress={() => navigation.navigate("DiseaseIdentification2")}
         >
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/disease-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
@@ -109,14 +109,14 @@ const MarketPrice1 = () => {
           onPress={() => navigation.navigate("PersonalTrackerMain")}
         >
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/finance-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
           <Image
-            source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/profile-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
