@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 
-export default function App() {
+export default function Call() {
     const [selectedCrop, setSelectedCrop] = useState('');
     const [selectedDate, setSelectedDate] = useState(new Date()); // New state for date
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -60,12 +60,9 @@ export default function App() {
         <ScrollView style={styles.container}>
             <Text style={styles.title}>Fertilizer Reminder</Text>
 
+            {/* Crop Picker */}
             <Text style={styles.label}>Select Crop:</Text>
-            <Picker
-                selectedValue={selectedCrop}
-                style={styles.picker}
-                onValueChange={(itemValue) => setSelectedCrop(itemValue)}
-            >
+            <Picker selectedValue={selectedCrop} style={styles.picker} onValueChange={(itemValue) => setSelectedCrop(itemValue)}>
                 <Picker.Item label="Select Crop" value="" />
                 {crops.map((crop) => (
                     <Picker.Item key={crop} label={crop} value={crop} />
@@ -76,36 +73,26 @@ export default function App() {
             <Text style={styles.label}>Select Date:</Text>
             <Button title="Pick a Date" onPress={() => setShowDatePicker(true)} />
             {showDatePicker && (
-                <DateTimePicker
-                    value={selectedDate}
-                    mode="date"
-                    display="default"
-                    onChange={(event, date) => {
-                        setShowDatePicker(false);
-                        if (date) setSelectedDate(date);
-                    }}
-                />
+                <DateTimePicker value={selectedDate} mode="date" display="default" onChange={onDateChange} />
             )}
-            <Text style={styles.selectedDateText}>Selected Date: {selectedDate.toDateString()}</Text>
+            <Text style={styles.selectedDateText}>📅 Selected Date: {selectedDate.toDateString()}</Text>
 
-            <Button
-                title="Set Reminder"
-                onPress={sendSchedule}
-                disabled={loading}
-            />
+            {/* Set Reminder Button */}
+            <Button title="Set Reminder" onPress={sendSchedule} disabled={loading} />
             {loading && <Text>Loading...</Text>}
             {message ? <Text style={message.includes('error') ? styles.errorText : styles.successText}>{message}</Text> : null}
 
-            <Text style={styles.historyTitle}>Schedule History:</Text>
+            {/* Schedule History */}
+            <Text style={styles.historyTitle}>📜 Schedule History:</Text>
             <FlatList
                 data={scheduleHistory}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item: any, index) => index.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.historyItem}>
-                        <Text>Crop: {item.crop_type}</Text>
-                        <Text>Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
-                        <Text>Date: {item.application_date}</Text>
-                        <Text>SMS Sent: {item.sms_sent ? 'Yes' : 'No'}</Text>
+                        <Text>🌱 Crop: {item.crop_type}</Text>
+                        <Text>💊 Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
+                        <Text>📅 Date: {item.application_date}</Text>
+                        <Text>📨 SMS Sent: {item.sms_sent ? '✅ Yes' : '❌ No'}</Text>
                     </View>
                 )}
                 ListEmptyComponent={<Text style={styles.emptyHistory}>No history available.</Text>}
@@ -115,52 +102,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    label: {
-        fontSize: 16,
-        marginBottom: 5,
-    },
-    picker: {
-        height: 50,
-        marginBottom: 10,
-    },
-    selectedDateText: {
-        marginTop: 10,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    errorText: {
-        color: 'red',
-        marginTop: 10,
-    },
-    successText: {
-        color: 'green',
-        marginTop: 10,
-    },
-    historyTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginTop: 20,
-        marginBottom: 10,
-    },
-    historyItem: {
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    emptyHistory: {
-        textAlign: 'center',
-        marginTop: 10,
-        fontStyle: 'italic',
-    },
+    container: { flex: 1, padding: 20, backgroundColor: '#fff' },
+    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+    label: { fontSize: 16, marginBottom: 5 },
+    picker: { height: 50, marginBottom: 10 },
+    selectedDateText: { marginTop: 10, fontSize: 16, fontWeight: 'bold' },
+    errorText: { color: 'red', marginTop: 10 },
+    successText: { color: 'green', marginTop: 10 },
+    historyTitle: { fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10 },
+    historyItem: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' },
+    emptyHistory: { textAlign: 'center', marginTop: 10, fontStyle: 'italic' },
 });

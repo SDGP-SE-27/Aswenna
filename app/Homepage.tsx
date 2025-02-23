@@ -8,7 +8,7 @@ import {
   TextInput,
   Alert,
   Modal, 
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
@@ -158,14 +158,14 @@ const handlePasswordReset = async () => {
     { icon: require("../assets/icons/personal_finance_tracker.png"), label: "Personal Finance Tracker", screen: "PersonalTrackerMain" },
     { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast" },
   ]
-
+  
   return (    
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
           <Image source={require("../assets/icons/menu.png")} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{navigation.navigate('NotifiScreen')}}>
           <Image source={require("../assets/icons/reminder.png")} style={styles.remindericon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProfileClick}>

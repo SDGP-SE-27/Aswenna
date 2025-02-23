@@ -30,6 +30,7 @@ import MonthlyReport from "./MonthlyReport";
 import SeasonalReport from "./SeasonalReport";
 import seller_dashboard from "./seller_dashboard";
 import WeatherForecast from "./WeatherForecast"
+import NotifiScreen from "./NotifiScreen";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -39,11 +40,13 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Homepage">
         <Stack.Screen name="Homepage" component={Homepage} />
+        {/* <Stack.Screen name="Notifications" component={FertilizerRemindersScreen} /> */}
         <Stack.Screen name="login" component={login} />
-        <Stack.Screen name = "commonregistration1"  component={commonregistration1}/>
+        <Stack.Screen name="commonregistration1"  component={commonregistration1}/>
         <Stack.Screen name="commonregistration2" component={commonregistration2} /> 
         <Stack.Screen name="DiseaseIdentification" component={DiseaseIdentificationScreen} />
         <Stack.Screen name="Buildyourfarmland" component={Buildyourfarmland} />
+        
         {/* <Stack.Screen name="Chatscreen" component={chatscreen} /> */}
         <Stack.Screen name = "PersonalTrackerMain" component={PersonalTrackerMain}/>
         <Stack.Screen name = "PersonalTrackerIncome" component={PersonalTrackerIncome}/>
@@ -63,6 +66,7 @@ const App = () => {
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
         <Stack.Screen name="seller_dashboard" component={seller_dashboard}/>
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
+        <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
         
       </Stack.Navigator>
     </NavigationContainer>
