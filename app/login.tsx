@@ -60,7 +60,7 @@ const login = () => {
         console.log("✅ Navigating to SellerDashboard...");
         navigation.reset({
             index: 0,
-            routes: [{ name: "seller_dashboard" }],
+            routes: [{ name: "shopItem" }],
         });
     } else {
         console.error("❌ Unknown role:", role);
