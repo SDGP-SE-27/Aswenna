@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const ShopItemsScreen = ({ navigation }: { navigation: any }) => {
   // List of items
-  const items = ['Long Bean', 'Bitter Gourd', 'Snake Gourd', 'Brinjals'];
+  const items = ['URIA', 'POSPATA', 'POTASH', 'NITROGEN', 'AMMONIA'];
 
   return (
     <View style={styles.container}>
