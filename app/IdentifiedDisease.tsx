@@ -35,6 +35,13 @@ const IdentifiedDisease = () => {
       >
         <Text style={styles.backButtonText}>Back to Crop Selection</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate("DiseaseIdentification2")}
+      >
+        <Text style={styles.backButtonText}>Contact agricultural instructor</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
