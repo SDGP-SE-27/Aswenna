@@ -3,6 +3,7 @@ export type RootStackParamList = {
     PersonalTrackerIncome: undefined;
     PersonalTrackerExpense: undefined;
     TransactionHistory : undefined;
+    NotifiScreen: undefined; 
     commonregistration1 : {
       username: string;
       phoneNumber: string;
@@ -50,4 +51,5 @@ export type RootStackParamList = {
   SeasonalReport : undefined; 
   seller_dashboard : undefined;
   WeatherForecast : undefined;
+  shopItem : undefined;
 };

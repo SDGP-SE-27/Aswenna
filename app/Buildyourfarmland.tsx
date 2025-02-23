@@ -82,7 +82,7 @@ const Buildyourfarmland = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.title}>
-        <Text style={[styles.title, { fontFamily: 'Poppins-Bold' }]}>Build your Farmland</Text>
+        <Text style={[styles.title]}>Build your Farmland</Text>
       </View>
 
       <View style={styles.formContainer}>
@@ -151,15 +151,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    marginBottom: 350,
+    marginBottom: 300,
     textAlign: 'center',
-    fontFamily: 'poppins',
+    fontWeight: "bold",
+  
+    
   },
   label: {
-    fontSize: 20,
+    fontWeight: "bold",
+    fontSize: 16,
     marginVertical: 10,
-    fontFamily: 'poppins',
-    color: 'F5F5F5'
+
   },
   input: {
     borderWidth: 1,
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     backgroundColor: '#F5F5F5',
-    fontFamily: 'poppins',
+    
   },
 
   picker: {

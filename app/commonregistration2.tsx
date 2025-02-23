@@ -288,16 +288,16 @@ const commonregistration2 = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.container}>
-        <Text style={[styles.title, { fontFamily: "Poppins-Bold" }]}>Registration</Text>
+        <Text style={[styles.title]}>Registration</Text>
 
         <View style={styles.formContainer}>
           {/* Email Input */}
-          <Text style={[styles.label, { fontFamily: "Poppins-Bold" }]}>Email*</Text>
+          <Text style={[styles.label]}>Email*</Text>
           <View>
-            <Image source={require("../assets/icons/email.png")} style={styles.icon} />
+            {/* <Image source={require("../assets/icons/email.png")} style={styles.icon} /> */}
             <TextInput
-              style={[styles.input, { fontFamily: "Poppins-Regular" }]}
-              placeholder="Email"
+              style={[styles.input]}
+              placeholder="Enter your Email"
               value={Email}
               onChangeText={setEmail}
             />
@@ -305,10 +305,10 @@ const commonregistration2 = () => {
           {errors.Email ? <Text style={styles.errorText}>{errors.Email}</Text> : null}
 
           {/* Password Input */}
-          <Text style={[styles.label, { fontFamily: "Poppins-Bold" }]}>Password*</Text>
+          <Text style={[styles.label]}>Password*</Text>
           <TextInput
-            style={[styles.input, { fontFamily: "Poppins-Regular" }]}
-            placeholder="Password"
+            style={[styles.input]}
+            placeholder="Enter your Password"
             value={Password}
             onChangeText={setPassword}
             secureTextEntry
@@ -316,10 +316,10 @@ const commonregistration2 = () => {
           {errors.Password ? <Text style={styles.errorText}>{errors.Password}</Text> : null}
 
           {/* Confirm Password Input */}
-          <Text style={[styles.label, { fontFamily: "Poppins-Bold" }]}>Confirm Password*</Text>
+          <Text style={[styles.label]}>Confirm Password*</Text>
           <TextInput
-            style={[styles.input, { fontFamily: "Poppins-Regular" }]}
-            placeholder="Confirm password"
+            style={[styles.input]}
+            placeholder="Enter your Confirm password"
             value={ConfirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
@@ -349,73 +349,57 @@ const commonregistration2 = () => {
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
+        padding: 10,
         backgroundColor: '#ffff',
+        
       },
 
       formContainer: {
         width: '100%',
-        maxWidth: 400,
         backgroundColor: '#CFFFC2',
-        padding: 20,
+        padding: 50,
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        fontFamily: 'poppins',
         fontSize: 20,
       },
 
       title: {
         fontSize: 32,
-        fontWeight: 'heavy',
+        fontWeight: "bold",
         marginBottom: 20,
-        textAlign: 'center',
-        fontFamily: 'poppins',
-        
+        textAlign: 'center'
       },
 
       label: {
-        fontSize: 20,
-        marginVertical: 10,
-        fontFamily: 'poppins',
-        color: 'F5F5F5'
-        
-      },
-        input: {
-        flex: 1,
-        paddingLeft: 40,  // space for the icon on the left side
         fontSize: 16,
+        marginBottom: 5,
+        fontWeight: "bold",
+        textAlign: "left"
+      },
+
+      input: {
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 20,
+        borderColor: "#CCCCCC",
+        borderRadius: 8,
         padding: 10,
-        marginBottom: 15,
-        backgroundColor: '#F5F5F5'
+        backgroundColor: '#FFFFFF', 
+        margin: 10, 
+        textAlign: "left",
+        width: 230,
+       
       },
     
-      picker: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 20,
-        marginBottom: 15,
-        backgroundColor: '#F5F5F5',
-        padding: 10,
-        fontFamily: 'poppins',
-      },
     
       button: {
-        backgroundColor: '#51B936', 
-        borderRadius: 20,
-        alignItems: 'center',
-        marginTop: 5,
-        marginBottom: 5,
-        padding: 5,
-        color: '#ffff',
-        fontFamily: 'poppins',
-        fontSize: 18,
+        backgroundColor: "#32CD32",
+        padding: 15,
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: 20,
       },
 
       errorText: {
@@ -424,14 +408,6 @@ const commonregistration2 = () => {
         marginBottom: 10,
       }, 
 
-    icon: {
-        position: 'relative',
-        left: 270,
-        top: '95%',
-        transform: [{ translateY: -50 }] ,
-        width: 20,
-        height: 20,
-    },
     buttonText: {
       color: "#FFFFFF",
       fontWeight: "bold",

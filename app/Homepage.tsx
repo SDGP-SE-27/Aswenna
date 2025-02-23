@@ -8,7 +8,7 @@ import {
   TextInput,
   Alert,
   Modal, 
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
@@ -156,16 +156,16 @@ const handlePasswordReset = async () => {
     { icon: require("../assets/icons/fertilizer_sellers.png"), label: "Fertilizer Sellers", screen: "Fertilizerseller" },
     { icon: require("../assets/icons/supplement_reminder.png"), label: "Supplement Reminder", screen: "SupplementReminder1" },
     { icon: require("../assets/icons/personal_finance_tracker.png"), label: "Personal Finance Tracker", screen: "PersonalTrackerMain" },
-    { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast1" },
+    { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast" },
   ]
-
+  
   return (    
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
           <Image source={require("../assets/icons/menu.png")} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{navigation.navigate('NotifiScreen')}}>
           <Image source={require("../assets/icons/reminder.png")} style={styles.remindericon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProfileClick}>
@@ -189,8 +189,9 @@ const handlePasswordReset = async () => {
             <TouchableOpacity
               style={styles.categoryBox}
               onPress={() => {
-                if (item.screen) {
-                  navigation.navigate(item.screen);
+                if (item.screen && typeof item.screen === 'string') {
+                  const screenName = item.screen as keyof RootStackParamList;
+                  navigation.navigate(screenName);
                 } else {
                   Alert.alert("Feature under development.");
                 }

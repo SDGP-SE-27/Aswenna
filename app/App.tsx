@@ -20,7 +20,7 @@ import Chooserole from "./Chooserole";
 import ProductPage from "./product";
 import MarketPrice1 from "./MarketPrice1";
 import MarketPrice2 from "./MarketPrice2";
-import MarketPrice3 from "./MarketPrice3";
+// import MarketPrice3 from "./MarketPrice3";
 import SupplementReminder1 from "./SupplementReminder1";
 import SupplementReminder2 from "./SupplementReminder2";
 import passwordReset from "./passwordReset";
@@ -29,7 +29,13 @@ import WeeklyReport from "./WeeklyReport";
 import MonthlyReport from "./MonthlyReport";
 import SeasonalReport from "./SeasonalReport";
 import seller_dashboard from "./seller_dashboard";
+<<<<<<< HEAD
 import WeatherForecast from "./WeatherForecast"
+import NotifiScreen from "./NotifiScreen";
+=======
+import WeatherForecast from "./WeatherForecast";
+import shopItem from "./shopItem";
+>>>>>>> c9420f83985442056301ab7837e0b638224b0f76
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -39,11 +45,13 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Homepage">
         <Stack.Screen name="Homepage" component={Homepage} />
+        {/* <Stack.Screen name="Notifications" component={FertilizerRemindersScreen} /> */}
         <Stack.Screen name="login" component={login} />
-        <Stack.Screen name = "commonregistration1"  component={commonregistration1}/>
+        <Stack.Screen name="commonregistration1"  component={commonregistration1}/>
         <Stack.Screen name="commonregistration2" component={commonregistration2} /> 
         <Stack.Screen name="DiseaseIdentification" component={DiseaseIdentificationScreen} />
         <Stack.Screen name="Buildyourfarmland" component={Buildyourfarmland} />
+        
         {/* <Stack.Screen name="Chatscreen" component={chatscreen} /> */}
         <Stack.Screen name = "PersonalTrackerMain" component={PersonalTrackerMain}/>
         <Stack.Screen name = "PersonalTrackerIncome" component={PersonalTrackerIncome}/>
@@ -53,7 +61,7 @@ const App = () => {
         <Stack.Screen name = "Chooserole" component={Chooserole}/>
         <Stack.Screen name="MarketPrice1" component={MarketPrice1}/>
         <Stack.Screen name= "MarketPrice2" component={MarketPrice2}/>
-        <Stack.Screen name= "MarketPrice3" component={MarketPrice3}/>
+        {/* <Stack.Screen name= "MarketPrice3" component={MarketPrice3}/> */}
         <Stack.Screen name = "SupplementReminder1" component={SupplementReminder1}/>
         <Stack.Screen name = "SupplementReminder2" component={SupplementReminder2}/>
         <Stack.Screen name ="passwordReset" component={passwordReset}/>
@@ -63,6 +71,11 @@ const App = () => {
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
         <Stack.Screen name="seller_dashboard" component={seller_dashboard}/>
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
+<<<<<<< HEAD
+        <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
+=======
+        <Stack.Screen name= "shopItem" component={shopItem}/>
+>>>>>>> c9420f83985442056301ab7837e0b638224b0f76
         
       </Stack.Navigator>
     </NavigationContainer>

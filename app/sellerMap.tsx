@@ -55,7 +55,7 @@ const App = () => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor:"white", justifyContent: 'center', alignItems: 'center' }}>
       <Text>React Native Google Maps Integration (Sri Lanka)</Text>
 
       {/* Button to open Google Maps with live location */}
@@ -67,16 +67,16 @@ const App = () => {
       </Pressable>
 
       {/* Button to open Google Maps with Directions from live location to Kandy */}
-      <Button
-        title="Get Directions (Live Location to Kandy)"
-        onPress={() => openGoogleMapsWithDirections(location.latitude, location.longitude, 7.2906, 80.6337)} // Live location to Kandy coordinates
-      />
+      {/* //<Button
+        //title="Get Directions (Live Location to Kandy)"
+       // onPress={() => openGoogleMapsWithDirections(location.latitude, location.longitude, 7.2906, 80.6337)} // Live location to Kandy coordinates
+      /> */}
 
       {/* Button to show confirmation modal before opening Google Maps */}
-      <Button
+      {/* <Button
         title="Confirm Redirect to Google Maps (Galle)"
         onPress={() => confirmRedirect('https://www.google.com/maps/search/?api=1&query=Galle,+Sri+Lanka')}
-      />
+      /> */}
     </View>
   );
 };
