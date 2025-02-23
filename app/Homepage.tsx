@@ -189,8 +189,9 @@ const handlePasswordReset = async () => {
             <TouchableOpacity
               style={styles.categoryBox}
               onPress={() => {
-                if (item.screen) {
-                  navigation.navigate(item.screen);
+                if (item.screen && typeof item.screen === 'string') {
+                  const screenName = item.screen as keyof RootStackParamList;
+                  navigation.navigate(screenName);
                 } else {
                   Alert.alert("Feature under development.");
                 }
