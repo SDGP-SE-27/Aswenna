@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { LineChart as RNLineChart } from "react-native-chart-kit";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import {
   LineChart,
   CartesianGrid,
@@ -21,275 +23,241 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import axios from "axios";
 
 type MarketPrice3ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   "MarketPrice3"
 >;
 
+interface PriceEntry {
+  date: string; // e.g., "2024-01"
+  retail_price: number;
+  predicted_price: number;
+}
+
 const MarketPrice3 = () => {
   const navigation = useNavigation<MarketPrice3ScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "MarketPrice3">>();
+  const cropName = route.params?.cropName; // Optional chaining to avoid undefined error
+  console.log("Received params:", route.params);
+  console.log(cropName);
+  const [prices, setPrices] = useState<PriceEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedView, setSelectedView] = useState("prices");
+  const formattedCropName = String(cropName);
+  const nameMapping = {
+    long_beans: "Long Beans",
+    bitter_gourd: "Bitter Gourd",
+    snake_gourd: "Snake Gourd",
+    brinjals: "Brinjals",
+    lady_finger_okra: "Lady Finger Okra",
+    pineapple: "Pineapple",
+    papaya: "Papaya",
+  };
+  const [lastYear, setLastYear] = useState<PriceEntry[]>([]);
+  const [lastThreeYears, setLastThreeYears] = useState<PriceEntry[]>([]);
 
-  // Sample data for the chart (replace with your actual data)
-  // const chartData = {
-  //   labels: ["0", "1", "2", "3", "4", "5"],
-  //   datasets: [
-  //     {
-  //       data: [
-  //         100, 200, 150, 250, 200, 300, 250, 350, 300, 400, 350, 450, 400, 500,
-  //         450, 550, 500, 450, 400, 350, 300, 250, 200, 150, 200, 250, 300, 350,
-  //         400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 850, 800, 750,
-  //         700, 650, 600, 550, 500, 450, 400,
-  //       ],
-  //       color: (opacity = 1) => rgba(134, 65, 244, ${opacity}), // optional
-  //       strokeWidth: 2, // optional
-  //     },
-  //   ],
-  // };
-  const data = [
-    {
-      date: "2014-01-01",
-      retail_price: 93.59,
-      predicted_price: null,
-    },
-    {
-      date: "2014-02-01",
-      retail_price: 91.75,
-      predicted_price: null,
-    },
-    {
-      date: "2014-03-01",
-      retail_price: 88.47,
-      predicted_price: null,
-    },
-    {
-      date: "2014-04-01",
-      retail_price: 85.06,
-      predicted_price: null,
-    },
-    {
-      date: "2014-05-01",
-      retail_price: 119.51,
-      predicted_price: null,
-    },
-    {
-      date: "2014-06-01",
-      retail_price: 139.89,
-      predicted_price: null,
-    },
-    {
-      date: "2014-07-01",
-      retail_price: 140.55,
-      predicted_price: null,
-    },
-    {
-      date: "2014-08-01",
-      retail_price: 104.24,
-      predicted_price: null,
-    },
-    {
-      date: "2014-09-01",
-      retail_price: 95.42,
-      predicted_price: null,
-    },
-    {
-      date: "2014-10-01",
-      retail_price: 125.3,
-      predicted_price: null,
-    },
-    {
-      date: "2014-11-01",
-      retail_price: 141.77,
-      predicted_price: null,
-    },
-    {
-      date: "2014-12-01",
-      retail_price: 166.62,
-      predicted_price: null,
-    },
-    {
-      date: "2015-01-01",
-      retail_price: 220.5,
-      predicted_price: null,
-    },
-    {
-      date: "2015-02-01",
-      retail_price: 165.97,
-      predicted_price: null,
-    },
-    {
-      date: "2015-03-01",
-      retail_price: 137.29,
-      predicted_price: null,
-    },
-    {
-      date: "2015-04-01",
-      retail_price: 110.15,
-      predicted_price: null,
-    },
-    {
-      date: "2015-05-01",
-      retail_price: 117.25,
-      predicted_price: null,
-    },
-    {
-      date: "2015-06-01",
-      retail_price: 135.96,
-      predicted_price: null,
-    },
-    {
-      date: "2015-07-01",
-      retail_price: 128.66,
-      predicted_price: null,
-    },
-    {
-      date: "2015-08-01",
-      retail_price: 119.86,
-      predicted_price: null,
-    },
-    {
-      date: "2015-09-01",
-      retail_price: 108.7,
-      predicted_price: null,
-    },
-    {
-      date: "2015-10-01",
-      retail_price: 121.43,
-      predicted_price: null,
-    },
-    {
-      date: "2015-11-01",
-      retail_price: 197.09,
-      predicted_price: null,
-    },
-    {
-      date: "2015-12-01",
-      retail_price: 207.3,
-      predicted_price: null,
-    },
-    {
-      date: "2016-01-01",
-      retail_price: 144.78,
-      predicted_price: null,
-    },
-    {
-      date: "2016-02-01",
-      retail_price: 125.94,
-      predicted_price: null,
-    },
-    {
-      date: "2016-03-01",
-      retail_price: 119.94,
-      predicted_price: null,
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get<{ prices: PriceEntry[] }>(
+        `http://127.0.0.1:8000/marketPrice/${encodeURIComponent(
+          formattedCropName
+        )}/`
+      ) // Replace with your actual API endpoint
+      .then((response) => {
+        setPrices(response.data.prices); // Extract the "prices" array
+        // console.log("Data fetched:", response.data.prices);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, [formattedCropName]);
 
+  useEffect(() => {
+    setFiltering();
+  }, [prices]);
 
+  const setFiltering = () => {
+    if (!prices.length) return;
 
-  // State to manage the selected view (daily, weekly, monthly)
-  const [selectedView, setSelectedView] = React.useState("daily");
+    const currentDate = new Date(); // Get today's date
+
+    // Convert string dates to Date objects and filter
+    const filteredLastYear = prices.filter((entry) => {
+      const entryDate = new Date(entry.date);
+      const diffInMonths =
+        (currentDate.getFullYear() - entryDate.getFullYear()) * 12 +
+        (currentDate.getMonth() - entryDate.getMonth());
+      return diffInMonths >= 0 && diffInMonths < 12;
+    });
+
+    const filteredLastThreeYears = prices.filter((entry) => {
+      const entryDate = new Date(entry.date);
+      const diffInMonths =
+        (currentDate.getFullYear() - entryDate.getFullYear()) * 12 +
+        (currentDate.getMonth() - entryDate.getMonth());
+      return diffInMonths >= 0 && diffInMonths < 36;
+    });
+
+    setLastYear(filteredLastYear);
+    setLastThreeYears(filteredLastThreeYears);
+    console.log("Data has been filtered");
+  };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  const getSelectedData = () => {
+    switch (selectedView) {
+      case "lastYear":
+        return lastYear;
+      case "lastThreeYears":
+        return lastThreeYears;
+      default:
+        return prices;
+    }
+  };
+
+  const getCurrentAndLastMonthPrices = () => {
+    if (!prices.length)
+      return { currentMonthPrice: null, lastMonthPrice: null };
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // JS months are 0-based
+
+    const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+    const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+
+    // Convert to "YYYY-MM" format for comparison
+    const currentMonthStr = `${currentYear}-${String(currentMonth).padStart(
+      2,
+      "0"
+    )}`;
+    const lastMonthStr = `${lastMonthYear}-${String(lastMonth).padStart(
+      2,
+      "0"
+    )}`;
+
+    const currentMonthEntry = prices.find((entry) =>
+      entry.date.startsWith(currentMonthStr)
+    );
+    const lastMonthEntry = prices.find((entry) =>
+      entry.date.startsWith(lastMonthStr)
+    );
+
+    return {
+      currentMonthPrice: currentMonthEntry?.retail_price || null,
+      lastMonthPrice: lastMonthEntry?.retail_price || null,
+    };
+  };
+
+  const { currentMonthPrice, lastMonthPrice } = getCurrentAndLastMonthPrices();
 
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketPrice2")}
       ></TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("MarketPrice2")}
-      ></TouchableOpacity>
 
       {/* Product Information */}
-      <View style={styles.productInfo}>
-        <Text style={styles.priceText}>Todays' s price = 93.00 LKR</Text>
-        <Text style={styles.priceText}>Yesterday' s price = 87.50 LKR</Text>
-        <Text style={styles.priceText}>Price difference =5.50 LKR</Text>
+      <View>
+        <Text style={styles.productName}>
+          {nameMapping[formattedCropName as keyof typeof nameMapping]}
+        </Text>
       </View>
 
-      <View style={styles.chart}>
-        <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
-          <LineChart data={data}>
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="retail_price"
-              stroke="#8884d8"
-              strokeWidth={2}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        </View>
-      <View style={styles.chart}>
-        <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
-          <LineChart data={data}>
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="retail_price"
-              stroke="#8884d8"
-              strokeWidth={2}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+      <View style={styles.productInfo}>
+        <Text style={styles.priceText}>
+          This Month's Price ={" "}
+          {currentMonthPrice ? `${currentMonthPrice} LKR` : "N/A"}
+        </Text>
+        <Text style={styles.priceText}>
+          Last Month's Price ={" "}
+          {lastMonthPrice ? `${lastMonthPrice} LKR` : "N/A"}
+        </Text>
+        <Text style={styles.priceText}>
+          Price Difference ={" "}
+          {currentMonthPrice && lastMonthPrice
+            ? `${(currentMonthPrice - lastMonthPrice).toFixed(2)} LKR`
+            : "N/A"}
+        </Text>
       </View>
+
+      <ScrollView horizontal={true}>
+        <View style={styles.chart}>
+          <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
+            <LineChart data={getSelectedData()}>
+              <XAxis
+                dataKey="date"
+                tickFormatter={(date) => date.slice(0, 7)}
+              />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="retail_price"
+                stroke="#8884d8"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </View>
+      </ScrollView>
 
       {/* View Selection Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
             styles.button,
-            selectedView === "daily" && styles.activeButton,
-            selectedView === "daily" && styles.activeButton,
+            selectedView === "lastYear" && styles.activeButton,
           ]}
-          onPress={() => setSelectedView("daily")}
+          onPress={() => setSelectedView("lastYear")}
         >
           <Text
             style={[
               styles.buttonText,
-              selectedView === "daily" && styles.activeButtonText,
+              selectedView === "lastYear" && styles.activeButtonText,
             ]}
           >
-            Daily
+            1 Yrs
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             styles.button,
-            selectedView === "weekly" && styles.activeButton,
-            selectedView === "weekly" && styles.activeButton,
+            selectedView === "lastThreeYears" && styles.activeButton,
           ]}
-          onPress={() => setSelectedView("weekly")}
+          onPress={() => setSelectedView("lastThreeYears")}
         >
           <Text
             style={[
               styles.buttonText,
-              selectedView === "weekly" && styles.activeButtonText,
+              selectedView === "lastThreeYears" && styles.activeButtonText,
             ]}
           >
-            Weekly
+            3 Yrs
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             styles.button,
-            selectedView === "monthly" && styles.activeButton,
-            selectedView === "monthly" && styles.activeButton,
+            selectedView === "prices" && styles.activeButton,
           ]}
-          onPress={() => setSelectedView("monthly")}
+          onPress={() => setSelectedView("prices")}
         >
           <Text
             style={[
               styles.buttonText,
-              selectedView === "monthly" && styles.activeButtonText,
+              selectedView === "prices" && styles.activeButtonText,
             ]}
           >
-            Monthly
+            All Time
           </Text>
         </TouchableOpacity>
       </View>
@@ -303,25 +271,25 @@ const MarketPrice3 = () => {
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            // source={require("../../assets/images/farmer.png")}
+            source={require("../assets/images/home-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            //source={require('../assets/images/capsicum.png')}
+            source={require("../assets/images/disease-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            //source={require('./assets/images/dollar.png')}
+            source={require("../assets/images/finance-icon.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Image
-            source={require("../assets/images/farmer.jpg")}
+            source={require("../assets/images/weather_location.png")}
             style={styles.navIcon}
           />
         </TouchableOpacity>
@@ -425,19 +393,15 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginTop: 10,
-    margin: "auto",
+    margin: 2,
     width: "100%",
     height: 400,
     backgroundColor: "white",
     marginBottom: 20,
     borderRadius: 20,
     shadowColor: "#000",
-    paddingRight: 30,
+    paddingRight: 5,
   },
 });
 
 export default MarketPrice3;
-
-function rgba(arg0: number, arg1: number, arg2: number, $: any, arg4: { opacity: number; }) {
-    throw new Error("Function not implemented.");
-}

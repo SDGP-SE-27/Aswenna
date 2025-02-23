@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,107 +6,105 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from './types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useRoute, RouteProp } from '@react-navigation/native';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "./types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useRoute, RouteProp } from "@react-navigation/native";
+import MarketPrice3 from "./MarketPrice3";
 
 type MarketPrice2ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
-  'MarketPrice2'
+  "MarketPrice2"
 >;
 
 type Crop = {
   name: string;
-  image: any; 
+  image: any;
 };
 
-const MarketPrice2= () => {
+const MarketPrice2 = () => {
   const navigation = useNavigation<MarketPrice2ScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "MarketPrice2">>();
   const crops: Crop[] = [
-    
     {
-      name: 'Pineapple',
-      image: require('../assets/images/Pineapple.jpg'), 
+      name: "pineapple",
+      image: require("../assets/images/Pineapple.jpg"),
     },
+
     {
-      name: 'TOM EJC Mango',
-      image: require('../assets/images/tom_jc_mango.jpg'),
-    },
-   
-    {
-      name: 'Papaya',
-      image: require('../assets/images/Papaya.png'),
+      name: "papaya",
+      image: require("../assets/images/Papaya.png"),
     },
   ];
 
   const handleNavigation = (cropName: string) => {
-    navigation.navigate('MarketPrice3', { cropName });
+    // console.log("Navigating to MarketPrice3 with:", cropName);
+    navigation.navigate("MarketPrice3", { cropName });
+    // console.log(route.params);
   };
-
 
   return (
     <View style={styles.container}>
-
       {/* Crop Selection */}
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Select a Crop</Text>
-      <View style={styles.gridContainer}>
-        {crops.map((crop, index) => (
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.header}>Select a Crop</Text>
+        <View style={styles.gridContainer}>
+          {crops.map((crop, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.cropContainer}
+              onPress={() => handleNavigation(crop.name)}
+            >
+              <Image source={crop.image} style={styles.cropImage} />
+              <Text style={styles.cropName}>{crop.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View>
           <TouchableOpacity
-            key={index}
-            style={styles.cropContainer}
-            onPress={() => handleNavigation(crop.name)}
+            onPress={() => navigation.navigate("MarketPrice1")}
+            style={styles.fruitsButton}
           >
-            <Image source={crop.image} style={styles.cropImage} />
-            <Text style={styles.cropName}>{crop.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <View>  
-         
-          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}
-            style={styles.fruitsButton}>
             <Text style={styles.fruitsButtonText}>For Vegetables</Text>
           </TouchableOpacity>
-      </View>
-    </ScrollView>
-
+        </View>
+      </ScrollView>
 
       {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
-            <Image
-              source={require("../assets/images/home-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification2")}>
-            <Image
-              source={require("../assets/images/disease-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
-            <Image
-              source={require("../assets/images/finance-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-            <Image
-              source={require("../assets/images/profile-icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+          <Image
+            source={require("../assets/images/home-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DiseaseIdentification2")}
+        >
+          <Image
+            source={require("../assets/images/disease-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("PersonalTrackerMain")}
+        >
+          <Image
+            source={require("../assets/images/finance-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+          <Image
+            source={require("../assets/images/home-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
       </View>
-
-
     </View>
   );
 };
@@ -114,29 +112,29 @@ const MarketPrice2= () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: "#F8F8F8",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-    fontSize : 25 , 
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
   },
   cropSelectionContainer: {
     padding: 20,
   },
   cropItem: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 10,
     marginBottom: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   cropImageContainer: {
-    backgroundColor: '#F0FFF0',
+    backgroundColor: "#F0FFF0",
     borderRadius: 15,
     padding: 5,
     marginRight: 15,
@@ -154,37 +152,37 @@ const styles = StyleSheet.create({
   cropImage: {
     width: 75,
     height: 75,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   cropName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   fruitsButton: {
-    alignItems: 'center',
-    backgroundColor: '#F5DEB3',
+    alignItems: "center",
+    backgroundColor: "#F5DEB3",
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,
     marginTop: 90,
-    marginLeft: 70, 
-    marginRight: 70
+    marginLeft: 70,
+    marginRight: 70,
   },
   fruitsButtonText: {
     fontSize: 20,
-    fontWeight: 'bold', 
+    fontWeight: "bold",
   },
   bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 15,
-    backgroundColor: '#E0F8E0',
+    backgroundColor: "#E0F8E0",
     borderTopWidth: 1,
-    borderTopColor: '#d3d3d3',
+    borderTopColor: "#d3d3d3",
   },
   navItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   navItemText: {
     fontSize: 24,
@@ -204,18 +202,18 @@ const styles = StyleSheet.create({
     height: 30,
   },
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   cropContainer: {
-    width: '48%',
-    backgroundColor: '#fff',
+    width: "48%",
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -224,8 +222,3 @@ const styles = StyleSheet.create({
 });
 
 export default MarketPrice2;
-
-
-
-
-  
