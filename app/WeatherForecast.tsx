@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -10,7 +10,7 @@ interface WeatherResponse {
 }
 
 interface WeatherData {
-  condition: string;
+  description: string;
   temperature: number;
   wind_speed: number;
   humidity: number;
@@ -24,7 +24,7 @@ interface ForecastData {
 
 const WeatherScreen = () => {
   const [city, setCity] = useState("Colombo");
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [forecastData, setForecastData] = useState<ForecastData[]>([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -38,22 +38,25 @@ const WeatherScreen = () => {
     { label: 'Kandy', value: 'Kandy' },
   ];
 
-  // Function to fetch weather data
+  // Function to fetch weather data including forecast
   const fetchWeatherData = async (city: string) => {
     try {
       const response = await axios.get<WeatherResponse>(`http://127.0.0.1:8000/WeatherForecast/weather/${city}/`);
-      console.log('API Response:', response.data); // Log the full response
+      console.log('Full API Response:', response.data); // Log the full response
+      
       if (response.status === 200) {
-        setWeatherData(response.data.weather); // Assuming 'weather' is the key in response
+        const weather = response.data.weather.weather; // Nested structure: weather.weather
+        const forecast = response.data.weather.forecast; // Nested structure: weather.forecast
+
+        setWeatherData(weather);  // Update weather data state
+        setForecastData(forecast);  // Update forecast data state
       } else {
         console.error('Error: Invalid response status');
       }
     } catch (error) {
-      console.error("Error fetching weather data:");
+      console.error("Error fetching weather data:", error);
     }
   };
-  
-
 
   // Function to determine the weather icon
   const getWeatherImage = (condition: string) => {
@@ -86,47 +89,55 @@ const WeatherScreen = () => {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backText}>{"<"}</Text>
+          <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Weather Forecast</Text>
       </View>
 
       {/* Location Selector */}
       <View style={[styles.locationPicker]}>
-      <Image source={require('../assets/images/weather_location.png')} style={styles.locationIcon} />
-      <DropDownPicker
-        open={open}
-        value={city}
-        items={locations}
-        setOpen={setOpen}
-        setValue={setCity}
-        placeholder="Select Location"
-        style={styles.dropdown}
-        containerStyle={{ width: '100%' }}
-      />
+        <Image source={require('../assets/images/weather_location.png')} style={styles.locationIcon} />
+        <DropDownPicker
+          open={open}
+          value={city}
+          items={locations}
+          setOpen={setOpen}
+          setValue={setCity}
+          placeholder="Select Location"
+          style={styles.dropdown}
+          containerStyle={{ width: '100%' }}
+        />
       </View>
 
       {/* Current Weather */}
-      {weatherData && (
+      {weatherData ? (
         <View style={styles.weatherSection}>
-          <Image source={getWeatherImage((weatherData as WeatherData).condition)} style={styles.weatherImage} />
+          <Image source={getWeatherImage(weatherData.description)} style={styles.weatherImage} />
           <Text style={styles.date}>{`Today, ${new Date().toLocaleDateString()}`}</Text>
-          <Text style={styles.temp}>{`${((weatherData as WeatherData).temperature)}°C`}</Text>
-          <Text style={styles.condition}>{((weatherData as WeatherData).condition)}</Text>
-          <Text style={styles.details}>{`Wind: ${((weatherData as WeatherData).wind_speed ?? 'Data not available')} km/h | Humidity: ${((weatherData as WeatherData).humidity)}%`}</Text>
-        </View>
-      )}
+          <Text style={styles.temp}>{`${weatherData.temperature}°C`}</Text>
+          <Text style={styles.condition}>{weatherData.description}</Text>
+          <Text style={styles.details}>
+      {`Wind: ${weatherData.wind_speed || 'Data not available'} km/h | Humidity: ${weatherData.humidity || 'Data not available'}%`}
+    </Text>
+  </View>
+  ) : (
+    <ActivityIndicator size="large" color="green" />
+  )}
 
       {/* 7-Day Forecast */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {forecastData.map((day, index) => (
-          <View key={index} style={styles.forecastItem}>
-            <Text style={styles.forecastDate}>{day.date}</Text>
-            <Image source={getWeatherImage(day.weather)} style={styles.forecastImage} />
-            <Text style={styles.forecastTemp}>{`${day.temp}°C`}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      {forecastData.length > 0 ? (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.forecastContainer}>
+          {forecastData.map((day, index) => (
+            <View key={index} style={styles.forecastItem}>
+              <Text style={styles.forecastDate}>{new Date(day.date).toLocaleDateString()}</Text>
+              <Image source={getWeatherImage(day.weather)} style={styles.forecastImage} />
+              <Text style={styles.forecastTemp}>{`${day.temp}°C`}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      ) : (
+        <ActivityIndicator size="large" color="green" />
+      )}
     </View>
   );
 };
@@ -203,8 +214,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   weatherImage: {
-    width: 150,
-    height: 170,
+    width: 200,
+    height: 220,
   },
   date: {
     fontSize: 18,
@@ -223,24 +234,42 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 5,
   },
+  forecastScroll: {
+    marginTop: 20,
+  },
+  forecastContainer: {
+    flexDirection: 'row', // Ensure items are aligned horizontally
+    alignItems: 'center', // Align items vertically to the center
+    paddingLeft: 10, // Add padding to the left
+  },
   forecastItem: {
-    marginHorizontal: 10,
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#fff',
+    width: 120, // Set width for each item
+    height: 150, // Set height for each item
+    marginRight: 10, // Add space between forecast items
+    backgroundColor: '#ffffff',
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
   },
   forecastDate: {
     fontSize: 14,
-    marginBottom: 5,
+    fontWeight: 'bold',
+    color: '#000',
   },
   forecastImage: {
-    width: 50,
-    height: 50,
+    width: 50, // Size of the icon
+    height: 50, // Size of the icon
+    marginBottom: 10, // Space between the image and temperature
   },
   forecastTemp: {
     fontSize: 16,
-    fontWeight: 'bold',
+    color: '#000',
   },
 });
 
