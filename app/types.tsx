@@ -51,4 +51,5 @@ export type RootStackParamList = {
   SeasonalReport : undefined; 
   seller_dashboard : undefined;
   WeatherForecast : undefined;
+  shopItem : undefined;
 };

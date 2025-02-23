@@ -122,7 +122,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: "white" },
+  container: { padding: 50, backgroundColor: "white" , margin:10 , marginTop: 75, borderRadius: 20},
   label: { fontSize: 16, fontWeight: 'bold', marginTop: 10 },
   input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginTop: 5, borderRadius: 5 },
   switchContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
