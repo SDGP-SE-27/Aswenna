@@ -35,7 +35,7 @@ const NotifiScreen = () => {
                     renderItem={({ item }) => (
                         <View style={styles.reminderItem}>
                             <Text style={styles.cropName}>🌱 Crop: {item.crop_type}</Text>
-                            <Text>Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
+                            <Text>💊 Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
                             <Text>📅 Date: {item.application_date}</Text>
                             <Text>📨 SMS Sent: {item.sms_sent ? 'Yes' : 'No'}</Text>
                         </View>
