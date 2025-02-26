@@ -12,7 +12,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # For migration
-RUN python manage.py migrate
+#RUN python manage.py migrate
 
 # Expose the port that Django will run on.
 EXPOSE 8000

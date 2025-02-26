@@ -190,6 +190,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -299,15 +301,11 @@ SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER' : 'postgres',
-        'PASSWORD': 'SE27_aswenna', 
-        'HOST': 'db.jsiblxlprbatjvmqijxt.supabase.co',
-        'PORT' : '5432',
-
-    }
+    'default': dj_database_url.config(
+        default='postgresql://aswennadb_user:t39iP8qgis7sPH4GtmftignSFdBtLGzR@dpg-cuvamc56l47c738piis0-a.oregon-postgres.render.com/aswennadb',
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
