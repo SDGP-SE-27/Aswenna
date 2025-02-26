@@ -176,10 +176,6 @@
 #     'OPTIONS',
 # ]
 
-
-
-
-
 """
 Django settings for backend project.
 
@@ -195,12 +191,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from pymongo import MongoClient
 
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 GEOCODE_API_KEY = os.getenv("GEOCODE_API_KEY")
 YOUR_API_KEY = os.getenv("YOUR_API_KEY")
@@ -212,6 +208,7 @@ SECRET_KEY = 'django-insecure-s$pz^-!ls7@gp_1rhz=)c%)ch)#q1j=radgs95vx(k^09o'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -225,8 +222,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'personalFinanceTracker',
     'corsheaders',
-    'users',
-    'rest_framework_simplejwt',
+    'users' , 
+    'rest_framework_simplejwt' ,
     'farmland',
     'disease_detection',
     'homepage',
@@ -236,6 +233,7 @@ INSTALLED_APPS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -247,7 +245,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.AllowAny', 
         # added the top one
     ],
     'UNAUTHENTICATED_USER': None,
@@ -263,7 +261,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-
+    
 ]
 
 LOGIN_URL = '/api/users/login/'
@@ -300,9 +298,18 @@ SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# MongoDB Connection using MongoClient
-client = MongoClient('mongodb+srv://ravindiwelagedara:savindya2003@cluster0.xxp2m.mongodb.net/aswennaDB?retryWrites=true&w=majority')
-db = client['aswennaDB']  # 👈 Create a db attribute directly in settings
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER' : 'postgres',
+        'PASSWORD': 'SE27_aswenna', 
+        'HOST': 'db.jsiblxlprbatjvmqijxt.supabase.co',
+        'PORT' : '5432',
+
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -322,6 +329,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -332,6 +340,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -346,6 +355,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # added this part
 OPENCAGE_API_KEY = '35838cc8ed1349c7ae424f795d5f404e'
 TOMORROW_API_KEY = 'dulZUVId8PiZI5WtgxMsgGJgAH6vifyD'
+
 
 APPEND_SLASH = True
 
