@@ -195,6 +195,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from pymongo import MongoClient
 
 load_dotenv()
 
@@ -299,20 +300,9 @@ SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# MongoDB Configuration for Docker
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'aswennaDB',
-        'CLIENT': {
-            'host': 'mongodb+srv://ravindiwelagedara:savindya2003@cluster0.xxp2m.mongodb.net/aswennaDB?retryWrites=true&w=majority',
-            'username': 'ravindiwelagedara',
-            'password': 'savindya2003',
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
-        }
-    }
-}
+# MongoDB Connection using MongoClient
+client = MongoClient('mongodb+srv://ravindiwelagedara:savindya2003@cluster0.xxp2m.mongodb.net/aswennaDB?retryWrites=true&w=majority')
+db = client['aswennaDB']  # 👈 Create a db attribute directly in settings
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
