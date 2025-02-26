@@ -1,0 +1,10 @@
+supabase==2.13.0
+django-cors-headers==4.7.0
+djangorestframework==3.15.2
+djangorestframework_simplejwt==5.4.0
+python-dotenv==1.0.1
+requests==2.32.3
+supabase==2.13.0
+tensorflow==2.18.0
+psycopg2-binary==2.9.10
+pillow==11.1.0

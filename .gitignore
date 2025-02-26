@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code and IDE specific
+.vscode/
+.idea/
+
+# Docker and Build files
+*.pid
+*.tgz
+*.gz
+*.out
+*.egg-info
+
+# Pytest and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# Django Migrations
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.log
+*/migrations/__pycache__/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
