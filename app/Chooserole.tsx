@@ -17,22 +17,6 @@ const Chooserole = () =>{
     const route = useRoute<RouteProp<RootStackParamList, "commonregistration1">>();
     const { username = "", phoneNumber = "", address = "", district = "" } = route.params || {}; 
 
-    // function registerToRole () {
-    //     if (selectedRole === "seller") {
-    //         console.log("You are now registering as a seller");
-    //     } else if (selectedRole === "farmer") {
-    //         console.log("You are now registering as a farmer");
-    //         navigation.navigate("commonregistration1" , {
-    //             username, 
-    //             phoneNumber, 
-    //             address,
-    //             district, 
-    //         });
-    //     } else {
-    //         console.log("No role specified");
-    //     }
-    // }
-
     const registerToRole = () => {
         if (selectedRole === "seller") {
             console.log("You are now registering as a seller");
@@ -58,17 +42,8 @@ const Chooserole = () =>{
     };
     
 
-
     return (
         <View style={styles.container}>
-
-            {/* Back button */}
-            <View style={styles.backButtonContainer}>
-                <TouchableOpacity style={styles.backButton}>  
-                        <Text>&lt;</Text>
-                </TouchableOpacity>
-            </View>
-
             <Text style={styles.text}> Select your role: </Text>
 
             {/* Roles Container */}
@@ -104,7 +79,7 @@ const Chooserole = () =>{
 
             {/* Footer */}
             <View style={styles.footer}>
-            <Image source={require("../assets/images/login-aswenna-logo.png")} style={styles.logo}/>
+            <Image source={require("../assets/images/logo.png")} style={styles.logo}/>
             <Text> POWERED BY INNOVATECH </Text>
             </View>
         </View>
@@ -115,9 +90,12 @@ const Chooserole = () =>{
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
+        flex: 1,
         flexDirection: 'column',
         alignItems: "center",
+        bottom: 10,
+        top: 10,
+        height: "90%",
     },
     
     text: {
@@ -176,31 +154,6 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 10,
         marginTop: 20
-    },
-
-    backButton: {
-        borderColor: "#dcd5d5eb",
-        shadowColor: "#dcd5d5eb",
-        borderWidth: 3,
-        padding: 10,
-        margin: 10,
-        fontSize: 18,
-        borderRadius: 20,
-        width: 40,
-        height: 40,
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 50,
-        left: 20,
-    },
- 
-    backButtonContainer: {
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        paddingHorizontal: 20,
-        marginTop: 20,
     },
 
     selected: {

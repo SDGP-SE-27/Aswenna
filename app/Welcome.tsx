@@ -61,14 +61,14 @@ const Welcome: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 55,
   },
   logo: {
-    width: 140,
-    height: 140,
+    width: 180,
+    height: 180,
     marginBottom: 10,
     top: -27,
   },

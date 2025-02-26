@@ -100,7 +100,7 @@ const MarketPrice2 = () => {
 
         <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
           <Image
-            source={require("../assets/images/home-icon.png")}
+            source={require("../assets/images/profile-icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
@@ -194,8 +194,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: "#DFFFD8",
     position: "absolute",
-    bottom: 0,
-    width: "100%",
+    width: "90%",
+    bottom: 30,
+    alignSelf: "center",
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   footerIcon: {
     width: 30,

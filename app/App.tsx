@@ -17,7 +17,6 @@ import PersonalTrackerMain from "./PersonalTrackerMain";
 import TransactionHistory from "./TransactionHistory";
 import Buildyourfarmland from "./Buildyourfarmland";
 import Chooserole from "./Chooserole";
-import ProductPage from "./product";
 import MarketPrice1 from "./MarketPrice1";
 import MarketPrice2 from "./MarketPrice2";
 // import MarketPrice3 from "./MarketPrice3";
@@ -32,6 +31,9 @@ import seller_dashboard from "./seller_dashboard";
 import WeatherForecast from "./WeatherForecast"
 import NotifiScreen from "./NotifiScreen";
 import shopItem from "./shopItem";
+import ItemDetails from "./ItemDetails";
+import buyergomap from "./buyergomap";
+import buyersItem from "./buyersItem";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -69,6 +71,9 @@ const App = () => {
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
         <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
         <Stack.Screen name= "shopItem" component={shopItem}/>
+        <Stack.Screen name= "ItemDetails" component={ItemDetails}/>
+        <Stack.Screen name= "buyergomap" component={buyergomap}/>
+        <Stack.Screen name= "buyersItem" component={buyersItem}/>
         
       </Stack.Navigator>
     </NavigationContainer>

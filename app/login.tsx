@@ -127,7 +127,7 @@ const handleLogin = async () => {
 
 
       {/* Logo */}
-      <Image source={require("../assets/images/login-aswenna-logo.png")} style={styles.logo} />
+      <Image source={require("../assets/images/logo.png")} style={styles.logo} />
 
       {/* Title */}
       <Text style={styles.title}>Log In</Text>
@@ -196,7 +196,7 @@ const handleLogin = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 35,
     justifyContent: "center",
     backgroundColor: "#F0FFF0",
   },
@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   logo: {
-    width: 80,
-    height: 80,
+    width: 180,
+    height: 180,
     alignSelf: "center",
     marginBottom: 10,
   },
@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     width: 132,
     height: 30,
     justifyContent: "center",
+    borderRadius: 13,
     
   },
 
