@@ -52,4 +52,6 @@ export type RootStackParamList = {
   seller_dashboard : undefined;
   WeatherForecast : undefined;
   shopItem : undefined;
+  buyergomap : undefined;
+  ItemDetails : { item: { id: number; price: number; stock: number; availability: boolean } };
 };

@@ -43,27 +43,27 @@ const login = () => {
   };
 
   const navigateBasedOnRole = async (role: string) => {
-    console.log("✅ navigateBasedOnRole() called with role:", role);
+    console.log("navigateBasedOnRole() called with role:", role);
 
     if (!navigation) {
-        console.error("🚨 Navigation object is undefined!");
+        console.error("Navigation object is undefined!");
         return;
     }
 
     if (role === "farmer") {
-        console.log("✅ Navigating to Homepage...");
+        console.log("Navigating to Homepage...");
         navigation.reset({
             index: 0,
             routes: [{ name: "Homepage" }],
         });
     } else if (role === "seller") {
-        console.log("✅ Navigating to SellerDashboard...");
+        console.log("Navigating to SellerDashboard...");
         navigation.reset({
             index: 0,
             routes: [{ name: "shopItem" }],
         });
     } else {
-        console.error("❌ Unknown role:", role);
+        console.error(" Unknown role:", role);
         Alert.alert("Error", "Unknown role. Redirecting to login.");
         navigation.navigate("login", {username});
     }
@@ -94,22 +94,22 @@ const handleLogin = async () => {
       });
 
       const data = await response.json();
-      console.log("✅ Login Response Data:", data);  
+      console.log("Login Response Data:", data);  
 
       if (response.status === 200) {
-          console.log("✅ Received Role:", data.role);
-          console.log("✅ Received Username:", data.username);
+          console.log(" Received Role:", data.role);
+          console.log(" Received Username:", data.username);
 
           await AsyncStorage.setItem("accessToken", data.access);
           await AsyncStorage.setItem("username", data.username);
           await AsyncStorage.setItem("role", data.role);
 
-          console.log("✅ Stored Role in AsyncStorage:", await AsyncStorage.getItem("role"));
+          console.log("Stored Role in AsyncStorage:", await AsyncStorage.getItem("role"));
 
-          console.log("✅ Calling navigateBasedOnRole()...");
+          console.log("Calling navigateBasedOnRole()...");
           navigateBasedOnRole(data.role);
       } else if (response.status === 401) {
-          console.log("❌ Login Failed");
+          console.log("Login Failed");
           setErrors({ ...newErrors, password: "Incorrect password. Please try again." });
           Alert.alert("Login Failed", "Invalid credentials. Please try again.");
       } else {

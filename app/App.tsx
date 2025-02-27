@@ -29,13 +29,11 @@ import WeeklyReport from "./WeeklyReport";
 import MonthlyReport from "./MonthlyReport";
 import SeasonalReport from "./SeasonalReport";
 import seller_dashboard from "./seller_dashboard";
-<<<<<<< HEAD
 import WeatherForecast from "./WeatherForecast"
 import NotifiScreen from "./NotifiScreen";
-=======
-import WeatherForecast from "./WeatherForecast";
-import shopItem from "./shopItem";
->>>>>>> c9420f83985442056301ab7837e0b638224b0f76
+import buyergomap from "./buyergomap";
+import ItemDetails from "./ItemDetails";
+import ShopItemsScreen from "./shopItem";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -71,11 +69,10 @@ const App = () => {
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
         <Stack.Screen name="seller_dashboard" component={seller_dashboard}/>
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
-<<<<<<< HEAD
         <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
-=======
-        <Stack.Screen name= "shopItem" component={shopItem}/>
->>>>>>> c9420f83985442056301ab7837e0b638224b0f76
+        <Stack.Screen name= "buyergomap" component={buyergomap}/>
+        <Stack.Screen name="ItemDetails" component={ItemDetails}/>
+        <Stack.Screen name="shopItem" component={ShopItemsScreen}/>
         
       </Stack.Navigator>
     </NavigationContainer>
