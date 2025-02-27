@@ -16,8 +16,8 @@ import PersonalTrackerIncome from "./PersonalTrackerIncome";
 import PersonalTrackerMain from "./PersonalTrackerMain";
 import TransactionHistory from "./TransactionHistory";
 import Buildyourfarmland from "./Buildyourfarmland";
+import Welcome from "./Welcome";
 import Chooserole from "./Chooserole";
-import ProductPage from "./product";
 import MarketPrice1 from "./MarketPrice1";
 import MarketPrice2 from "./MarketPrice2";
 // import MarketPrice3 from "./MarketPrice3";
@@ -31,9 +31,10 @@ import SeasonalReport from "./SeasonalReport";
 import seller_dashboard from "./seller_dashboard";
 import WeatherForecast from "./WeatherForecast"
 import NotifiScreen from "./NotifiScreen";
-import buyergomap from "./buyergomap";
+import shopItem from "./shopItem";
 import ItemDetails from "./ItemDetails";
-import ShopItemsScreen from "./shopItem";
+import buyergomap from "./buyergomap";
+import buyersItem from "./buyersItem";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
@@ -70,9 +71,10 @@ const App = () => {
         <Stack.Screen name="seller_dashboard" component={seller_dashboard}/>
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
         <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
+        <Stack.Screen name= "shopItem" component={shopItem}/>
+        <Stack.Screen name= "ItemDetails" component={ItemDetails}/>
         <Stack.Screen name= "buyergomap" component={buyergomap}/>
-        <Stack.Screen name="ItemDetails" component={ItemDetails}/>
-        <Stack.Screen name="shopItem" component={ShopItemsScreen}/>
+        <Stack.Screen name= "buyersItem" component={buyersItem}/>
         
       </Stack.Navigator>
     </NavigationContainer>

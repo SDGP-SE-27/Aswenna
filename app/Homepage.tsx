@@ -198,9 +198,10 @@ const handlePasswordReset = async () => {
               }}
             >
               <Image source={item.icon} style={styles.categoryIcon} />
-            </TouchableOpacity>
-            <Text style={[styles.categoryLabel, { fontFamily: "Poppins-SemiBold" }]}>{item.label}
+              <Text style={[styles.categoryLabel, { fontFamily: "Poppins-SemiBold" }]}>{item.label}
             </Text>
+            </TouchableOpacity>
+            
           </View>
         ))}
       </View>
@@ -259,6 +260,41 @@ const handlePasswordReset = async () => {
           </View>
         </View>
       </Modal>
+
+      {/* Bottom Navigation (Placeholder) */}
+                  <View style={styles.footer}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+                      <Image
+                        source={require("../assets/images/home-icon.png")}
+                        style={styles.footerIcon}
+                      />
+                    </TouchableOpacity>
+            
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("DiseaseIdentification2")}
+                    >
+                      <Image
+                        source={require("../assets/images/disease-icon.png")}
+                        style={styles.footerIcon}
+                      />
+                    </TouchableOpacity>
+            
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("PersonalTrackerMain")}
+                    >
+                      <Image
+                        source={require("../assets/images/finance-icon.png")}
+                        style={styles.footerIcon}
+                      />
+                    </TouchableOpacity>
+            
+                    <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                      <Image
+                        source={require("../assets/images/profile-icon.png")}
+                        style={styles.footerIcon}
+                      />
+                    </TouchableOpacity>
+                  </View>
     </View>   
   );
 };
@@ -267,7 +303,8 @@ const handlePasswordReset = async () => {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: "#ffff"
+    backgroundColor: "#ffff",
+    padding: 20,
   },
   header: {
     flexDirection: "row",
@@ -309,32 +346,35 @@ const styles = StyleSheet.create({
   searchInput: { 
     flex: 1, 
     fontSize: 16, 
-    color: "#0000" 
+    color: "#0000", 
   },
   categories: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    marginHorizontal: 15,
-    margin: 40
+    alignItems: "center",
+    marginVertical: 10,
+    width: "100%",
   },
   categoryBox: {
-    width: "60%",
+    width: "90%",
+    height: 120,
     alignItems: "center",
+    justifyContent: "center",
+    elevation: 5,
     marginVertical: 10,
     backgroundColor: "#ffff",
     paddingVertical: 15,
-    borderRadius: 20,
-    borderColor: "#51b936",
-    borderWidth: 7,
-    margin:40
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
-  categoryContainer: { 
+  categoryContainer: {  
+    width: "48%" ,
     alignItems: "center", 
-    marginVertical: 10, 
-    width: "45%" ,
-    
-    
+    marginVertical: 10,  
   },
   categoryIcon: { 
     width: 50, 
@@ -343,10 +383,10 @@ const styles = StyleSheet.create({
     tintColor: "green" 
   },
   categoryLabel: {
-    marginTop: 5,
+    marginTop: 8,
     fontSize: 15,
-    fontWeight: "800",
-    color: "#000",
+    fontWeight: "600",
+    color: "#333",
     textAlign: "center",
   },
   screen: { 
@@ -406,6 +446,27 @@ const styles = StyleSheet.create({
      padding: 10, 
      borderRadius: 10, 
      marginTop: 10 
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    width: "90%",
+    bottom: 30,
+    alignSelf: "center",
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  footerIcon: {
+    width: 30,
+    height: 30,
   },
 });
 

@@ -159,7 +159,7 @@ const MarketPrice3 = () => {
   const { currentMonthPrice, lastMonthPrice } = getCurrentAndLastMonthPrices();
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.navigate("MarketPrice2")}
       ></TouchableOpacity>
@@ -210,6 +210,7 @@ const MarketPrice3 = () => {
         </View>
       </ScrollView>
 
+      <ScrollView>
       {/* View Selection Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -266,31 +267,32 @@ const MarketPrice3 = () => {
       <Text style={styles.description}>
         click buttons above to view daily, weekly and monthly prices
       </Text>
+      </ScrollView>
 
       {/* Bottom Navigation (Placeholder) */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navButton}>
+      <View style={styles.footer}>
+        <TouchableOpacity>
           <Image
             source={require("../assets/images/home-icon.png")}
-            style={styles.navIcon}
+            style={styles.footerIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity>
           <Image
             source={require("../assets/images/disease-icon.png")}
-            style={styles.navIcon}
+            style={styles.footerIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity>
           <Image
             source={require("../assets/images/finance-icon.png")}
-            style={styles.navIcon}
+            style={styles.footerIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity>
           <Image
-            source={require("../assets/images/weather_location.png")}
-            style={styles.navIcon}
+            source={require("../assets/images/profile-icon.png")}
+            style={styles.footerIcon}
           />
         </TouchableOpacity>
       </View>
@@ -302,6 +304,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5F5",
+    paddingBottom: 100,
   },
   header: {
     flexDirection: "row",
@@ -350,6 +353,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 10,
+    marginTop: 10,
   },
   button: {
     backgroundColor: "#F5F5F5",
@@ -373,21 +377,36 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 5,
     color: "#000000",
+    fontSize: 16,
   },
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: "#90EE90",
-    padding: 10,
-    marginTop: 160,
-    marginBottom: 0,
+    padding: 15,
+    backgroundColor: "#E0F8E0",
+    borderTopWidth: 1,
+    borderTopColor: "#d3d3d3",
   },
-  navButton: {
-    // Add styling for navigation buttons
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    width: "90%",
+    bottom: 30,
+    alignSelf: "center",
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
-  navIcon: {
+  footerIcon: {
     width: 30,
     height: 30,
   },

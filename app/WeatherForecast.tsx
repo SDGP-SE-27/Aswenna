@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './types';
+
+type WeatherScreenScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "WeatherForecast"
+>;
 
 interface WeatherResponse {
-  current: any; // Define the type of current property
-  forecast: any; // Define the type of forecast property
+  current: any; 
+  forecast: any; 
   weather: any;
 }
 
@@ -23,6 +31,7 @@ interface ForecastData {
 }
 
 const WeatherScreen = () => {
+  const navigation = useNavigation<WeatherScreenScreenProp>();
   const [city, setCity] = useState("Colombo");
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [forecastData, setForecastData] = useState<ForecastData[]>([]);
@@ -88,7 +97,7 @@ const WeatherScreen = () => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Weather Forecast</Text>
@@ -138,6 +147,25 @@ const WeatherScreen = () => {
       ) : (
         <ActivityIndicator size="large" color="green" />
       )}
+
+      {/* Bottom Navigation (Placeholder) */}
+      <View style={styles.footer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+          <Image source={require("../assets/images/home-icon.png")} style={styles.footerIcon} />
+        </TouchableOpacity>
+      
+        <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification2")} >
+          <Image source={require("../assets/images/disease-icon.png")} style={styles.footerIcon} />
+        </TouchableOpacity>
+      
+        <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
+          <Image source={require("../assets/images/finance-icon.png")} style={styles.footerIcon} />
+        </TouchableOpacity>
+      
+        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+          <Image source={require("../assets/images/profile-icon.png")} style={styles.footerIcon} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -211,7 +239,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   weatherImage: {
     width: 200,
@@ -270,6 +298,35 @@ const styles = StyleSheet.create({
   forecastTemp: {
     fontSize: 16,
     color: '#000',
+  },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 15,
+    backgroundColor: "#E0F8E0",
+    borderTopWidth: 1,
+    borderTopColor: "#d3d3d3",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    width: "90%",
+    bottom: 30,
+    alignSelf: "center",
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  footerIcon: {
+    width: 30,
+    height: 30,
   },
 });
 
