@@ -1,9 +1,17 @@
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './types';
+
+type WelcomeScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Welcome"
+>;
 
 const Welcome: React.FC = () => {
-  // Use state
+  const navigation = useNavigation<WelcomeScreenProp>();
   const [progress, setProgress] = useState<number>(0);
   const [progressText, setProgressText] = useState<string>("Loading... 0%");
 
@@ -12,21 +20,25 @@ const Welcome: React.FC = () => {
   const[fontsLoaded3] = useFonts({'Poppins-SemiBold': require('../assets/fonts/Poppins/Poppins-SemiBold.ttf'),});
 
   // Simulate the progress increment (Logic)
+  // Simulate the progress increment (Logic)
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prevProgress) => {
         const newProgress = Math.min(prevProgress + 0.01, 1); // Cap at 1
         setProgressText(`Loading... ${(newProgress * 100).toFixed(0)}%`);
-
+      
         if (newProgress >= 1) {
           clearInterval(interval); // Stop the interval at 100%
+          setTimeout(() => {
+            navigation.replace("Chooserole", { role: "farmer" }); // Navigate to Chooserole
+          }, 500); // Small delay before navigating
         }
-        return newProgress;
+        return newProgress; // Update the progress state
       });
-    }, 50); // Updates every 50ms
-
+    }, 100); // Add the time interval
+  
     return () => clearInterval(interval);
-  }, []);
+  }, [navigation]);
 
   // UI Part
   return (

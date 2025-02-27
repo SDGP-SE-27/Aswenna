@@ -16,6 +16,7 @@ import PersonalTrackerIncome from "./PersonalTrackerIncome";
 import PersonalTrackerMain from "./PersonalTrackerMain";
 import TransactionHistory from "./TransactionHistory";
 import Buildyourfarmland from "./Buildyourfarmland";
+import Welcome from "./Welcome";
 import Chooserole from "./Chooserole";
 import MarketPrice1 from "./MarketPrice1";
 import MarketPrice2 from "./MarketPrice2";

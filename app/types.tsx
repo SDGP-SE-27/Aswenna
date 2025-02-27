@@ -38,6 +38,7 @@ export type RootStackParamList = {
   Weather : undefined;
   product : undefined;
   SelectLanguage : undefined;
+  Welcome: undefined;
   Chooserole : {role : string};
   Buildyourfarmland : {username : string};
   MarketPrice1 : undefined; 
