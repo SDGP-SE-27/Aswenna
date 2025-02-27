@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, Switch } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-
-// Define Navigation Params
-type RootStackParamList = {
-  ItemDetails: { item: { id: number; price: number; stock: number; availability: boolean } };
-};
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from './types';
 
 // Define Props Type
 type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, "ItemDetails">;
+
 
 // Phone Number Validation Function
 const isValidPhoneNumber = (phone: string) => {
@@ -18,6 +18,7 @@ const isValidPhoneNumber = (phone: string) => {
 
 // Fix the component with proper type annotation
 const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
+  const navigation = useNavigation<NavigationProp>();
   const item = route?.params?.item || { id: 0, price: 0, stock: 0, availability: false };
 
   const [price, setPrice] = useState(item.price.toString());
@@ -77,6 +78,13 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   };
 
   return (
+    <View style={styles.newContainer}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('shopItem')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+          <Text style={styles.headerTitle}>Item Details</Text>
+      </View>
     <View style={styles.container}>
       <Text style={styles.label}>Price:</Text>
       <TextInput
@@ -118,12 +126,51 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
 
       <Button title="Update Item" onPress={updateItemDetails} />
     </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 50, backgroundColor: "white" , margin:10 , marginTop: 75, borderRadius: 20},
-  label: { fontSize: 16, fontWeight: 'bold', marginTop: 10 },
+  newContainer: {
+    flex: 1,
+    backgroundColor: '#DFFFD8',
+  },
+  container: { padding: 50, backgroundColor: "white" , margin:30 , marginTop: 75, borderRadius: 20},
+  header: {
+    fontSize: 24,
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderColor: "#DDD",
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    alignItems: "center",
+    paddingLeft: 80,
+  },
+  backButton: { 
+    marginRight: 10,
+    marginBottom: 25,
+    borderColor: "#DDD", 
+    borderWidth: 2, 
+    borderRadius: 15,
+    marginTop: 25,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center" 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold" 
+  },
+  label: { fontSize: 16, fontWeight: 'bold', marginVertical: 20 },
   input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginTop: 5, borderRadius: 5 },
   switchContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
 });

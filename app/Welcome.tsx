@@ -49,7 +49,6 @@ const Welcome: React.FC = () => {
         style={styles.logo}
         resizeMode="contain"
       />
-      <Text style={styles.title}>ASWENNA</Text>
 
       {/* Progress Bar */}
       <Text style={styles.loadingText}>{progressText}</Text>
@@ -79,8 +78,8 @@ const styles = StyleSheet.create({
     paddingVertical: 55,
   },
   logo: {
-    width: 180,
-    height: 180,
+    width: 250,
+    height: 250,
     marginBottom: 10,
     top: -27,
   },

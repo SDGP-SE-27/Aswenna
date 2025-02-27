@@ -1,6 +1,5 @@
 import React from 'react'; 
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
@@ -34,23 +33,17 @@ const ShopItemsScreen = () => {
 
       {/* Map through the items and create TouchableOpacity for each */}
       <View style={styles.itemsContainer}>
-      {items.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.item}
-          onPress={() => navigation?.navigate('ItemDetails', { 
-            item: { 
-            id: item.id,  
-            price: 0, // add a default price
-            stock: 0, // add a default stock
-            availability: false // add a default availability
-          }
-        })}
-        >
-          {/* Image Component */}
-          <Image source={item.image} style={styles.itemImage} />
-          <Text style={styles.itemText}>{item.name}</Text>
-        </TouchableOpacity>
+        {items.map((item, index) => (
+           
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation?.navigate('buyergomap')}
+            >
+              {/* Image Component */}
+              <Image source={item.image} style={styles.itemImage} />
+              <Text style={styles.itemText}>{item.name}</Text>
+            </TouchableOpacity>
+          
       ))}
     </View>
       <View style={styles.footer}>
