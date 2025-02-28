@@ -123,7 +123,7 @@ const DiseaseIdentification = () => {
         </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={pickImageFromGallery}>
             <View style={styles.rowContainer}>
-            <Image source={require("../assets/images/galler_-icon.png")} style={styles.icon} />
+            <Image source={require("../assets/images/gallery_icon.png")} style={styles.icon} />
             <Text style={styles.buttonText}>   Upload from Gallery</Text>
             </View>
           </TouchableOpacity>
