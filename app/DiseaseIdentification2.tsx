@@ -31,7 +31,7 @@ const DiseaseIdentification2 = () => {
   const crops: Crop[] = [
     { name: 'Banana', image: require('../assets/images/banana.jpg') },
     { name: 'Mango', image: require('../assets/images/tom_jc_mango.jpg') },
-    { name: 'Papaya', image: require('../assets/images/Papaya.png') },
+    { name: 'Papaya', image: require('../assets/images/papaya.png') },
     { name: 'Snake Gourd', image: require('../assets/images/snakeGourd.jpg') },
     { name: 'Eggplant', image: require('../assets/images/eggPlant.jpg') },
     { name: 'Okra', image: require('../assets/images/okra.jpg') },

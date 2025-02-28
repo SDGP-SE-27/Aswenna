@@ -58,8 +58,8 @@ const DiseaseIdentification = () => {
   
     // Map crop names to their respective API endpoints
     const cropEndpoints: { [key: string]: string } = {
-      "Banana": "http://127.0.0.1:8000/api/disease_detection/predict/banana/",
-      "Mango": "http://127.0.0.1:8000/api/disease_detection/predict/mango/",
+      "Banana": "https://api.aswenna.site/api/disease_detection/predict/banana/",
+      "Mango": "https://api.aswenna.site/api/disease_detection/predict/mango/",
       "Papaya": "http://127.0.0.1:8000/api/disease_detection/predict/papaya/",
       "Snake Gourd": "http://127.0.0.1:8000/api/disease_detection/predict/snake_gourd/",
       "Eggplant": "http://127.0.0.1:8000/api/disease_detection/predict/eggplant/",

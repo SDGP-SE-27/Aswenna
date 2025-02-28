@@ -29,12 +29,12 @@ const MarketPrice2 = () => {
   const crops: Crop[] = [
     {
       name: "pineapple",
-      image: require("../assets/images/Pineapple.jpg"),
+      image: require("../assets/images/pineapple.jpg"),
     },
 
     {
       name: "papaya",
-      image: require("../assets/images/Papaya.png"),
+      image: require("../assets/images/papaya.png"),
     },
   ];
 

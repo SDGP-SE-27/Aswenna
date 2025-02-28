@@ -17,6 +17,9 @@ type loginScreenProp = NativeStackNavigationProp<
 const login = () => {
   const navigation = useNavigation<NavigationProp>();
 
+  //import env
+  const API_URL = process.env.API_URL;
+
   // State for input and errors
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +34,7 @@ const login = () => {
 
   const fetchProtectedData = async () => {
     const token = await AsyncStorage.getItem("accessToken");
-    const response = await fetch("http://127.0.0.1:8000/protected-endpoint/", {
+    const response = await fetch("https://api.aswenna.site/protected-endpoint/", {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -87,7 +90,7 @@ const handleLogin = async () => {
   if (!isValid) return;
 
   try {
-      const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+      const response = await fetch("https://api.aswenna.site/api/users/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
