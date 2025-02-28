@@ -7,16 +7,14 @@ import {
   Image,
   TextInput,
   Alert,
-  Modal, 
+  Modal,
   ActivityIndicator,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
-import {useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
-
-
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -33,149 +31,215 @@ const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
 
   useEffect(() => {
     fetchUserFarmland(); // Fetch farmland details when component loads
   }, []);
 
-
   const fetchUserFarmland = async () => {
     try {
-        const username = await AsyncStorage.getItem("username");
+      const username = await AsyncStorage.getItem("username");
 
-        if (!username) {
-            Alert.alert("Error", "User is not logged in.");
-            return;
-        }
+      if (!username) {
+        Alert.alert("Error", "User is not logged in.");
+        return;
+      }
 
-        console.log("Fetching farmland details for:", username); // Debugging log
+      console.log("Fetching farmland details for:", username); // Debugging log
 
-        const response = await fetch(`http://127.0.0.1:8000/api/homepage/farmland/${username}/`);
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/homepage/farmland/${username}/`
+      );
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Fetched Farmland Data:", data); // Debugging log
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched Farmland Data:", data); // Debugging log
 
-            setUserData({
-                cropType: data.crop_type || "Not set",
-                landArea: data.land_area ? `${data.land_area} sq.ft` : "Not set",
-            });
-        } else {
-            const errorData = await response.json();
-            console.error("Error fetching farmland data:", errorData);
-            Alert.alert("Error", errorData.error || "Failed to fetch data.");
-        }
+        setUserData({
+          cropType: data.crop_type || "Not set",
+          landArea: data.land_area ? `${data.land_area} sq.ft` : "Not set",
+        });
+      } else {
+        const errorData = await response.json();
+        console.error("Error fetching farmland data:", errorData);
+        Alert.alert("Error", errorData.error || "Failed to fetch data.");
+      }
     } catch (error) {
-        console.error("Error fetching farmland details:", error);
-        Alert.alert("Error", "Something went wrong. Try again.");
+      console.error("Error fetching farmland details:", error);
+      Alert.alert("Error", "Something went wrong. Try again.");
     }
-};
+  };
 
-const handleMenuClick = async () => {
-  await fetchUserFarmland();  // ✅ Ensure latest data is fetched
-  setModalVisible(true);
-};
+  const handleMenuClick = async () => {
+    await fetchUserFarmland(); // ✅ Ensure latest data is fetched
+    setModalVisible(true);
+  };
 
+  const fetchUserDetails = async () => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) {
+        Alert.alert("Error", "You need to log in first.");
+        return;
+      }
 
-const fetchUserDetails = async () => {
-  setLoading(true);
-  try {
-    const token = await AsyncStorage.getItem("accessToken");
-    if (!token) {
-      Alert.alert("Error", "You need to log in first.");
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/homepage/user-details/",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserDetails(data);
+        setProfileModalVisible(true);
+      } else {
+        Alert.alert("Error", "Failed to fetch user details.");
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProfileClick = async () => {
+    await fetchUserDetails();
+  };
+
+  const handlePasswordReset = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters long.");
       return;
     }
 
-    const response = await fetch("http://127.0.0.1:8000/api/homepage/user-details/", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) {
+        Alert.alert("Error", "You need to log in first.");
+        return;
+      }
 
-    if (response.ok) {
-      const data = await response.json();
-      setUserDetails(data);
-      setProfileModalVisible(true);
-    } else {
-      Alert.alert("Error", "Failed to fetch user details.");
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/homepage/reset-password/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ new_password: newPassword }),
+        }
+      );
+
+      if (response.ok) {
+        Alert.alert("Success", "Password reset successfully!");
+        setNewPassword(""); // Clear input
+        setShowPasswordInput(false);
+      } else {
+        const errorData = await response.json();
+        Alert.alert("Error", errorData.error || "Failed to reset password.");
+      }
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      Alert.alert("Error", "Something went wrong. Please try again.");
     }
-  } catch (error) {
-    console.error("Error fetching user details:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
-const handleProfileClick = async () => {
-  await fetchUserDetails();
-};
-
-
-const handlePasswordReset = async () => {
-  if (!newPassword || newPassword.length < 6) {
-    Alert.alert("Error", "Password must be at least 6 characters long.");
-    return;
-  }
-
-  try {
-    const token = await AsyncStorage.getItem("accessToken");
-    if (!token) {
-      Alert.alert("Error", "You need to log in first.");
-      return;
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("accessToken");
+      Alert.alert("Success", "Logged out successfully!");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      Alert.alert("Error", "Failed to log out. Please try again.");
     }
+  };
 
-    const response = await fetch("http://127.0.0.1:8000/api/homepage/reset-password/", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ new_password: newPassword }),
-    });
+  const categories: {
+    icon: any;
+    label: string;
+    screen: keyof RootStackParamList | null;
+  }[] = [
+    {
+      icon: require("../assets/icons/disease_identification.png"),
+      label: "Disease Identification",
+      screen: "DiseaseIdentification2",
+    },
+    {
+      icon: require("../assets/icons/priceprediction.png"),
+      label: "Price Prediction",
+      screen: "MarketPrice1",
+    },
+    {
+      icon: require("../assets/icons/fertilizer_sellers.png"),
+      label: "Fertilizer Sellers",
+      screen: "Fertilizerseller",
+    },
+    {
+      icon: require("../assets/icons/supplement_reminder.png"),
+      label: "Supplement Reminder",
+      screen: "SupplementReminder1",
+    },
+    {
+      icon: require("../assets/icons/personal_finance_tracker.png"),
+      label: "Personal Finance Tracker",
+      screen: "PersonalTrackerMain",
+    },
+    {
+      icon: require("../assets/icons/weather_alerts.png"),
+      label: "Weather Alerts",
+      screen: "WeatherForecast",
+    },
+  ];
 
-    if (response.ok) {
-      Alert.alert("Success", "Password reset successfully!");
-      setNewPassword("");  // Clear input
-      setShowPasswordInput(false); 
-    } else {
-      const errorData = await response.json();
-      Alert.alert("Error", errorData.error || "Failed to reset password.");
-    }
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    Alert.alert("Error", "Something went wrong. Please try again.");
-  }
-};
+  // const navigateToLogin = async () => {
+  //   console.log("Logged out!");
+  //   navigation.navigate({
+  //     index: 0,
+  //     routes: [{ name:  }],
+  //   });
+  // };
 
-
-  const categories: { icon: any; label: string; screen: keyof RootStackParamList | null }[] = [
-    { icon: require("../assets/icons/disease_identification.png"), label: "Disease Identification", screen: "DiseaseIdentification2" },
-    { icon: require("../assets/icons/priceprediction.png"), label: "Price Prediction", screen: "MarketPrice1" },
-    { icon: require("../assets/icons/fertilizer_sellers.png"), label: "Fertilizer Sellers", screen: "Fertilizerseller" },
-    { icon: require("../assets/icons/supplement_reminder.png"), label: "Supplement Reminder", screen: "SupplementReminder1" },
-    { icon: require("../assets/icons/personal_finance_tracker.png"), label: "Personal Finance Tracker", screen: "PersonalTrackerMain" },
-    { icon: require("../assets/icons/weather_alerts.png"), label: "Weather Alerts", screen: "WeatherForecast" },
-  ]
-  
-  return (    
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
-          <Image source={require("../assets/icons/menu.png")} style={styles.icon} />
+          <Image
+            source={require("../assets/icons/menu.png")}
+            style={styles.icon}
+          />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{navigation.navigate('NotifiScreen')}}>
-          <Image source={require("../assets/icons/reminder.png")} style={styles.remindericon} />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("NotifiScreen");
+          }}
+        >
+          <Image
+            source={require("../assets/icons/reminder.png")}
+            style={styles.remindericon}
+          />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProfileClick}>
-          <Image source={require("../assets/icons/farmer_2.png")} style={styles.profileIcon} />
+          <Image
+            source={require("../assets/icons/farmer_2.png")}
+            style={styles.profileIcon}
+          />
         </TouchableOpacity>
-
       </View>
 
       <View style={styles.searchBar}>
-        <Image source={require("../assets/icons/search.png")} style={styles.searchIcon} />
+        <Image
+          source={require("../assets/icons/search.png")}
+          style={styles.searchIcon}
+        />
         <TextInput
           placeholder="Search any categories"
           placeholderTextColor="#000"
@@ -189,7 +253,7 @@ const handlePasswordReset = async () => {
             <TouchableOpacity
               style={styles.categoryBox}
               onPress={() => {
-                if (item.screen && typeof item.screen === 'string') {
+                if (item.screen && typeof item.screen === "string") {
                   const screenName = item.screen as keyof RootStackParamList;
                   navigation.navigate(screenName);
                 } else {
@@ -198,10 +262,15 @@ const handlePasswordReset = async () => {
               }}
             >
               <Image source={item.icon} style={styles.categoryIcon} />
-              <Text style={[styles.categoryLabel, { fontFamily: "Poppins-SemiBold" }]}>{item.label}
-            </Text>
+              <Text
+                style={[
+                  styles.categoryLabel,
+                  { fontFamily: "Poppins-SemiBold" },
+                ]}
+              >
+                {item.label}
+              </Text>
             </TouchableOpacity>
-            
           </View>
         ))}
       </View>
@@ -211,8 +280,13 @@ const handlePasswordReset = async () => {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Farmland Details</Text>
             <Text style={styles.modalText}>Crop Type: {userData.cropType}</Text>
-            <Text style={styles.modalText}>Land Area: {userData.landArea} sq.ft</Text>
-            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+            <Text style={styles.modalText}>
+              Land Area: {userData.landArea} sq.ft
+            </Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
               <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
@@ -220,7 +294,11 @@ const handlePasswordReset = async () => {
       </Modal>
 
       {/* Profile Details Modal */}
-      <Modal visible={profileModalVisible} transparent={true} animationType="slide">
+      <Modal
+        visible={profileModalVisible}
+        transparent={true}
+        animationType="slide"
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Farmer Profile</Text>
@@ -228,9 +306,13 @@ const handlePasswordReset = async () => {
               <ActivityIndicator size="large" color="green" />
             ) : (
               <>
-                <Text style={styles.modalText}>Username: {userDetails.username}</Text>
+                <Text style={styles.modalText}>
+                  Username: {userDetails.username}
+                </Text>
                 <Text style={styles.modalText}>Email: {userDetails.email}</Text>
-                <Text style={styles.modalText}>Phone: {userDetails.phone_number}</Text>
+                <Text style={styles.modalText}>
+                  Phone: {userDetails.phone_number}
+                </Text>
 
                 {/* Show password input only when button is clicked */}
                 {showPasswordInput ? (
@@ -242,17 +324,33 @@ const handlePasswordReset = async () => {
                       value={newPassword}
                       onChangeText={setNewPassword}
                     />
-                    <TouchableOpacity style={styles.confirmButton} onPress={handlePasswordReset}>
+                    <TouchableOpacity
+                      style={styles.confirmButton}
+                      onPress={handlePasswordReset}
+                    >
                       <Text style={styles.buttonText}>Confirm Reset</Text>
                     </TouchableOpacity>
                   </>
                 ) : (
-                  <TouchableOpacity style={styles.resetButton} onPress={() => setShowPasswordInput(true)}>
+                  <TouchableOpacity
+                    style={styles.resetButton}
+                    onPress={() => setShowPasswordInput(true)}
+                  >
                     <Text style={styles.buttonText}>Reset Password</Text>
                   </TouchableOpacity>
                 )}
 
-                <TouchableOpacity style={styles.closeButton} onPress={() => setProfileModalVisible(false)}>
+                <TouchableOpacity
+                  style={styles.logOutButton}
+                  onPress={() => setConfirmation(true)}
+                >
+                  <Text style={{ color: "#fff", fontSize: 16 }}> Logout </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setProfileModalVisible(false)}
+                >
                   <Text style={styles.buttonText}>Close</Text>
                 </TouchableOpacity>
               </>
@@ -261,48 +359,76 @@ const handlePasswordReset = async () => {
         </View>
       </Modal>
 
+      <Modal visible={confirmation} transparent={true} animationType="fade">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirm Action</Text>
+            <Text style={styles.modalText}>
+              Are you sure you want to log out?
+            </Text>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={async () => {
+                await handleLogout(); // Log out the user
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "login" }],
+                }); // Navigate to the login screen
+              }}
+            >
+              <Text style={styles.buttonText}>Confirm Logout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setConfirmation(false)}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       {/* Bottom Navigation (Placeholder) */}
-                  <View style={styles.footer}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
-                      <Image
-                        source={require("../assets/images/home-icon.png")}
-                        style={styles.footerIcon}
-                      />
-                    </TouchableOpacity>
-            
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("DiseaseIdentification2")}
-                    >
-                      <Image
-                        source={require("../assets/images/disease-icon.png")}
-                        style={styles.footerIcon}
-                      />
-                    </TouchableOpacity>
-            
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("PersonalTrackerMain")}
-                    >
-                      <Image
-                        source={require("../assets/images/finance-icon.png")}
-                        style={styles.footerIcon}
-                      />
-                    </TouchableOpacity>
-            
-                    <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-                      <Image
-                        source={require("../assets/images/profile-icon.png")}
-                        style={styles.footerIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
-    </View>   
+      <View style={styles.footer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+          <Image
+            source={require("../assets/images/home-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DiseaseIdentification2")}
+        >
+          <Image
+            source={require("../assets/images/disease-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("PersonalTrackerMain")}
+        >
+          <Image
+            source={require("../assets/images/finance-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+          <Image
+            source={require("../assets/images/profile-icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
-
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
+  container: {
+    flex: 1,
     backgroundColor: "#ffff",
     padding: 20,
   },
@@ -311,23 +437,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 15,
   },
-  icon: { 
+  icon: {
     width: 40,
     height: 40,
-    tintColor: "#000", 
-    
+    tintColor: "#000",
   },
-  remindericon: { 
+  remindericon: {
     width: 40,
     height: 40,
-    tintColor: "#000", 
-    left: 90, 
-    top: 5 
+    tintColor: "#000",
+    left: 90,
+    top: 5,
   },
-  profileIcon: { 
+  profileIcon: {
     width: 40,
     height: 40,
-    borderRadius: 50 
+    borderRadius: 50,
   },
   searchBar: {
     flexDirection: "row",
@@ -337,16 +462,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 15,
   },
-  searchIcon: { 
-    width: 20, 
-    height: 20, 
-    tintColor: "#333", 
-    marginRight: 10 
+  searchIcon: {
+    width: 20,
+    height: 20,
+    tintColor: "#333",
+    marginRight: 10,
   },
-  searchInput: { 
-    flex: 1, 
-    fontSize: 16, 
-    color: "#0000", 
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: "#0000",
   },
   categories: {
     flexDirection: "row",
@@ -371,16 +496,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
   },
-  categoryContainer: {  
-    width: "48%" ,
-    alignItems: "center", 
-    marginVertical: 10,  
+  categoryContainer: {
+    width: "48%",
+    alignItems: "center",
+    marginVertical: 10,
   },
-  categoryIcon: { 
-    width: 50, 
-    height: 50, 
-    marginBottom: 10, 
-    tintColor: "green" 
+  categoryIcon: {
+    width: 50,
+    height: 50,
+    marginBottom: 10,
+    tintColor: "green",
   },
   categoryLabel: {
     marginTop: 8,
@@ -389,10 +514,10 @@ const styles = StyleSheet.create({
     color: "#333",
     textAlign: "center",
   },
-  screen: { 
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center" 
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContainer: {
     flex: 1,
@@ -426,11 +551,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  resetButton: { 
-    backgroundColor: "#FFD700", 
-    padding: 10, 
-    borderRadius: 10, 
-    marginTop: 10 
+  resetButton: {
+    backgroundColor: "#FFD700",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
   },
   input: {
     borderWidth: 1,
@@ -442,10 +567,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   confirmButton: {
-     backgroundColor: "#ff6347", 
-     padding: 10, 
-     borderRadius: 10, 
-     marginTop: 10 
+    backgroundColor: "#ff6347",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
   },
   footer: {
     flexDirection: "row",
@@ -468,6 +593,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+
+  logOutButton: {
+    backgroundColor: "#ff6347",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
 });
 
-export default Homepage; 
+export default Homepage;
