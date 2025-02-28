@@ -117,13 +117,13 @@ const DiseaseIdentification = () => {
         <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={takePhoto}>
           <View style={styles.rowContainer}>
-           <Image source={require("../assets/images/camera-icon.png")} style={styles.icon} />
+           <Image source={require("../assets/images/camera_icon.png")} style={styles.icon} />
            <Text style={styles.buttonText}>   Take a Photo</Text>
           </View>
         </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={pickImageFromGallery}>
             <View style={styles.rowContainer}>
-            <Image source={require("../assets/images/gallery-icon.png")} style={styles.icon} />
+            <Image source={require("../assets/images/galler_-icon.png")} style={styles.icon} />
             <Text style={styles.buttonText}>   Upload from Gallery</Text>
             </View>
           </TouchableOpacity>

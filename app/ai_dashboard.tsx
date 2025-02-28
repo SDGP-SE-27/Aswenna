@@ -72,7 +72,7 @@ function AIDashBoard() {
           </View>
         </View>
         <Image
-          source={require("../assets/images/camera-icon.png")}
+          source={require("../assets/images/camera_icon.png")}
           style={styles.chat_icon}
         />
       </View>
@@ -181,7 +181,7 @@ function AIDashBoard() {
         onPress={() => setAddFarmerModalVisible(true)}
       >
         <Image
-          source={require("../assets/images/apple-icon.png")}
+          source={require("../assets/images/apple_icon.png")}
           style={styles.add_icon}
         />
       </TouchableOpacity>

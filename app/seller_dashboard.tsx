@@ -55,7 +55,7 @@ function SellerDashBoard() {
         >
           <View key={id}>
             <Image
-              source={require("../assets/images/apple-icon.png")}
+              source={require("../assets/images/apple_icon.png")}
               style={styles.product_img}
             />
 
@@ -90,7 +90,7 @@ function SellerDashBoard() {
           onPress={() => setAddFarmerModalVisible(true)}
         >
           <Image
-            source={require("../assets/images/apple-icon.png")}
+            source={require("../assets/images/apple_icon.png")}
             style={styles.add_icon}
           />
         </TouchableOpacity>

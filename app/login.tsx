@@ -173,13 +173,13 @@ const handleLogin = async () => {
       <View style={styles.socialButtonContainer}>
         <TouchableOpacity style={styles.socialButton}>
           <Image
-            source={require("../assets/images/google-icon.png")}
+            source={require("../assets/images/google_icon.png")}
             style={styles.socialIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton}>
           <Image
-            source={require("../assets/images/apple-icon.png")}
+            source={require("../assets/images/apple_icon.png")}
             style={styles.socialIcon}
           />
         </TouchableOpacity>

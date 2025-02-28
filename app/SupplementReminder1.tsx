@@ -13,7 +13,7 @@ type SupplementReminder1ScreenProp = NativeStackNavigationProp<
 >;
 
 const crops = [
-  { id: '1', name: 'Salad Cucumber', time: '1 hour ago', image: require('../assets/images/salad-cucumber.png') },
+  { id: '1', name: 'Salad Cucumber', time: '1 hour ago', image: require('../assets/images/salad_cucumber.png') },
   { id: '2', name: 'Naimiris', time: '7 days ago', image: require('../assets/images/naimiris.png') },
 ];
 

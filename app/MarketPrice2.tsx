@@ -75,7 +75,7 @@ const MarketPrice2 = () => {
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image
-            source={require("../assets/images/home-icon.png")}
+            source={require("../assets/images/home_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
@@ -84,7 +84,7 @@ const MarketPrice2 = () => {
           onPress={() => navigation.navigate("DiseaseIdentification2")}
         >
           <Image
-            source={require("../assets/images/disease-icon.png")}
+            source={require("../assets/images/disease_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
@@ -93,14 +93,14 @@ const MarketPrice2 = () => {
           onPress={() => navigation.navigate("PersonalTrackerMain")}
         >
           <Image
-            source={require("../assets/images/finance-icon.png")}
+            source={require("../assets/images/finance_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
           <Image
-            source={require("../assets/images/profile-icon.png")}
+            source={require("../assets/images/profile_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
