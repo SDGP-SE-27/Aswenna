@@ -6,15 +6,18 @@
     "orientation": "portrait",
     "scheme": "aswenna",
     "userInterfaceStyle": "automatic",
-    "platforms": [
-      "android"
-    ],
+    "platforms": ["android", "web"],
     "android": {
       "package": "com.anonymous.Aswenna",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/home_icon.png",
         "backgroundColor": "#ffffff"
       }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/home_icon.png"
     },
     "plugins": [
       "expo-router",
@@ -32,9 +35,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "ios": {
-      "bundleIdentifier": "com.anonymous.Aswenna"
     },
     "extra": {
       "router": {
