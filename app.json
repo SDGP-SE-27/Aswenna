@@ -11,7 +11,6 @@
     ],
     "android": {
       "package": "com.anonymous.Aswenna",
-      "enablePngCrunchInReleaseBuilds": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/home_icon.png",
         "backgroundColor": "#ffffff"
