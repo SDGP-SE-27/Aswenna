@@ -13,3 +13,4 @@ djangorestframework-simplejwt~=5.4.0
 python-dateutil~=2.9.0.post0
 numpy~=2.0.2
 dj_database_url~=2.3.0
+twilio~=9.4.6
