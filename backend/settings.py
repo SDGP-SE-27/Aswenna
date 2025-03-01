@@ -22,6 +22,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 
+CSRF_TRUSTED_ORIGINS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
+
 # Application definition
 
 INSTALLED_APPS = [

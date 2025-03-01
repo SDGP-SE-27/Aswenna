@@ -67,8 +67,10 @@ TWILIO_PHONE_NUMBER = "+15419408863"  # Replace with your Twilio phone number
 
 reminders = []
 
-def get_user_phone_number(user_id):  # Replace with database lookup
-    return "+94767627455" # Replace with your actual phone number for testing
+def get_user_phone_number(user_id):
+    """Mock function to return a test phone number."""
+    return "+94767627455"
+
 def send_sms(to_phone_number, message):
     """Sends an SMS message using Twilio."""
     try:
@@ -78,18 +80,41 @@ def send_sms(to_phone_number, message):
             from_=TWILIO_PHONE_NUMBER,
             body=message
         )
-        print(f"SMS sent to {to_phone_number}. SID: {message.sid}")  # Log the message SID
+        print(f"SMS sent to {to_phone_number}. SID: {message.sid}")
         return True
     except Exception as e:
         print(f"Error sending SMS: {e}")
         return False
-    
-def emulate_call(phone_number, crop_type, fertilizer_type, application_date):  # Include crop
+
+def emulate_call(phone_number, crop_type, fertilizer_type, application_date):
+    """Simulates a call to remind about fertilizer application."""
     print(f"Emulated Call to {phone_number}: Fertilizer reminder for {fertilizer_type} for {crop_type} on {application_date}.")
 
+def calculate_reminder_dates(application_time):
+    """Determines the reminder date based on application schedule."""
+    today = date.today()
 
-# @csrf_exempt
+    if "before planting" in application_time.lower():
+        days_before = int(application_time.split("days before")[0].strip() or 2)
+        application_date = today
+        reminder_date = application_date - timedelta(days=days_before)
+    elif "week" in application_time.lower():
+        weeks_after = int(application_time.split("week")[0].replace("After", "").strip())
+        application_date = today + relativedelta(weeks=weeks_after)
+        reminder_date = application_date - timedelta(days=2)
+    elif "month" in application_time.lower():
+        months_after = int(application_time.split("month")[0].replace("After", "").strip())
+        application_date = today + relativedelta(months=months_after)
+        reminder_date = application_date - timedelta(days=2)
+    else:
+        application_date = today
+        reminder_date = today - timedelta(days=1)
+
+    return application_date, reminder_date
+
+@csrf_exempt
 def receive_schedule(request):
+    """Receives and processes the fertilizer schedule from the frontend."""
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
@@ -100,7 +125,8 @@ def receive_schedule(request):
 
                 for application in applications:
                     try:
-                        time_description = application['time']
+                        application_date, reminder_date = calculate_reminder_dates(application['time'])
+
                         fertilizer_types = []
                         if application.get('urea') is not None:
                             fertilizer_types.append(f"Urea ({application['urea']} kg/ha)")
@@ -109,53 +135,19 @@ def receive_schedule(request):
                         if application.get('mop') is not None:
                             fertilizer_types.append(f"MOP ({application['mop']} kg/ha)")
 
-                        fertilizer_type_str = ", ".join(fertilizer_types)
-
-                        # Calculate the reminder date based on the 'time' description.
-                        if "planting" in time_description.lower():
-                            days_before = 2 if "before planting" in time_description.lower() else 3 #default to 2 days before planting
-                            application_date = date.today() # Assume planting today, for testing purposes.  Replace this with actual planting date input from user.
-                            reminder_date = application_date - timedelta(days=days_before)  # Reminder 2 days before planting
-                        elif "days before" in time_description.lower(): # Handling "X days before"
-                            days_before = int(time_description.split("days before")[0].strip() or 3)  #Get the numner of days from the string
-                            application_date = date.today() # planting date here
-                            reminder_date = application_date - timedelta(days=days_before)
-                        elif "week" in time_description.lower():
-                            weeks_after = int(time_description.split("week")[0].replace("After", "").strip()) # Extract number of weeks
-                            application_date = date.today() + relativedelta(weeks=weeks_after) # date of application
-                            reminder_date = application_date - timedelta(days=2) # 2 days before
-                        elif "month" in time_description.lower():
-                            months_after = int(time_description.split("month")[0].replace("After", "").strip())
-                            application_date = date.today() + relativedelta(months=months_after)
-                            reminder_date = application_date - timedelta(days=2)
-                        elif "map" in time_description.lower():
-                            # Specific to PineApple.
-                            application_date = date.today() + relativedelta(months=1)
-                            if "3-4" in time_description.lower():
-                                application_date = date.today() + relativedelta(months=3) # take 3 months as an assumption here, adjust it as needed.
-                            reminder_date = application_date - timedelta(days=2)
-                        else:
-                            # Handle other time descriptions or set a default.  For example, if the "time" field is
-                            # just "Basal",  you might have a default date or not set a reminder at all.  Or,
-                            # you might prompt the user to enter a planting date.
-                            print(f"Warning: Unhandled time description: {time_description} for {crop_type}")
-                            continue  # Skip this schedule entry
-
-
-                        if reminder_date >= date.today(): #Check if reminder is in the future
+                        if reminder_date >= date.today():
                             reminders.append({
                                 'reminder_date': reminder_date,
-                                'fertilizer_type': fertilizer_type_str,
+                                'fertilizer_type': ", ".join(fertilizer_types),
                                 'application_date': application_date,
                                 'crop_type': crop_type,
                             })
                         else:
-                            print(f"Skipping reminder for {time_description} because it has passed.")
+                            print(f"Skipping reminder for {application['time']} because it has passed.")
 
-                    except (ValueError, TypeError) as e:
-                        print(f"Error processing application: {application}.  Error: {e}")
-                        # Log the error, skip this application, or handle it as appropriate
-                        continue # Skip this application and go to the next.
+                    except Exception as e:
+                        print(f"Error processing application: {application}. Error: {e}")
+                        continue
 
                 return JsonResponse({'status': 'success', 'message': 'Schedule received and reminders set.'}, status=201)
             else:
@@ -164,19 +156,17 @@ def receive_schedule(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
 
-
-#  The 'check_reminders' function
 def check_reminders():
-    """Checks if any reminders are due and triggers the emulated call."""
-    now = date.today()
+    """Checks for due reminders and triggers emulated calls."""
+    today = date.today()
     for reminder in reminders:
-        if reminder['reminder_date'] == now:  #Correct Comparison: date object
-            phone_number = get_user_phone_number(1) # Assuming user ID 1 (for testing)
-            emulate_call(phone_number, reminder['crop_type'], reminder['fertilizer_type'], reminder['application_date'])  #Pass crop_type
+        if reminder['reminder_date'] == today:
+            phone_number = get_user_phone_number(1)
+            emulate_call(phone_number, reminder['crop_type'], reminder['fertilizer_type'], reminder['application_date'])
             reminders.remove(reminder)
 
 @csrf_exempt
 def get_schedule_history(request):
-    history = list(FertilizerSchedule.objects.all().values())  # Fetch all data
-    print("Fetched History from DB:", history)  # Debugging log
+    """Fetches the fertilizer schedule history from the database."""
+    history = list(FertilizerSchedule.objects.all().values())
     return JsonResponse({"history": history})
