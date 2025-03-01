@@ -9,7 +9,6 @@ import { RootStackParamList } from './types';
 type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "ItemDetails">;
 
-
 // Phone Number Validation Function
 const isValidPhoneNumber = (phone: string) => {
   const phoneRegex = /^[0-9]{10}$/; // Ensures exactly 10 digits
@@ -51,25 +50,31 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
     }
 
     try {
-      const API_BASE_URL = 'http://10.0.2.2:8000'; // Use 10.0.2.2 for Android Emulator
+      const API_BASE_URL = 'http://localhost:8000';
 
-      const response = await fetch(`${API_BASE_URL}/shop/items/${item.id}/`, {
+      const response = await fetch(`${API_BASE_URL}/shop/update_item/${item.id}/`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           price: updatedPrice,
           stock: updatedStock,
           availability,
-          seller_phone: phoneNumber,
-          shop_address: shopAddress,
+          contact_number: phoneNumber, // Changed to match backend field
+          address: shopAddress, // Changed to match backend field
         }),
       });
 
       if (response.ok) {
         Alert.alert('Success', 'Item details updated successfully');
       } else {
-        const errorData = await response.json();
-        Alert.alert('Error', errorData.message || 'Failed to update item details');
+        try {
+          const errorData = await response.json();
+          Alert.alert('Error', errorData.message || 'Failed to update item details');
+        } catch (jsonError) {
+          // If the response is not JSON, show a generic error message
+          Alert.alert('Error', 'Failed to update item details.  Please check your backend.');
+          console.error("Response was not JSON:", await response.text()); // Log the raw response
+        }
       }
     } catch (error) {
       console.error('Error updating item:', error);
@@ -147,28 +152,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#DDD",
   },
-  headerTitle: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    flex: 1, 
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    flex: 1,
     alignItems: "center",
     paddingLeft: 80,
   },
-  backButton: { 
+  backButton: {
     marginRight: 10,
     marginBottom: 25,
-    borderColor: "#DDD", 
-    borderWidth: 2, 
+    borderColor: "#DDD",
+    borderWidth: 2,
     borderRadius: 15,
     marginTop: 25,
-    paddingLeft: 13, 
+    paddingLeft: 13,
     paddingRight: 15,
-    paddingBottom: 5, 
-    textAlign: "center" 
+    paddingBottom: 5,
+    textAlign: "center"
   },
-    backText: { 
-    fontSize: 25, 
-    fontWeight: "bold" 
+    backText: {
+    fontSize: 25,
+    fontWeight: "bold"
   },
   label: { fontSize: 16, fontWeight: 'bold', marginVertical: 20 },
   input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginTop: 5, borderRadius: 5 },
