@@ -35,7 +35,7 @@ const SeasonalReport = () => {
       }
 
       const response = await fetch(
-        `http://127.0.0.1:8000/personalFinanceTracker/seasonal-report/?start_date=${startDate}&end_date=${endDate}`,
+        `https://api.aswenna.site/personalFinanceTracker/seasonal-report/?start_date=${startDate}&end_date=${endDate}`,
         {
           method: "GET",
           headers: {

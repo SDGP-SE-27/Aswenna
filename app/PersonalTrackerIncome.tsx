@@ -93,7 +93,7 @@ const PersonalTrackerIncome = () => {
         return false;
       }
 
-      const response = await fetch('http://127.0.0.1:8000/personalFinanceTracker/add-income/', {
+      const response = await fetch('https://api.aswenna.site/personalFinanceTracker/add-income/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

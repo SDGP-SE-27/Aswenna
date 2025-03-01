@@ -71,45 +71,8 @@ const handleSubmit = async (): Promise<boolean> => {
   setErrors(newErrors);
   return isValid;
                               
-// Update the errors state
 };  
 
-  // if (!isValid) {
-  //     return false; // Return early if validations fail
-  // }
-  
-//   try {
-//       const response = await fetch('http://127.0.0.1:8000/api/users/register/', {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({
-//               username,
-//               phone_number: phoneNumber,
-//               address,
-//               district,
-//           }),
-//       });
-
-//       if (response.ok) {
-//           Alert.alert("Registration Successful", `Welcome, ${name}!`);
-//           return true;
-//       } else {
-//           const errorData = await response.json();
-//           console.error("Error:", errorData);
-//           Alert.alert("Error", "Failed to register. Please try again.");
-//       }
-//   } catch (error) {
-//       console.error("Error:", error);
-//       Alert.alert("Error", "Cannot connect to the server. Please try again later.");
-//   }
-
-//   return false; // Return false if API call fails
-
-
- 
-  
 return (
     <View style={styles.container}>
       <Text style={styles.title}>Registration</Text>

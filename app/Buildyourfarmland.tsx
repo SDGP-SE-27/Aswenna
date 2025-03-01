@@ -20,7 +20,7 @@ type BuildyourfarmlandScreenProp = NativeStackNavigationProp<
 
 const Buildyourfarmland = () => {
   const navigation = useNavigation<BuildyourfarmlandScreenProp>();
-  const route = useRoute<RouteProp<RootStackParamList, "Buildyourfarmland">>();  // ✅ Get route params
+  const route = useRoute<RouteProp<RootStackParamList, "Buildyourfarmland">>();  // Get route params
   const username = route.params?.username || "";
   const [cropType, setCropType] = useState<string>('');
   const [landArea, setLandArea] = useState<string>('');
@@ -67,7 +67,7 @@ const Buildyourfarmland = () => {
 
         if (response.ok) {
             Alert.alert('Success', 'Farmland details saved successfully!');
-            navigation.navigate("login", { username }); // ✅ Redirect to login after success
+            navigation.navigate("login", { username }); // Redirect to login after success
         } else {
             const errorData = await response.json();
             console.error('Error:', errorData);
@@ -87,7 +87,7 @@ const Buildyourfarmland = () => {
 
       <View style={styles.formContainer}>
 
-        {/* ✅ Crop Type Picker */}
+        {/* Crop Type Picker */}
         <Text style={styles.label}>Crop Type*</Text>
         <Picker
           selectedValue={cropType}

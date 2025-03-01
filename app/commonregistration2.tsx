@@ -1,173 +1,3 @@
-// import React, { ChangeEventHandler, useState } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, TouchableOpacity , Image} from 'react-native';
-// import { useFonts } from 'expo-font';
-// import { NavigationProp } from '@react-navigation/native';
-// import { useNavigation } from '@react-navigation/native';
-// import { RootStackParamList } from './types';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import { useRoute, RouteProp } from '@react-navigation/native';
-// import commonregistration1 from './commonregistration1';
-
-
-// type commonregistration2ScreenProp = NativeStackNavigationProp<
-//   RootStackParamList,
-//   'commonregistration2'
-// >;
-
-// const commonregistration2 = () => {
-//     const navigation = useNavigation<commonregistration2ScreenProp>();
-//     const route = useRoute<RouteProp<RootStackParamList, "commonregistration2">>();
-//     const { username, phoneNumber, address, district } = route.params;
-//     const [Email, setEmail] = useState<string>('');
-//     const [Password, setPassword] = useState<string>('');
-//     const [ConfirmPassword, setConfirmPassword] = useState<string>('');
-//     const[emailError , setEmailError] = useState<string>(''); 
-//     const[passwordError, setPasswordError] = useState<string>('');
-//     const [errors, setErrors] = useState({
-//           Email:  "",
-//           Password: "",
-          
-//     });      
-
-//     const validateEmail = (email: string): boolean => {
-//         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//         return emailRegex.test(email);
-//       };
-
-//     const validatePasswords = () : boolean =>{
-//         return Password == ConfirmPassword
-//     }; 
-
-//     const handleSubmit = async (): Promise<boolean> => {
-//       let isValid = true; // Assume inputs are valid initially
-//       const newErrors = { Email: "", Password: "", ConfirmPassword: ""};
-
-
-//       if (!Email.trim()) {
-//         newErrors.Email = "Email is required.";
-//         isValid = false;
-//       }
-
-//       if (!Password.trim()) {
-//         newErrors.Password = "Password is required.";
-//         isValid = false;
-//       }
-
-
-//      if (!isValid) {
-//           return false; // Return early if validations fail
-//       }
-    
-//       try {
-//           const response = await fetch('http://127.0.0.1:8000/api/users/register/', {
-//               method: 'POST',
-//               headers: {
-//                   'Content-Type': 'application/json',
-//               },
-//               body: JSON.stringify({
-//                   Email,
-//                   Password,
-//                   ConfirmPassword,
-                  
-//               }),
-//           });
-    
-//           if (response.ok) {
-//               Alert.alert("Registration Successful");
-//               return true;
-//           } else {
-//               const errorData = await response.json();
-//               console.error("Error:", errorData);
-//               Alert.alert("Error", "Failed to register. Please try again.");
-//           }
-//       } catch (error) {
-//           console.error("Error:", error);
-//           Alert.alert("Error", "Cannot connect to the server. Please try again later.");
-//       }
-    
-//       return false; // Return false if API call fails
-    
-    
-//     }
-
-//     return (
-//         <ScrollView contentContainerStyle={styles.container}>
-
-//         <View style={styles.container}>
-//         <Text style={[styles.title, {fontFamily: 'Poppins-Bold'}]}>Registration</Text>
-        
-
-//         <View style={styles.formContainer}>
-        
-//             <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Email*</Text>
-//             <View >
-//                 <Image
-//                     source={require("../assets/icons/email.png")}
-//                     style={styles.icon}
-//                 />
-//                 <TextInput
-//                     style={[styles.input,{fontFamily: 'Poppins-Regular'}]} 
-//                     placeholder='email'
-//                     value={Email}
-//                     onChangeText={setEmail}
-//                 />    
-
-//             </View>
-              
-            
-//             {emailError && <Text style={styles.errorText}>{emailError}</Text>}
-    
-          
-//             <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Password*</Text>
-//             <TextInput
-//               style= {[styles.input,{fontFamily:'Poppins-Regular'}]}
-//               placeholder="password"
-//               value={Password}
-//               onChangeText={setPassword}
-//               secureTextEntry
-//             />
-    
-
-//             <Text style={[styles.label,{fontFamily: 'Poppins-Bold'}]}>Confirm Password*</Text>
-//             <TextInput
-//               style= {[styles.input,{fontFamily:'Poppins-Regular'}]}
-//               placeholder="Confirm password"
-//               value={ConfirmPassword}
-//               onChangeText={setConfirmPassword}
-//               secureTextEntry
-//             />
-
-//             {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
-    
-    
-//             {/* Submit Button */}
-//             <TouchableOpacity
-//               style={styles.button}
-//               onPress={async () => {
-//               const isValid = await handleSubmit(); // Await the result of handleSubmit
-//               if (isValid) {
-//                 navigation.navigate("commonregistration3", {
-//                       username, 
-//                       phoneNumber,
-//                       address,
-//                       district,
-//                       Email, 
-//                       Password
-//                 }); // Navigate only if successful
-//               }
-//               }}
-//               >
-//             <Text style={styles.buttonText}>Next</Text>
-//             </TouchableOpacity>
-
-
-
-//           </View>
-//           </View>
-//         </ScrollView>
-//       );
-//     };
-
 import React, { useState } from "react";
 import {
   View,
@@ -184,7 +14,7 @@ import { RootStackParamList } from "./types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import BuildyourFarmland from "./Buildyourfarmland";
-import seller_dashBoard from "./seller_dashboard";
+
 
 
 type commonregistration2ScreenProp = NativeStackNavigationProp<
@@ -217,9 +47,9 @@ const commonregistration2 = () => {
 
   const navigateBasedOnRole = () => {
     if (role === "farmer") {
-        navigation.navigate("Buildyourfarmland", { username });  // ✅ Farmers go to Buildyourfarmland
+        navigation.navigate("Buildyourfarmland", { username });  // Farmers go to Buildyourfarmland
     } else {
-        navigation.navigate("login", { username });  // ✅ Sellers go to SellerDashboard
+        navigation.navigate("login", { username });  // Sellers go to SellerDashboard
     } 
 };
 
@@ -248,8 +78,8 @@ const commonregistration2 = () => {
     console.log("Sending role to backend:", role);
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
-            method: "POST", // ✅ Ensure POST method is used
+        const response = await fetch("https://api.aswenna.site/api/users/register/", {
+            method: "POST", 
             headers: {
                 "Content-Type": "application/json",
             },
@@ -268,7 +98,7 @@ const commonregistration2 = () => {
           Alert.alert(
               "Registration Successful",
               `You have registered as a ${role}.`,
-              [{ text: "OK", onPress: () => navigateBasedOnRole() }]  // ✅ Navigate after clicking OK
+              [{ text: "OK", onPress: () => navigateBasedOnRole() }]  // Navigate after clicking OK
           );
           return true;
         } else {
@@ -294,7 +124,6 @@ const commonregistration2 = () => {
           {/* Email Input */}
           <Text style={[styles.label]}>Email*</Text>
           <View>
-            {/* <Image source={require("../assets/icons/email.png")} style={styles.icon} /> */}
             <TextInput
               style={[styles.input]}
               placeholder="Enter your Email"
@@ -332,7 +161,7 @@ const commonregistration2 = () => {
             onPress={async () => {
               const isValid = await handleSubmit();
               if (isValid) {
-                navigateBasedOnRole();  // ✅ Navigate based on the role
+                navigateBasedOnRole();  //Navigate based on the role
               }
             }}
           >

@@ -50,7 +50,7 @@ const MarketPrice1 = () => {
   ];
 
   const handleNavigation = (cropName: string) => {
-    // console.log("Navigating to MarketPrice3 with:", cropName);
+    console.log("Navigating to MarketPrice3 with:", cropName);
     navigation.navigate("MarketPrice3", { cropName });
   };
 

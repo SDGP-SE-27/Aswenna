@@ -12,7 +12,7 @@ const NotifiScreen = () => {
 
     const fetchReminders = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/callScheduler/get-schedule-history/');
+            const response = await axios.get('https://api.aswenna.site/api/callScheduler/get-schedule-history/');
             setReminders(response.data.history);
         } catch (error) {
             console.error('Error fetching reminders:', error);
@@ -35,9 +35,9 @@ const NotifiScreen = () => {
                     renderItem={({ item }) => (
                         <View style={styles.reminderItem}>
                             <Text style={styles.cropName}>🌱 Crop: {item.crop_type}</Text>
-                            <Text>💊 Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
-                            <Text>📅 Date: {item.application_date}</Text>
-                            <Text>📨 SMS Sent: {item.sms_sent ? 'Yes' : 'No'}</Text>
+                            <Text>Fertilizer: {item.fertilizer_type || 'N/A'}</Text>
+                            <Text>Date: {item.application_date}</Text>
+                            <Text>SMS Sent: {item.sms_sent ? 'Yes' : 'No'}</Text>
                         </View>
                     )}
                 />

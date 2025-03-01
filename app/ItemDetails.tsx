@@ -4,6 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from './types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define Props Type
 type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
@@ -18,7 +19,7 @@ const isValidPhoneNumber = (phone: string) => {
 // Fix the component with proper type annotation
 const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   const navigation = useNavigation<NavigationProp>();
-  const item = route?.params?.item || { id: 0, price: 0, stock: 0, availability: false };
+  const item = route?.params?.item || { id: 1, price: 0, stock: 0, availability: false };
 
   const [price, setPrice] = useState(item.price.toString());
   const [stock, setStock] = useState(item.stock.toString());
@@ -50,11 +51,23 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
     }
 
     try {
-      const API_BASE_URL = 'http://localhost:8000';
+      const API_BASE_URL = 'https://api.aswenna.site';
+
+      const token = await AsyncStorage.getItem("accessToken");
+      console.log("token recieved");
+
+      if (!token) {
+        Alert.alert("Authentication Error", "No access token found. Please log in again.");
+        console.log("No token");
+        return;
+      }
 
       const response = await fetch(`${API_BASE_URL}/shop/update_item/${item.id}/`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           price: updatedPrice,
           stock: updatedStock,
@@ -66,6 +79,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
 
       if (response.ok) {
         Alert.alert('Success', 'Item details updated successfully');
+        console.log("updates succesfully");
       } else {
         try {
           const errorData = await response.json();

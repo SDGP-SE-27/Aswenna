@@ -181,12 +181,12 @@ const Homepage = () => {
     {
       icon: require("../assets/icons/fertilizer_sellers.png"),
       label: "Fertilizer Sellers",
-      screen: "Fertilizerseller",
+      screen: "buyersItem",
     },
     {
       icon: require("../assets/icons/supplement_reminder.png"),
       label: "Supplement Reminder",
-      screen: "SupplementReminder1",
+      screen: "Call",
     },
     {
       icon: require("../assets/icons/personal_finance_tracker.png"),
@@ -253,7 +253,7 @@ const Homepage = () => {
             <TouchableOpacity
               style={styles.categoryBox}
               onPress={() => {
-                if (item.screen && typeof item.screen === "string") {
+                if (item.screen) {
                   const screenName = item.screen as keyof RootStackParamList;
                   navigation.navigate(screenName);
                 } else {

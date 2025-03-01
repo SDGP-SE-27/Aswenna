@@ -11,15 +11,15 @@ export default function Call() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [scheduleHistory, setScheduleHistory] = useState([]);
-
+    const[responsedata , setResponseData] = useState(history);
     const crops = ['Bitter Gourd', 'Papaya', 'Pineapple'];
 
     // Fetch schedule history from the backend
     const fetchScheduleHistory = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/callScheduler/get-schedule-history/');
-            setScheduleHistory(response.data.history);
-            console.log('Schedule History:', response.data.history);
+            setScheduleHistory(responsedata.history);
+            console.log('Schedule History:', responsedata.history);
         } catch (error) {
             console.error('Error fetching schedule history:', error);
             setMessage('Error fetching schedule history.');

@@ -50,7 +50,7 @@ const WeatherScreen = () => {
   // Function to fetch weather data including forecast
   const fetchWeatherData = async (city: string) => {
     try {
-      const response = await axios.get<WeatherResponse>(`http://127.0.0.1:8000/WeatherForecast/weather/${city}/`);
+      const response = await axios.get<WeatherResponse>(`https://api.aswenna.site/WeatherForecast/weather/${city}/`);
       console.log('Full API Response:', response.data); // Log the full response
       
       if (response.status === 200) {

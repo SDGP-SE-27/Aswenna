@@ -32,18 +32,18 @@ const login = () => {
   useEffect(() => { checkStoredToken(); }, []);
 
 
-  const fetchProtectedData = async () => {
-    const token = await AsyncStorage.getItem("accessToken");
-    const response = await fetch("https://api.aswenna.site/protected-endpoint/", {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-    });
-    const data = await response.json();
-    console.log(data);
-  };
+  // const fetchProtectedData = async () => {
+  //   const token = await AsyncStorage.getItem("accessToken");
+  //   const response = await fetch("https://api.aswenna.site/protected-endpoint/", {
+  //       method: "GET",
+  //       headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //       },
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  // };
 
   const navigateBasedOnRole = async (role: string) => {
     console.log("navigateBasedOnRole() called with role:", role);

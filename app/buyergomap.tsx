@@ -4,6 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type BuyerGoMapScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -55,12 +56,37 @@ const ShopScreen = () => {
     fetchShops();
   }, []);
 
+  
   const fetchShops = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/shop/get_shops/'); // Replace with your API endpoint
+      // Retrieve the token from AsyncStorage
+      const token = await AsyncStorage.getItem("accessToken");
+  
+      if (!token) {
+        Alert.alert("Authentication Error", "No access token found. Please log in again.");
+        console.error("No token found in storage.");
+        return;
+      }
+  
+      // Make API request with proper headers
+      const response = await fetch('https://api.aswenna.site/shop/get_shops/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token.trim()}`,  // Ensure no extra spaces
+          "Content-Type": "application/json",
+        },
+      });
+  
       if (!response.ok) {
+        if (response.status === 401) {
+          Alert.alert("Session Expired", "Please log in again.");
+          console.error("Unauthorized: Token may be invalid or expired.");
+          return;
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+  
+      // Parse and store shop data
       const data: Shop[] = await response.json();
       setShops(data);
     } catch (error) {
@@ -68,12 +94,13 @@ const ShopScreen = () => {
       Alert.alert("Error", "Failed to load shop data.");
     }
   };
+  
 
   const handleGoToShop = (shop: Shop) => {
     setSelectedShop(shop);
     // Implement navigation to map screen or shop details here
     console.log("Navigating to shop:", shop.shop_name);
-    navigation.navigate('buyergomap');  // Example: Navigate to a map screen
+    navigation.navigate('sellerMap');  // Example: Navigate to a map screen
   };
 
 
@@ -82,7 +109,7 @@ const ShopScreen = () => {
       id: item.id,
       name: item.name,
       availability: item.availability ? 'Available' : 'Out of Stock',
-      price: item.price.toFixed(2),
+      price: item.price,
       address: shop.address,
       contact: shop.contact_number,
       stock: item.stock.toString(),
