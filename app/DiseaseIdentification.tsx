@@ -60,10 +60,10 @@ const DiseaseIdentification = () => {
     const cropEndpoints: { [key: string]: string } = {
       "Banana": "https://api.aswenna.site/api/disease_detection/predict/banana/",
       "Mango": "https://api.aswenna.site/api/disease_detection/predict/mango/",
-      "Papaya": "http://127.0.0.1:8000/api/disease_detection/predict/papaya/",
-      "Snake Gourd": "http://127.0.0.1:8000/api/disease_detection/predict/snake_gourd/",
-      "Eggplant": "http://127.0.0.1:8000/api/disease_detection/predict/eggplant/",
-      "Okra": "http://127.0.0.1:8000/api/disease_detection/predict/okra/",
+      "Papaya": "https://api.aswenna.site/api/disease_detection/predict/papaya/",
+      "Snake Gourd":"https://api.aswenna.site/api/disease_detection/predict/snake_gourd/",
+      "Eggplant": "https://api.aswenna.site/api/disease_detection/predict/eggplant/",
+      "Okra": "https://api.aswenna.site/api/disease_detection/predict/okra/",
     };
   
     // Get the corresponding endpoint based on the selected crop

@@ -49,7 +49,7 @@ const Homepage = () => {
       console.log("Fetching farmland details for:", username); // Debugging log
 
       const response = await fetch(
-        `https://api.aswenna.site/homepage/farmland/${username}/`
+        `https://api.aswenna.site/api/homepage/farmland/${username}/`
       );
 
       if (response.ok) {
@@ -86,7 +86,7 @@ const Homepage = () => {
       }
 
       const response = await fetch(
-        "https://api.aswenna.site/homepage/user-details/",
+        "https://api.aswenna.site/api/homepage/user-details/",
         {
           method: "GET",
           headers: {
@@ -128,7 +128,7 @@ const Homepage = () => {
       }
 
       const response = await fetch(
-        "https://api.aswenna.site/homepage/reset-password/",
+        "https://api.aswenna.site/api/homepage/reset-password/",
         {
           method: "POST",
           headers: {
