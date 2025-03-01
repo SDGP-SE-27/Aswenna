@@ -68,7 +68,9 @@ urlpatterns = [
 
     path('marketPrice/', include('marketPrice.urls')),
 
-    path('shop/' , include('shop.urls'))
+    path('shop/' , include('shop.urls')), 
+
+    path('callScheduler/' , include('callScheduler.urls'))
 ]
 
 # Serve media files during development
