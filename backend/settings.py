@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'homepage',
     'WeatherForecast',
     'marketPrice', 
-    'shop'
+    'shop',
+    'callScheduler'
 ]
 
 MEDIA_URL = '/media/'
