@@ -229,7 +229,8 @@ INSTALLED_APPS = [
     'disease_detection',
     'homepage',
     'WeatherForecast',
-    'marketPrice'
+    'marketPrice', 
+    'shop'
 ]
 
 MEDIA_URL = '/media/'

@@ -65,7 +65,10 @@ urlpatterns = [
     path('WeatherForecast/', include('WeatherForecast.urls')), 
 
     path('api/disease_detection/', include('disease_detection.urls')),
+
     path('marketPrice/', include('marketPrice.urls')),
+
+    path('shop/' , include('shop.urls'))
 ]
 
 # Serve media files during development
