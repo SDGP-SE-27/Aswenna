@@ -56,14 +56,15 @@ const MarketPrice1 = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Homepage")}
-        style={styles.backButton}
-      ></TouchableOpacity>
 
       {/* Crop Selection */}
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>Select a Crop</Text>
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+            <Text style={styles.backText}>{"<"}</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Select a crop</Text>
+        </View>
         <View style={styles.gridContainer}>
           {crops.map((crop, index) => (
             <TouchableOpacity
@@ -140,13 +141,29 @@ const styles = StyleSheet.create({
     borderBottomColor: "#d3d3d3",
     fontSize: 25,
   },
-  backButton: {
-    width: 24,
-    height: 24,
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 50 
+  },
+  backButton: { 
     marginRight: 10,
+    borderColor: "#DDD", 
+    borderWidth: 2, 
+    borderRadius: 15, 
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center" 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
   },
   cropSelectionContainer: {
     padding: 20,
+    margin: 20,
   },
   cropItem: {
     backgroundColor: "#FFFFFF",
@@ -154,7 +171,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
+    justifyContent: "space-between",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -209,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#DFFFD8",
     position: "absolute",
     width: "90%",
-    bottom: 30,
+    bottom: 15,
     alignSelf: "center",
     borderRadius: 30,
     elevation: 5,
