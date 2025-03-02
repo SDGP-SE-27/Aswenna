@@ -36,7 +36,7 @@ const WeeklyReport = () => {
       }
 
       const response = await fetch(
-        "http://127.0.0.1:8000/personalFinanceTracker/weekly-report/",
+        "https://api.aswenna.site/personalFinanceTracker/weekly-report/",
         {
           method: "GET",
           headers: {

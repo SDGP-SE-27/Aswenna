@@ -1,33 +1,121 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type BuyerGoMapScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   "buyergomap"
 >;
 
-const itemDetails = {
+interface Shop {
+  shop_name: string;
+  address: string;
+  contact_number: string;
+  items: Item[];
+}
+
+interface Item {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  availability: boolean;
+  shop: number;
+}
+
+interface ItemDetailsProps {
   item: {
-    id: 1, // replace with the actual id
-    price: 10.00, // replace with the actual price
-    stock: 50, // replace with the actual stock
-    availability: true, // replace with the actual availability
-  },
-};
+    id: number;
+    price: number;
+    stock: number;
+    availability: boolean;
+  };
+}
+
 
 const ShopScreen = () => {
   const navigation = useNavigation<BuyerGoMapScreenProp>();
-  const products = [
-    { name: 'URIA', availability: 'Available', price: '10.00', address: 'Shop A', contact: '078 16 390 72', stock: '50' },
-    { name: 'POSPATA', availability: 'Out of Stock', price: '15.00', address: 'Shop B', contact: '078 16 390 73', stock: '0' },
-    { name: 'POTASH', availability: 'Available', price: '20.00', address: 'Shop C', contact: '078 16 390 74', stock: '30' },
-    { name: 'NITROGEN', availability: 'Available', price: '25.00', address: 'Shop D', contact: '078 16 390 75', stock: '20' },
-    { name: 'AMMONIA', availability: 'Out of Stock', price: '18.00', address: 'Shop E', contact: '078 16 390 76', stock: '0' },
-  ];
+  const [shops, setShops] = useState<Shop[]>([]);
+  const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
+
+  const itemDetails: ItemDetailsProps = {
+    item: {
+      id: 1,
+      price: 10.00,
+      stock: 50,
+      availability: true,
+    },
+  };
+
+
+  useEffect(() => {
+    fetchShops();
+  }, []);
+
+  
+  const fetchShops = async () => {
+    try {
+      // Retrieve the token from AsyncStorage
+      const token = await AsyncStorage.getItem("accessToken");
+  
+      if (!token) {
+        Alert.alert("Authentication Error", "No access token found. Please log in again.");
+        console.error("No token found in storage.");
+        return;
+      }
+  
+      // Make API request with proper headers
+      const response = await fetch('https://api.aswenna.site/shop/get_shops/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token.trim()}`,  // Ensure no extra spaces
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        if (response.status === 401) {
+          Alert.alert("Session Expired", "Please log in again.");
+          console.error("Unauthorized: Token may be invalid or expired.");
+          return;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      // Parse and store shop data
+      const data: Shop[] = await response.json();
+      setShops(data);
+    } catch (error) {
+      console.error("Could not fetch shops:", error);
+      Alert.alert("Error", "Failed to load shop data.");
+    }
+  };
+  
+
+  const handleGoToShop = (shop: Shop) => {
+    setSelectedShop(shop);
+    // Implement navigation to map screen or shop details here
+    console.log("Navigating to shop:", shop.shop_name);
+    navigation.navigate('sellerMap');  // Example: Navigate to a map screen
+  };
+
+
+  const products = shops.flatMap(shop =>
+    shop.items.map(item => ({
+      id: item.id,
+      name: item.name,
+      availability: item.availability ? 'Available' : 'Out of Stock',
+      price: item.price,
+      address: shop.address,
+      contact: shop.contact_number,
+      stock: item.stock.toString(),
+      shop: shop.shop_name,
+    }))
+  );
 
   return (
     <View style={styles.container}>
@@ -35,7 +123,7 @@ const ShopScreen = () => {
         <Text style={styles.backButtonText}>{"<"}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.checkButton}>
+      <TouchableOpacity style={styles.checkButton} onPress={() => handleGoToShop({shop_name: "shopname", address:"address", contact_number:"123",items:[]})}>
         <Text style={styles.buttonText}>Check & Go to Shop</Text>
       </TouchableOpacity>
 
@@ -63,7 +151,7 @@ const ShopScreen = () => {
                 <Text style={styles.tableCell}>{product.stock} kg</Text>
                 <Text style={[styles.tableCell, styles.wideColumn]}>{product.address}</Text>
                 <Text style={[styles.tableCell, styles.wideColumn]}>{product.contact}</Text>
-                <TouchableOpacity style={styles.goButton}>
+                <TouchableOpacity style={styles.goButton} onPress={() => handleGoToShop({ shop_name: product.shop, address: product.address, contact_number: product.contact, items: [] })}>
                   <Text style={styles.goButtonText}>Go To Shop</Text>
                 </TouchableOpacity>
               </View>
@@ -76,31 +164,31 @@ const ShopScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, 
-    padding: 22, 
-    backgroundColor: '#F0FFF0' 
+  container: { flex: 1,
+    padding: 22,
+    backgroundColor: '#F0FFF0'
   },
-  backText: { 
-    fontSize: 18, 
-    color: 'black', 
-    marginBottom: 10 
+  backText: {
+    fontSize: 18,
+    color: 'black',
+    marginBottom: 10
   },
-  backButton: { 
+  backButton: {
     marginRight: 10,
-    borderColor: "#DDD", 
-    borderWidth: 2, 
-    borderRadius: 15, 
-    paddingLeft: 13, 
+    borderColor: "#DDD",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingLeft: 13,
     paddingRight: 15,
-    paddingBottom: 5, 
+    paddingBottom: 5,
     marginBottom: 20,
-    textAlign: "center", 
+    textAlign: "center",
     width: "14%",
     backgroundColor: '#fff'
   },
-    backButtonText: { 
-    fontSize: 25, 
-    fontWeight: "bold" 
+    backButtonText: {
+    fontSize: 25,
+    fontWeight: "bold"
   },
   checkButton: { backgroundColor: '#32CD32', padding: 10, borderRadius: 5, alignItems: 'center', marginBottom: 20 },
   buttonText: { fontSize: 16, fontWeight: 'bold', color: '#fff' },
@@ -160,7 +248,7 @@ const styles = StyleSheet.create({
   },
 
   scrollableTable: { maxHeight: 300 }, // Allows vertical scrolling of rows while keeping headers fixed
-  
+
   goButton: { backgroundColor: '#32CD32', padding: 5, borderRadius: 5, alignItems: 'center', margin: 5, minWidth: 100 },
   goButtonText: { color: '#fff', fontWeight: 'bold' },
 });

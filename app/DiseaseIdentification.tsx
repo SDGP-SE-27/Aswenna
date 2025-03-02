@@ -58,12 +58,12 @@ const DiseaseIdentification = () => {
   
     // Map crop names to their respective API endpoints
     const cropEndpoints: { [key: string]: string } = {
-      "Banana": "http://127.0.0.1:8000/api/disease_detection/predict/banana/",
-      "Mango": "http://127.0.0.1:8000/api/disease_detection/predict/mango/",
-      "Papaya": "http://127.0.0.1:8000/api/disease_detection/predict/papaya/",
-      "Snake Gourd": "http://127.0.0.1:8000/api/disease_detection/predict/snake_gourd/",
-      "Eggplant": "http://127.0.0.1:8000/api/disease_detection/predict/eggplant/",
-      "Okra": "http://127.0.0.1:8000/api/disease_detection/predict/okra/",
+      "Banana": "https://api.aswenna.site/api/disease_detection/predict/banana/",
+      "Mango": "https://api.aswenna.site/api/disease_detection/predict/mango/",
+      "Papaya": "https://api.aswenna.site/api/disease_detection/predict/papaya/",
+      "Snake Gourd":"https://api.aswenna.site/api/disease_detection/predict/snake_gourd/",
+      "Eggplant": "https://api.aswenna.site/api/disease_detection/predict/eggplant/",
+      "Okra": "https://api.aswenna.site/api/disease_detection/predict/okra/",
     };
   
     // Get the corresponding endpoint based on the selected crop
@@ -117,13 +117,13 @@ const DiseaseIdentification = () => {
         <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={takePhoto}>
           <View style={styles.rowContainer}>
-           <Image source={require("../assets/images/camera-icon.png")} style={styles.icon} />
+           <Image source={require("../assets/images/camera_icon.png")} style={styles.icon} />
            <Text style={styles.buttonText}>   Take a Photo</Text>
           </View>
         </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={pickImageFromGallery}>
             <View style={styles.rowContainer}>
-            <Image source={require("../assets/images/gallery-icon.png")} style={styles.icon} />
+            <Image source={require("../assets/images/gallery_icon.png")} style={styles.icon} />
             <Text style={styles.buttonText}>   Upload from Gallery</Text>
             </View>
           </TouchableOpacity>

@@ -4,11 +4,11 @@ import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from './types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define Props Type
 type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "ItemDetails">;
-
 
 // Phone Number Validation Function
 const isValidPhoneNumber = (phone: string) => {
@@ -19,7 +19,7 @@ const isValidPhoneNumber = (phone: string) => {
 // Fix the component with proper type annotation
 const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   const navigation = useNavigation<NavigationProp>();
-  const item = route?.params?.item || { id: 0, price: 0, stock: 0, availability: false };
+  const item = route?.params?.item || { id: 1, price: 0, stock: 0, availability: false };
 
   const [price, setPrice] = useState(item.price.toString());
   const [stock, setStock] = useState(item.stock.toString());
@@ -51,25 +51,44 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
     }
 
     try {
-      const API_BASE_URL = 'http://10.0.2.2:8000'; // Use 10.0.2.2 for Android Emulator
+      const API_BASE_URL = 'https://api.aswenna.site';
 
-      const response = await fetch(`${API_BASE_URL}/shop/items/${item.id}/`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+      const token = await AsyncStorage.getItem("accessToken");
+      console.log("token recieved");
+
+      if (!token) {
+        Alert.alert("Authentication Error", "No access token found. Please log in again.");
+        console.log("No token");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/shop/update_item/${item.id}/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           price: updatedPrice,
           stock: updatedStock,
           availability,
-          seller_phone: phoneNumber,
-          shop_address: shopAddress,
+          contact_number: phoneNumber, // Changed to match backend field
+          address: shopAddress, // Changed to match backend field
         }),
       });
 
       if (response.ok) {
         Alert.alert('Success', 'Item details updated successfully');
+        console.log("updates succesfully");
       } else {
-        const errorData = await response.json();
-        Alert.alert('Error', errorData.message || 'Failed to update item details');
+        try {
+          const errorData = await response.json();
+          Alert.alert('Error', errorData.message || 'Failed to update item details');
+        } catch (jsonError) {
+          // If the response is not JSON, show a generic error message
+          Alert.alert('Error', 'Failed to update item details.  Please check your backend.');
+          console.error("Response was not JSON:", await response.text()); // Log the raw response
+        }
       }
     } catch (error) {
       console.error('Error updating item:', error);
@@ -147,28 +166,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#DDD",
   },
-  headerTitle: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    flex: 1, 
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    flex: 1,
     alignItems: "center",
     paddingLeft: 80,
   },
-  backButton: { 
+  backButton: {
     marginRight: 10,
     marginBottom: 25,
-    borderColor: "#DDD", 
-    borderWidth: 2, 
+    borderColor: "#DDD",
+    borderWidth: 2,
     borderRadius: 15,
     marginTop: 25,
-    paddingLeft: 13, 
+    paddingLeft: 13,
     paddingRight: 15,
-    paddingBottom: 5, 
-    textAlign: "center" 
+    paddingBottom: 5,
+    textAlign: "center"
   },
-    backText: { 
-    fontSize: 25, 
-    fontWeight: "bold" 
+    backText: {
+    fontSize: 25,
+    fontWeight: "bold"
   },
   label: { fontSize: 16, fontWeight: 'bold', marginVertical: 20 },
   input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginTop: 5, borderRadius: 5 },

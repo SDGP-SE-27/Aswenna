@@ -65,18 +65,6 @@ const App = () => {
       >
         <Text style={{ color: 'white' }}>Open Google Maps (Live Location)</Text>
       </Pressable>
-
-      {/* Button to open Google Maps with Directions from live location to Kandy */}
-      {/* //<Button
-        //title="Get Directions (Live Location to Kandy)"
-       // onPress={() => openGoogleMapsWithDirections(location.latitude, location.longitude, 7.2906, 80.6337)} // Live location to Kandy coordinates
-      /> */}
-
-      {/* Button to show confirmation modal before opening Google Maps */}
-      {/* <Button
-        title="Confirm Redirect to Google Maps (Galle)"
-        onPress={() => confirmRedirect('https://www.google.com/maps/search/?api=1&query=Galle,+Sri+Lanka')}
-      /> */}
     </View>
   );
 };

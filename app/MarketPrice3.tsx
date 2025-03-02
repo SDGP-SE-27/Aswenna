@@ -61,7 +61,7 @@ const MarketPrice3 = () => {
   useEffect(() => {
     axios
       .get<{ prices: PriceEntry[] }>(
-        `http://127.0.0.1:8000/marketPrice/${encodeURIComponent(
+        `https://api.aswenna.site/marketPrice/${encodeURIComponent(
           formattedCropName
         )}/`
       ) // Replace with your actual API endpoint
@@ -273,25 +273,25 @@ const MarketPrice3 = () => {
       <View style={styles.footer}>
         <TouchableOpacity>
           <Image
-            source={require("../assets/images/home-icon.png")}
+            source={require("../assets/images/home_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity>
           <Image
-            source={require("../assets/images/disease-icon.png")}
+            source={require("../assets/images/disease_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity>
           <Image
-            source={require("../assets/images/finance-icon.png")}
+            source={require("../assets/images/finance_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity>
           <Image
-            source={require("../assets/images/profile-icon.png")}
+            source={require("../assets/images/profile_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>

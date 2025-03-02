@@ -50,7 +50,7 @@ const WeatherScreen = () => {
   // Function to fetch weather data including forecast
   const fetchWeatherData = async (city: string) => {
     try {
-      const response = await axios.get<WeatherResponse>(`http://127.0.0.1:8000/WeatherForecast/weather/${city}/`);
+      const response = await axios.get<WeatherResponse>(`https://api.aswenna.site/WeatherForecast/weather/${city}/`);
       console.log('Full API Response:', response.data); // Log the full response
       
       if (response.status === 200) {
@@ -151,19 +151,19 @@ const WeatherScreen = () => {
       {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
-          <Image source={require("../assets/images/home-icon.png")} style={styles.footerIcon} />
+          <Image source={require("../assets/images/home_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       
         <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification2")} >
-          <Image source={require("../assets/images/disease-icon.png")} style={styles.footerIcon} />
+          <Image source={require("../assets/images/disease_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       
         <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")}>
-          <Image source={require("../assets/images/finance-icon.png")} style={styles.footerIcon} />
+          <Image source={require("../assets/images/finance_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       
         <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-          <Image source={require("../assets/images/profile-icon.png")} style={styles.footerIcon} />
+          <Image source={require("../assets/images/profile_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       </View>
     </View>

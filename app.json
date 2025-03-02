@@ -4,28 +4,27 @@
     "slug": "Aswenna",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "myapp",
+    "scheme": "aswenna",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
+    "platforms": ["android", "web"],
     "android": {
+      "package": "com.anonymous.Aswenna",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/images/home_icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.Aswenna"
+      }
     },
     "web": {
       "bundler": "metro",
-      "output": "static"
+      "output": "single",
+      "favicon": "./assets/images/home_icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/home_icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -36,6 +35,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f184c853-fcfb-4cfa-95dc-7fee194d37af"
+      }
     }
   }
 }

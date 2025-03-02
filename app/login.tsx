@@ -17,6 +17,9 @@ type loginScreenProp = NativeStackNavigationProp<
 const login = () => {
   const navigation = useNavigation<NavigationProp>();
 
+  //import env
+  const API_URL = process.env.API_URL;
+
   // State for input and errors
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,18 +32,18 @@ const login = () => {
   useEffect(() => { checkStoredToken(); }, []);
 
 
-  const fetchProtectedData = async () => {
-    const token = await AsyncStorage.getItem("accessToken");
-    const response = await fetch("http://127.0.0.1:8000/protected-endpoint/", {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-    });
-    const data = await response.json();
-    console.log(data);
-  };
+  // const fetchProtectedData = async () => {
+  //   const token = await AsyncStorage.getItem("accessToken");
+  //   const response = await fetch("https://api.aswenna.site/protected-endpoint/", {
+  //       method: "GET",
+  //       headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //       },
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  // };
 
   const navigateBasedOnRole = async (role: string) => {
     console.log("navigateBasedOnRole() called with role:", role);
@@ -87,7 +90,7 @@ const handleLogin = async () => {
   if (!isValid) return;
 
   try {
-      const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+      const response = await fetch("https://api.aswenna.site/api/users/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
@@ -170,13 +173,13 @@ const handleLogin = async () => {
       <View style={styles.socialButtonContainer}>
         <TouchableOpacity style={styles.socialButton}>
           <Image
-            source={require("../assets/images/google-icon.png")}
+            source={require("../assets/images/google_icon.png")}
             style={styles.socialIcon}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton}>
           <Image
-            source={require("../assets/images/apple-icon.png")}
+            source={require("../assets/images/apple_icon.png")}
             style={styles.socialIcon}
           />
         </TouchableOpacity>
