@@ -142,7 +142,8 @@ def receive_schedule(request):
                             crop_type=crop_type,
                             fertilizer_type=fertilizer_type_str,
                             application_date=application_date,
-                            call_made=False  # Default value
+                            call_made=False,
+                            phone_number=application.get('phone_number')
                         )
 
                         if reminder_date >= date.today():
@@ -151,6 +152,7 @@ def receive_schedule(request):
                                 'fertilizer_type': fertilizer_type_str,
                                 'application_date': application_date,
                                 'crop_type': crop_type,
+                                'phone_number': application.get('phone_number')
                             })
                         else:
                             print(f"Skipping reminder for {application['time']} because it has passed.")
