@@ -114,7 +114,7 @@ def calculate_reminder_dates(application_time):
 
 @csrf_exempt
 def receive_schedule(request):
-    """Receives and processes the fertilizer schedule from the frontend."""
+    """Receives and processes the fertilizer schedule from the frontend and saves it to the database."""
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
@@ -135,10 +135,20 @@ def receive_schedule(request):
                         if application.get('mop') is not None:
                             fertilizer_types.append(f"MOP ({application['mop']} kg/ha)")
 
+                        fertilizer_type_str = ", ".join(fertilizer_types)
+
+                        # Save to database
+                        FertilizerSchedule.objects.create(
+                            crop_type=crop_type,
+                            fertilizer_type=fertilizer_type_str,
+                            application_date=application_date,
+                            call_made=False  # Default value
+                        )
+
                         if reminder_date >= date.today():
                             reminders.append({
                                 'reminder_date': reminder_date,
-                                'fertilizer_type': ", ".join(fertilizer_types),
+                                'fertilizer_type': fertilizer_type_str,
                                 'application_date': application_date,
                                 'crop_type': crop_type,
                             })
