@@ -119,6 +119,10 @@ def receive_schedule(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             crop_type = data.get('cropType')
+            phone_number = data.get('phone_number')
+
+            if not phone_number:
+                return JsonResponse({'status': 'error', 'message': 'Phone number is required'}, status=400)
 
             if crop_type in CROP_SCHEDULES:
                 applications = CROP_SCHEDULES[crop_type]['fertilizer_applications']
@@ -143,7 +147,7 @@ def receive_schedule(request):
                             fertilizer_type=fertilizer_type_str,
                             application_date=application_date,
                             call_made=False,
-                            phone_number=application.get('phone_number')
+                            phone_number=phone_number
                         )
 
                         if reminder_date >= date.today():
@@ -152,7 +156,7 @@ def receive_schedule(request):
                                 'fertilizer_type': fertilizer_type_str,
                                 'application_date': application_date,
                                 'crop_type': crop_type,
-                                'phone_number': application.get('phone_number')
+                                'phone_number': phone_number
                             })
                         else:
                             print(f"Skipping reminder for {application['time']} because it has passed.")
