@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'WeatherForecast',
     'marketPrice', 
     'shop',
-    'callScheduler'
+    'reminder',
+    'rest_framework.authtoken',
 ]
 
 MEDIA_URL = '/media/'
