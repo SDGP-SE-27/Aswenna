@@ -41,7 +41,10 @@ const ShopScreen = () => {
   const navigation = useNavigation<BuyerGoMapScreenProp>();
   const [shops, setShops] = useState<Shop[]>([]);
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
-
+  useEffect(() => {
+        navigation.setOptions({ headerShown: false }); 
+      }, [navigation]);
+      
   const itemDetails: ItemDetailsProps = {
     item: {
       id: 1,

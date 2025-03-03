@@ -1,9 +1,10 @@
-import React from 'react'; 
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react'; 
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal } from 'react-native';
 import { Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 type ShopItemScreenProp = NativeStackNavigationProp<
@@ -13,6 +14,12 @@ type ShopItemScreenProp = NativeStackNavigationProp<
 
 const ShopItemsScreen = () => {
   const navigation = useNavigation<ShopItemScreenProp>();
+  const [confirmation, setConfirmation] = useState (false);
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   const items = [
     { id: 1, name: 'URIA'},
     { id: 2, name: 'POSPATA'},
@@ -20,11 +27,59 @@ const ShopItemsScreen = () => {
     { id: 2, name: 'AMMONIA'},
   ];
 
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("accessToken");
+      Alert.alert("Success", "Logged out successfully!");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      Alert.alert("Error", "Failed to log out. Please try again.");
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('login', { username: '' })} style={styles.backButton}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('login', { username: '' })} style={styles.backButton}>
         <Text style={styles.backButtonText}>{"<"}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+
+      <Modal visible={confirmation} transparent={true} animationType="fade">
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>Confirm Action</Text>
+                  <Text style={styles.modalText}>
+                    Are you sure you want to log out?
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.confirmButton}
+                    onPress={async () => {
+                      await handleLogout(); // Log out the user
+                      navigation.reset({
+                        index: 0,
+                        routes: [{ name: "login" }],
+                      }); // Navigate to the login screen
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Confirm Logout</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setConfirmation(false)}
+                  >
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+
+        <TouchableOpacity
+                        // style={styles.logOutButton}
+                        style={styles.backButton}
+                        onPress={() => setConfirmation(true)}
+                      >
+                        <Text style={{ color: "#fff", fontSize: 16 }}> {"<"} </Text>
+                      </TouchableOpacity>
+      
 
       <View>
         <Text style={styles.headerText}>Shop Items</Text>
@@ -146,6 +201,44 @@ const styles = StyleSheet.create({
   footerIcon: {
     width: 30,
     height: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    width: 300,
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  closeButton: {
+    backgroundColor: "#51b936",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  confirmButton: {
+    backgroundColor: "#ff6347",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
   },
 });
 

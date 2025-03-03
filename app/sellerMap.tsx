@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Button, Linking, Pressable, Text, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface Location {
   latitude: number;
@@ -31,7 +33,11 @@ const confirmRedirect = (url: string) => {
 };
 
 const App = () => {
+  const navigation = useNavigation();
   const [location, setLocation] = useState<Location | null>(null);
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
 
   useEffect(() => {
     // Get the user's current location

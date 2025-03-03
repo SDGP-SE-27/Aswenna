@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,11 +9,16 @@ import {
   ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from '@react-navigation/native';
 
 const SeasonalReport = () => {
+  const navigation = useNavigation();
   const [startDate, setStartDate] = useState(""); // Change to string
   const [endDate, setEndDate] = useState(""); // Change to string
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+                navigation.setOptions({ headerShown: false }); 
+            }, [navigation]);
   const [reportData, setReportData] = useState({
     total_income: 0,
     total_expense: 0,

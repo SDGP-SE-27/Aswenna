@@ -24,7 +24,10 @@ type Transaction = {
 const TransactionHistory = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const navigation = useNavigation<TransactionHistoryScreenProp>();
-
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   useEffect(() => {
     fetchTransactions();
   }, []);

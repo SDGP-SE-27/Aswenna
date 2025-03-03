@@ -52,7 +52,7 @@ const App = () => {
         <Stack.Screen name = "TransactionHistory" component={TransactionHistory}/>
         <Stack.Screen name = "Chooserole" component={Chooserole}/>
         <Stack.Screen name="MarketPrice1" component={MarketPrice1}/>
-        <Stack.Screen name= "MarketPrice2" component={MarketPrice2}/>
+        <Stack.Screen name= "MarketPrice2" component={MarketPrice2} options={{ headerShown: false }}/>
         <Stack.Screen name= "MarketPrice3" component={MarketPrice3}/>
         <Stack.Screen name ="passwordReset" component={passwordReset}/>
         <Stack.Screen name="DiseaseIdentification2" component={DiseaseIdentification2}/>

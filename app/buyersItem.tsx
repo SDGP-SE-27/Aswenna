@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -11,6 +11,9 @@ type BuyersItemScreenProp = NativeStackNavigationProp<
 
 const ShopItemsScreen = () => {
   const navigation = useNavigation<BuyersItemScreenProp>();
+  useEffect(() => {
+            navigation.setOptions({ headerShown: false }); 
+          }, [navigation]);
   const items = [
     { id: 1, name: 'Long Bean', image: require('../assets/images/long_bean.jpg') },
     { id: 2, name: 'Bitter Gourd', image: require('../assets/images/bitter_gourd.jpg') },

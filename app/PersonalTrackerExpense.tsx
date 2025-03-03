@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,10 @@ type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
 
 const PersonalTrackerExpense = () => {
   const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }); 
+  }, [navigation]);
 
   // States for form fields
   const [expenseType, setExpenseType] = useState('');

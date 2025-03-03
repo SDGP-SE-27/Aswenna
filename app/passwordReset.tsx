@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function PasswordResetScreen() {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-
+  useEffect(() => {
+              navigation.setOptions({ headerShown: false }); 
+          }, [navigation]);
   // Function to validate email
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -62,7 +66,7 @@ export default function PasswordResetScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 30,
     justifyContent: "center",
     backgroundColor: "#F0FFF0",
   },

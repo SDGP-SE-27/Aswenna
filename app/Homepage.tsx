@@ -34,6 +34,10 @@ const Homepage = () => {
   const [confirmation, setConfirmation] = useState(false);
 
   useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
+  useEffect(() => {
     fetchUserFarmland(); // Fetch farmland details when component loads
   }, []);
 
