@@ -15,16 +15,20 @@ const FertilizerSchedule = () => {
         Alert.alert("Error", "Please log in first.");
         return;
       }
-
-      const response = await fetch("https://api.aswenna.site/api/fertilizer/schedule/", {
+  
+      const response = await fetch("https://api.aswenna.site/api/receive-schedule/", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ crop_type: cropType, fertilizer, application_date: applicationDate }),
+        body: JSON.stringify({ 
+          cropType: cropType, 
+          fertilizerType: fertilizer, 
+          applicationDate: applicationDate 
+        }),
       });
-
+  
       if (response.ok) {
         Alert.alert("Success", "Fertilizer schedule saved!");
       } else {
@@ -34,7 +38,7 @@ const FertilizerSchedule = () => {
       console.error("Error saving schedule:", error);
       Alert.alert("Error", "Something went wrong.");
     }
-  };
+  };  
 
   return (
     <View style={styles.container}>
