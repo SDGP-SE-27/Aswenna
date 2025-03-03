@@ -186,7 +186,7 @@ const Homepage = () => {
     {
       icon: require("../assets/icons/supplement_reminder.png"),
       label: "Supplement Reminder",
-      screen: "Call",
+      screen: "FertilizerSchedule",
     },
     {
       icon: require("../assets/icons/personal_finance_tracker.png"),
@@ -200,13 +200,34 @@ const Homepage = () => {
     },
   ];
 
-  // const navigateToLogin = async () => {
-  //   console.log("Logged out!");
-  //   navigation.navigate({
-  //     index: 0,
-  //     routes: [{ name:  }],
-  //   });
-  // };
+  const fetchFertilizerReminders = async () => {
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) {
+        Alert.alert("Error", "Please log in to view reminders.");
+        return;
+      }
+
+      const response = await fetch("https://api.aswenna.site/api/fertilizer/reminders/", {
+        method: "GET",
+        headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Reminders:", data);
+        Alert.alert("Fertilizer Reminders", JSON.stringify(data, null, 2));
+      } else {
+        Alert.alert("Error", "Failed to fetch reminders.");
+      }
+    } catch (error) {
+      console.error("Error fetching reminders:", error);
+      Alert.alert("Error", "Something went wrong.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -217,16 +238,14 @@ const Homepage = () => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("NotifiScreen");
-          }}
-        >
-          <Image
-            source={require("../assets/icons/reminder.png")}
-            style={styles.remindericon}
-          />
-        </TouchableOpacity>
+
+      <TouchableOpacity onPress={fetchFertilizerReminders}>
+        <Image
+          source={require("../assets/icons/reminder.png")}
+          style={styles.remindericon}
+        />
+      </TouchableOpacity>
+        
         <TouchableOpacity onPress={handleProfileClick}>
           <Image
             source={require("../assets/icons/farmer_2.png")}

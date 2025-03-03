@@ -31,20 +31,6 @@ const login = () => {
   };
   useEffect(() => { checkStoredToken(); }, []);
 
-
-  // const fetchProtectedData = async () => {
-  //   const token = await AsyncStorage.getItem("accessToken");
-  //   const response = await fetch("https://api.aswenna.site/protected-endpoint/", {
-  //       method: "GET",
-  //       headers: {
-  //           "Authorization": `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //       },
-  //   });
-  //   const data = await response.json();
-  //   console.log(data);
-  // };
-
   const navigateBasedOnRole = async (role: string) => {
     console.log("navigateBasedOnRole() called with role:", role);
 
@@ -124,8 +110,46 @@ const handleLogin = async () => {
   }
 };
 
+interface Reminder {
+  crop_type: string;
+  fertilizer: string;
+  application_date: string;
+}
 
-  return (
+const checkFertilizerReminders = async () => {
+  try {
+    const token = await AsyncStorage.getItem("accessToken");
+    if (!token) return;
+
+    const response = await fetch("https://api.aswenna.site/api/fertilizer/reminders/", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const reminders = await response.json();
+      const today = new Date();
+      reminders.forEach((reminder: Reminder) => {
+        const reminderDate = new Date(reminder.application_date);
+        reminderDate.setDate(reminderDate.getDate() - 2);
+        
+        if (reminderDate.toDateString() === today.toDateString()) {
+          Alert.alert("Fertilizer Reminder", `Time to apply ${reminder.fertilizer} for ${reminder.crop_type}!`);
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Error checking reminders:", error);
+  }
+};
+
+// Call this after successful login
+checkFertilizerReminders();
+
+return (
     <View style={styles.container}>
 
 

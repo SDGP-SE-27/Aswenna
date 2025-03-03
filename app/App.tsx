@@ -30,7 +30,7 @@ import shopItem from "./shopItem";
 import ItemDetails from "./ItemDetails";
 import buyergomap from "./buyergomap";
 import buyersItem from "./buyersItem";
-import Call from "./Call";
+import FertilizerSchedule from "./FertilizerSchedule";
 import sellerMap from "./sellerMap"
 
 
@@ -65,7 +65,7 @@ const App = () => {
         <Stack.Screen name= "ItemDetails" component={ItemDetails}/>
         <Stack.Screen name= "buyergomap" component={buyergomap}/>
         <Stack.Screen name= "buyersItem" component={buyersItem}/>
-        <Stack.Screen name="Call" component={Call}/>
+        <Stack.Screen name="FertilizerSchedule" component={FertilizerSchedule}/>
         <Stack.Screen name="sellerMap" component={sellerMap}/>
         
       </Stack.Navigator>
