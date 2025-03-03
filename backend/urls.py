@@ -70,7 +70,9 @@ urlpatterns = [
 
     path('shop/' , include('shop.urls')), 
 
-    path('callScheduler/' , include('callScheduler.urls'))
+    path('reminder/' , include('reminder.urls')),
+
+    
 ]
 
 # Serve media files during development
