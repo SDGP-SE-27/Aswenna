@@ -212,7 +212,7 @@ const Homepage = () => {
         return;
       }
 
-      const response = await fetch("https://api.aswenna.site/api/fertilizer/reminders/", {
+      const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
         method: "GET",
         headers: {
         Authorization: `Bearer ${token}`,
