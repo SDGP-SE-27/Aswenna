@@ -20,7 +20,9 @@
 
         "test": "jest --watchAll",
 
-        "lint": "expo lint"
+        "lint": "expo lint",
+
+        "build:web": "expo export --output-dir dist --platform web"
 
     },
 
