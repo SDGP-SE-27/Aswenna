@@ -10,16 +10,23 @@ const FertilizerSchedule = () => {
 
   const submitSchedule = async () => {
     try {
-      const token = await AsyncStorage.getItem("accessToken");
+      const token = (await AsyncStorage.getItem("accessToken"))?.trim();
+      console.log("Token:", token);
       if (!token) {
         Alert.alert("Error", "Please log in first.");
         return;
       }
+
+      const checkStoredToken = async () => {
+        const storedToken = await AsyncStorage.getItem("accessToken");
+        console.log("Stored Token in AsyncStorage:", storedToken);
+      };
+      checkStoredToken();
   
       const response = await fetch("https://api.aswenna.site/reminder/receive-schedule/", {
         method: "POST",
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ 
@@ -27,6 +34,10 @@ const FertilizerSchedule = () => {
           fertilizerType: fertilizer, 
           applicationDate: applicationDate 
         }),
+      });
+      console.log("Request Headers:", {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
       });
   
       if (response.ok) {
