@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Modal } from 'react-native';
 import { Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +15,11 @@ type ShopItemScreenProp = NativeStackNavigationProp<
 const ShopItemsScreen = () => {
   const navigation = useNavigation<ShopItemScreenProp>();
   const [confirmation, setConfirmation] = useState (false);
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   const items = [
     { id: 1, name: 'URIA'},
     { id: 2, name: 'POSPATA'},

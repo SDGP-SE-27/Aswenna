@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Pressable, TouchableOpacity, Image, Alert } from "react-native";
 import { RootStackParamList } from "./types";
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -16,6 +16,9 @@ const Chooserole = () =>{
     const [selectedRole, setSelectedRole] = useState("");
     const route = useRoute<RouteProp<RootStackParamList, "commonregistration1">>();
     const { username = "", phoneNumber = "", address = "", district = "" } = route.params || {}; 
+    useEffect(() => {
+          navigation.setOptions({ headerShown: false }); 
+        }, [navigation]);
 
     const registerToRole = () => {
         if (selectedRole === "seller") {

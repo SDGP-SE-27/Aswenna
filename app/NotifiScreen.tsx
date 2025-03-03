@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const NotifiScreen = () => {
+    const navigation = useNavigation();
     const [reminders, setReminders] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+    useEffect(() => {
+        navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
     useEffect(() => {
         fetchReminders();
     }, []);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from './types';
@@ -13,6 +13,10 @@ type PersonalTrackerMainScreenProp = NativeStackNavigationProp<
 const PersonalTrackerMain = () => {
   const navigation = useNavigation<PersonalTrackerMainScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "Homepage">>();
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
   const [category, setCategory] = useState<string | null>(null);() => {
 
   const handleCategorySelect = (selectedCategory: string) => {

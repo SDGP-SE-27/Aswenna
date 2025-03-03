@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PieChart } from "react-native-chart-kit";
+import { useNavigation } from '@react-navigation/native';
 
 type ReportData = {
   total_income: number;
@@ -20,8 +21,13 @@ type ReportData = {
 
 
 const WeeklyReport = () => {
+  const navigation = useNavigation();
   const [reportData, setReportData] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+          navigation.setOptions({ headerShown: false }); 
+      }, [navigation]);
 
   useEffect(() => {
     fetchReport();

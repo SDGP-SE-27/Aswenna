@@ -17,6 +17,10 @@ type loginScreenProp = NativeStackNavigationProp<
 const login = () => {
   const navigation = useNavigation<NavigationProp>();
 
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
   //import env
   const API_URL = process.env.API_URL;
 

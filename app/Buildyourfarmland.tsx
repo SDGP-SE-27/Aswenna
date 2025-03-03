@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -24,6 +24,10 @@ const Buildyourfarmland = () => {
   const username = route.params?.username || "";
   const [cropType, setCropType] = useState<string>('');
   const [landArea, setLandArea] = useState<string>('');
+  useEffect(() => {
+                  navigation.setOptions({ headerShown: false }); 
+              }, [navigation]);
+              
   const [errors, setErrors] = useState({ cropType: '', landArea: '' });
 
   /** ✅ Function to validate input fields */

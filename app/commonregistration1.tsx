@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,} from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
@@ -23,6 +23,9 @@ const commonregistration1 = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [address, setAddress] = useState<string>("");
     const [district, setDistrict] = useState<string>("district");
+    useEffect(() => {
+        navigation.setOptions({ headerShown: false }); 
+      }, [navigation]);
     const [errors, setErrors] = useState({
       username: "",
       phoneNumber: "",

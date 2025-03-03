@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Button, Alert, TextInput, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from '@react-navigation/native';
+
 
 const FertilizerSchedule = () => {
+  const navigation = useNavigation();
   const [cropType, setCropType] = useState("Bitter Gourd");
   const [fertilizer, setFertilizer] = useState("Urea");
   const [applicationDate, setApplicationDate] = useState("");
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }); 
+  }, [navigation]);
 
   const submitSchedule = async () => {
     try {

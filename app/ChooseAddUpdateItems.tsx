@@ -1,7 +1,13 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ShopItemsScreen = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   // List of items
   const items = ['ADD ITEMS', 'UPDATE ITEMS'];
 

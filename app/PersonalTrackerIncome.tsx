@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -27,6 +27,10 @@ const PersonalTrackerIncome = () => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
 
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }); 
+  }, [navigation]);
+      
   // State for validation errors
   const [errors, setErrors] = useState({
     incomeType: '',
