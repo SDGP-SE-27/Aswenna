@@ -1,35 +1,68 @@
 import React, { useEffect } from 'react'; 
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from "./types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useRoute, RouteProp } from "@react-navigation/native";
+
+type ChooseAddUpdateItemScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "ChooseAddUpdateItems"
+>;
 
 const ShopItemsScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ChooseAddUpdateItemScreenProp>();
   useEffect(() => {
       navigation.setOptions({ headerShown: false }); 
     }, [navigation]);
     
   // List of items
-  const items = ['ADD ITEMS', 'UPDATE ITEMS'];
+  const item1 = [
+    { label: 'ADD ITEMS', screen: 'AddItemScreen' }
+  ];
+  const item2 = [
+    { label: 'UPDATE ITEMS', screen: 'UpdateItemScreen' }
+  ];
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Text style={styles.backButtonText}>{"<"}</Text>
-      </TouchableOpacity>
-
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('shopItem')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Update Items</Text>
+      </View>
+      <View style={styles.bodyContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>ADD or UPDATE Shop Items</Text>
       </View>
 
       {/* Map through the items and create TouchableOpacity for each */}
-      {items.map((item, index) => (
-        <TouchableOpacity key={index} style={styles.item}>
+      {item1.map((item1, index) => (
+        <TouchableOpacity 
+          key={index} 
+          style={styles.item} 
+          //onPress={() => navigation.navigate()}
+        >
           <View style={styles.itemBox}>
-            <Text style={[styles.itemText, styles.alignLeft]}>{item}</Text>
+            <Text style={[styles.itemText, styles.alignLeft]}>{item1.label}</Text>
           </View>
         </TouchableOpacity>
       ))}
 
+      {item2.map((item2, index) => (
+        <TouchableOpacity 
+          key={index} 
+          style={styles.item} 
+          onPress={() => navigation?.navigate({ name: 'ItemDetails', params: { item: { id: 1, price: 0, stock: 0, availability: false } } })}
+        >
+          <View style={styles.itemBox}>
+            <Text style={[styles.itemText, styles.alignLeft]}>{item2.label}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+
+      </View>
       <View style={styles.footer}>
         <TouchableOpacity>
           <Image source={require("../assets/images/home_icon.png")} style={styles.footerIcon} />
@@ -54,8 +87,23 @@ const ShopItemsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F8F8F8",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 70, 
   },
   backButton: { 
     marginRight: 10,
@@ -65,12 +113,14 @@ const styles = StyleSheet.create({
     paddingLeft: 13, 
     paddingRight: 15,
     paddingBottom: 5, 
-    textAlign: "center", 
-    width: "14%",
+    textAlign: "center" 
   },
-  backButtonText: { 
+    backText: { 
     fontSize: 25, 
-    fontWeight: "bold" 
+    fontWeight: "bold"
+  },
+  bodyContainer: {
+    padding: 20,
   },
   headerContainer: {
     backgroundColor: 'green',
