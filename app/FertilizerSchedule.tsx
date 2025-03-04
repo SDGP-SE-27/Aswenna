@@ -10,21 +10,36 @@ const FertilizerSchedule = () => {
 
   const submitSchedule = async () => {
     try {
-      const token = await AsyncStorage.getItem("accessToken");
+      const token = (await AsyncStorage.getItem("accessToken"))?.trim();
+      console.log("Token:", token);
       if (!token) {
         Alert.alert("Error", "Please log in first.");
         return;
       }
 
-      const response = await fetch("https://api.aswenna.site/api/fertilizer/schedule/", {
+      const checkStoredToken = async () => {
+        const storedToken = await AsyncStorage.getItem("accessToken");
+        console.log("Stored Token in AsyncStorage:", storedToken);
+      };
+      checkStoredToken();
+  
+      const response = await fetch("https://api.aswenna.site/reminder/receive-schedule/", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ crop_type: cropType, fertilizer, application_date: applicationDate }),
+        body: JSON.stringify({ 
+          cropType: cropType, 
+          fertilizerType: fertilizer, 
+          applicationDate: applicationDate 
+        }),
       });
-
+      console.log("Request Headers:", {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      });
+  
       if (response.ok) {
         Alert.alert("Success", "Fertilizer schedule saved!");
       } else {
@@ -34,7 +49,7 @@ const FertilizerSchedule = () => {
       console.error("Error saving schedule:", error);
       Alert.alert("Error", "Something went wrong.");
     }
-  };
+  };  
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,10 @@ type DiseaseIdentification2ScreenProp = NativeStackNavigationProp<
 
 const DiseaseIdentification2 = () => {
   const navigation = useNavigation<DiseaseIdentification2ScreenProp>();
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }); 
+  }, [navigation]);
 
   const handleNavigation = (cropName: string) => {
     navigation.navigate('DiseaseIdentification', { crop: cropName }); // Pass the selected crop to the next screen

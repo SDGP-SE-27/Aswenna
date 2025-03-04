@@ -12,6 +12,10 @@ type WelcomeScreenProp = NativeStackNavigationProp<
 
 const Welcome: React.FC = () => {
   const navigation = useNavigation<WelcomeScreenProp>();
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
   const [progress, setProgress] = useState<number>(0);
   const [progressText, setProgressText] = useState<string>("Loading... 0%");
 

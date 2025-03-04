@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -26,6 +26,11 @@ const MarketPrice1 = () => {
   const navigation = useNavigation<MarketPrice1ScreenProp>();
   const route = useRoute<RouteProp<RootStackParamList, "MarketPrice1">>();
   const [category, setCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   const crops: Crop[] = [
     {
       name: "long_beans",
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 50 
+    paddingLeft: 50, 
   },
   backButton: { 
     marginRight: 10,
@@ -245,13 +250,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center",
+    padding: 25,
   },
   cropContainer: {
-    width: "48%",
+    width: "43%",
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
-    marginBottom: 20,
+    marginVertical: 20,
+    marginHorizontal: 10,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

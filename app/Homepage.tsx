@@ -34,6 +34,10 @@ const Homepage = () => {
   const [confirmation, setConfirmation] = useState(false);
 
   useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
+  useEffect(() => {
     fetchUserFarmland(); // Fetch farmland details when component loads
   }, []);
 
@@ -208,7 +212,7 @@ const Homepage = () => {
         return;
       }
 
-      const response = await fetch("https://api.aswenna.site/api/fertilizer/reminders/", {
+      const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
         method: "GET",
         headers: {
         Authorization: `Bearer ${token}`,

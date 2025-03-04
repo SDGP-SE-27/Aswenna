@@ -45,6 +45,11 @@ const MarketPrice3 = () => {
   const [prices, setPrices] = useState<PriceEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedView, setSelectedView] = useState("prices");
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   const formattedCropName = String(cropName);
   const nameMapping = {
     long_beans: "Long Beans",

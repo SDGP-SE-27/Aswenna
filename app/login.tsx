@@ -17,6 +17,10 @@ type loginScreenProp = NativeStackNavigationProp<
 const login = () => {
   const navigation = useNavigation<NavigationProp>();
 
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
   //import env
   const API_URL = process.env.API_URL;
 
@@ -121,7 +125,7 @@ const checkFertilizerReminders = async () => {
     const token = await AsyncStorage.getItem("accessToken");
     if (!token) return;
 
-    const response = await fetch("https://api.aswenna.site/api/fertilizer/reminders/", {
+    const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -147,7 +151,9 @@ const checkFertilizerReminders = async () => {
 };
 
 // Call this after successful login
-checkFertilizerReminders();
+useEffect(() => {
+  checkFertilizerReminders();
+}, []);
 
 return (
     <View style={styles.container}>

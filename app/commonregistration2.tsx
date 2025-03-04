@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -34,6 +34,9 @@ const commonregistration2 = () => {
   const [ConfirmPassword, setConfirmPassword] = useState<string>("");
   const [errors, setErrors] = useState({ Email: "", Password: "", ConfirmPassword: "" });
 
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
   // Function to validate email format
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

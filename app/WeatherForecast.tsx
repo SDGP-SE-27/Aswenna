@@ -38,6 +38,10 @@ const WeatherScreen = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+
   // List of available locations
   const locations = [
     { label: 'Colombo', value: 'Colombo' },

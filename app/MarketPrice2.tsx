@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -37,6 +37,10 @@ const MarketPrice2 = () => {
       image: require("../assets/images/papaya.png"),
     },
   ];
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false }); 
+  }, [navigation]);
 
   const handleNavigation = (cropName: string) => {
     // console.log("Navigating to MarketPrice3 with:", cropName);
@@ -212,13 +216,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    padding: 25,
   },
   cropContainer: {
     width: "48%",
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
-    marginBottom: 20,
+    marginVertical: 20,
+    marginHorizontal: 10,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

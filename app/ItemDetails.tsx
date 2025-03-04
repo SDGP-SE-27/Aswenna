@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +19,9 @@ const isValidPhoneNumber = (phone: string) => {
 // Fix the component with proper type annotation
 const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   const navigation = useNavigation<NavigationProp>();
+  useEffect(() => {
+            navigation.setOptions({ headerShown: false }); 
+          }, [navigation]);
   const item = route?.params?.item || { id: 1, price: 0, stock: 0, availability: false };
 
   const [price, setPrice] = useState(item.price.toString());
