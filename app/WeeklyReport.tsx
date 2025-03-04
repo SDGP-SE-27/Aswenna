@@ -6,10 +6,19 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PieChart } from "react-native-chart-kit";
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+
+type WeeklyReportScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'WeeklyReport'
+>;
 
 type ReportData = {
   total_income: number;
@@ -21,7 +30,7 @@ type ReportData = {
 
 
 const WeeklyReport = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<WeeklyReportScreenProp>();
   const [reportData, setReportData] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -68,7 +77,14 @@ const WeeklyReport = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Weekly Report</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PersonalTrackerMain')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Weekly Report</Text>
+      </View>
+                  
+      <View style={styles.mainContainer}>
       <View style={styles.subcontainer}>
       {loading ? (
         <ActivityIndicator size="large" color="#51b936" />
@@ -129,13 +145,52 @@ const WeeklyReport = () => {
         
       )}
       </View>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, backgroundColor: "#fff" },
-  header: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
+  container: { flexGrow: 1, backgroundColor: "#fff" },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 50, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
+    padding: 20,
+  },
   subHeader: { fontSize: 20, fontWeight: "bold", marginTop: 10, color: "#333" },
   label :{
     fontSize: 18,

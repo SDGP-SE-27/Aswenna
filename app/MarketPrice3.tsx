@@ -170,11 +170,15 @@ const MarketPrice3 = () => {
       ></TouchableOpacity>
 
       {/* Product Information */}
-      <View>
-        <Text style={styles.productName}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('MarketPrice1')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>
           {nameMapping[formattedCropName as keyof typeof nameMapping]}
         </Text>
       </View>
+      
 
       <View style={styles.productInfo}>
         <Text style={styles.priceText}>
@@ -314,24 +318,41 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
     padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
   },
-  backButton: {
-    marginRight: 20,
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 70, 
   },
-  backButtonText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000000",
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
   },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000000",
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
   },
   productInfo: {
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#F0FFF0",
     padding: 20,
     marginBottom: 20,
   },

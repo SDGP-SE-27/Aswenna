@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,8 +7,18 @@ import { RootStackParamList } from './types';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define Props Type
-type ItemDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, "ItemDetails">;
+type addItemsScreenProp = RouteProp<RootStackParamList, 'addItems'> & {
+  params: {
+    item: {
+      id: number;
+      price: number;
+      stock: number;
+      availability: boolean;
+    };
+  };
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, "addItems">;
 
 // Phone Number Validation Function
 const isValidPhoneNumber = (phone: string) => {
@@ -17,15 +27,19 @@ const isValidPhoneNumber = (phone: string) => {
 };
 
 // Fix the component with proper type annotation
-const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
+const addItems = ({ route }: { route: addItemsScreenProp }) => {
   const navigation = useNavigation<NavigationProp>();
-  const item = route?.params?.item || { id: 1, price: 0, stock: 0, availability: false };
+  const item = (route.params as { item: { id: number; price: number; stock: number; availability: boolean } })?.item || { id: 1, price: 0, stock: 0, availability: false };
 
   const [price, setPrice] = useState(item.price.toString());
   const [stock, setStock] = useState(item.stock.toString());
   const [availability, setAvailability] = useState(item.availability);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [shopAddress, setShopAddress] = useState('');
+
+  useEffect(() => {
+              navigation.setOptions({ headerShown: false }); 
+            }, [navigation]);
 
   const handleAvailabilityChange = (value: boolean) => {
     setAvailability(value);
@@ -214,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemDetails;
+export default addItems;

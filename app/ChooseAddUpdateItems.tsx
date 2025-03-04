@@ -42,7 +42,7 @@ const ShopItemsScreen = () => {
         <TouchableOpacity 
           key={index} 
           style={styles.item} 
-          //onPress={() => navigation.navigate()}
+          onPress={() => navigation.navigate('addItems',{ item: { id: 1, price: 0, stock: 0, availability: false } })}
         >
           <View style={styles.itemBox}>
             <Text style={[styles.itemText, styles.alignLeft]}>{item1.label}</Text>
@@ -107,13 +107,19 @@ const styles = StyleSheet.create({
   },
   backButton: { 
     marginRight: 10,
-    borderColor: "#DDD", 
-    borderWidth: 2, 
+    backgroundColor: "#fff", 
     borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
     paddingLeft: 13, 
     paddingRight: 15,
     paddingBottom: 5, 
-    textAlign: "center" 
+    textAlign: "center",
   },
     backText: { 
     fontSize: 25, 

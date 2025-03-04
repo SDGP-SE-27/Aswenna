@@ -10,9 +10,17 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from './types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
+type SeasonalReportScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'SeasonalReport'
+>;
 
 const SeasonalReport = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<SeasonalReportScreenProp>();
   const [startDate, setStartDate] = useState(""); // Change to string
   const [endDate, setEndDate] = useState(""); // Change to string
   const [loading, setLoading] = useState(false);
@@ -65,7 +73,14 @@ const SeasonalReport = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Seasonal Report</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PersonalTrackerMain')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Seasonal Report</Text>
+      </View>
+            
+      <View style={styles.mainContainer}>
       <View style={styles.subcontainer}>
 
       <Text style={styles.label}>Enter Start Date              (YYYY-MM-DD):</Text>
@@ -99,12 +114,51 @@ const SeasonalReport = () => {
       ) : null}
       </View>
     </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", padding: 20, backgroundColor: "#fff" },
-  header: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
+  container: { flex: 1, backgroundColor: "#fff" },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 50, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
+    padding: 20,
+  },
   label: { fontSize: 18, marginBottom: 15, fontWeight: 'semibold' },
   input: {
     borderWidth: 2,

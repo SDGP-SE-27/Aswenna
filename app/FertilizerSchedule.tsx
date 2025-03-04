@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { View, Text, Button, Alert, TextInput, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Button, Alert, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
 
 const FertilizerSchedule = () => {
+  const navigation = useNavigation();
   const [cropType, setCropType] = useState("Bitter Gourd");
   const [fertilizer, setFertilizer] = useState("Urea");
   const [applicationDate, setApplicationDate] = useState("");
+
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
 
   const submitSchedule = async () => {
     try {
@@ -52,6 +58,13 @@ const FertilizerSchedule = () => {
   };  
 
   return (
+    <View style={styles.mainContainer}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Fertilizer Schedule</Text>
+      </View>
     <View style={styles.container}>
       <Text style={styles.label}>Select Crop Type</Text>
       <Picker selectedValue={cropType} onValueChange={(itemValue) => setCropType(itemValue)}>
@@ -73,19 +86,65 @@ const FertilizerSchedule = () => {
 
       <Button title="Save Schedule" onPress={submitSchedule} />
     </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#D9FAD9',
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 50, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
   container: {
-    backgroundColor: '#77CB61', 
+    backgroundColor: '#fff', 
     margin: 20,
     paddingLeft:70, 
     paddingRight: 70,
     paddingTop: 50,
     paddingBottom: 70, 
     borderRadius: 15, 
-    marginTop: 150
+    marginTop: 150,
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
   },
 
   label: {
@@ -94,15 +153,15 @@ const styles = StyleSheet.create({
     marginRight:0,
   
   },
-
-      input: {
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      padding: 10,
-      marginBottom: 15,
-    },
+  
+  input: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 15,
+  },
 });
 
 export default FertilizerSchedule;

@@ -32,15 +32,14 @@ const PersonalTrackerMain = () => {
 return (
     <View style={styles.container}>
 
-      <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-      >
- 
-      </TouchableOpacity>
-
-      {/* Header */}
-      <Text style={styles.header}>Personal Finance Tracker</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Personal Finance Tracker</Text>
+      </View>
+      
+      <View style={styles.mainContainer}>
   
       <View style={styles.subcontainer}>
       {/* choose category */}
@@ -80,7 +79,7 @@ return (
         </View>
 
       </View>
-
+      </View>
       {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
                 <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
@@ -111,6 +110,7 @@ return (
                   />
                 </TouchableOpacity>
             </View>
+            
     </View>
   );
 };
@@ -119,29 +119,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 30, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
     padding: 20,
   },
-
-  backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 10,
-    padding: 10,
-  },
-
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-
   label: {
     fontSize: 20,
     color: '#000',

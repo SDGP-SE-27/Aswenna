@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingBottom: 5, 
     textAlign: "center",
-     
   },
     backText: { 
     fontSize: 25, 
