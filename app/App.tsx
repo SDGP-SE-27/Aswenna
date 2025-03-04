@@ -31,7 +31,8 @@ import ItemDetails from "./ItemDetails";
 import buyergomap from "./buyergomap";
 import buyersItem from "./buyersItem";
 import FertilizerSchedule from "./FertilizerSchedule";
-import sellerMap from "./sellerMap"
+import sellerMap from "./sellerMap";
+import ChooseAddUpdateItems from "./ChooseAddUpdateItems";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;

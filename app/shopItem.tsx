@@ -44,41 +44,45 @@ const ShopItemsScreen = () => {
       </TouchableOpacity> */}
 
       <Modal visible={confirmation} transparent={true} animationType="fade">
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text style={styles.modalTitle}>Confirm Action</Text>
-                  <Text style={styles.modalText}>
-                    Are you sure you want to log out?
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.confirmButton}
-                    onPress={async () => {
-                      await handleLogout(); // Log out the user
-                      navigation.reset({
-                        index: 0,
-                        routes: [{ name: "login" }],
-                      }); // Navigate to the login screen
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Confirm Logout</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.closeButton}
-                    onPress={() => setConfirmation(false)}
-                  >
-                    <Text style={styles.buttonText}>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirm Action</Text>
+            <Text style={styles.modalText}>
+              Are you sure you want to log out?
+            </Text>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={async () => {
+              await handleLogout(); // Log out the user
+              navigation.reset({
+              index: 0,
+              routes: [{ name: "login" }],
+              }); // Navigate to the login screen
+              }}
+            >
+              
+            <Text style={styles.buttonText}>Confirm Logout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setConfirmation(false)}
+            >
+            <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
         <TouchableOpacity
-                        // style={styles.logOutButton}
-                        style={styles.backButton}
-                        onPress={() => setConfirmation(true)}
-                      >
-                        <Text style={{ color: "#fff", fontSize: 16 }}> {"<"} </Text>
-                      </TouchableOpacity>
+          style={styles.backButton}
+          onPress={() => setConfirmation(true)}
+        >
+          <Image
+            source={require('../assets/icons/logout.png')} // Path to your icon
+            style={styles.buttonIcon} // Style for icon size
+          />
+          <Text style={{ color: "#fff", fontSize: 16 }}> {"<"} </Text>
+        </TouchableOpacity>
       
 
       <View>
@@ -91,37 +95,13 @@ const ShopItemsScreen = () => {
         <TouchableOpacity
           key={index}
           style={styles.item}
-          onPress={() => navigation?.navigate('ItemDetails', {
-            item: { 
-            id: item.id,  
-            price: 0, // add a default price
-            stock: 0, // add a default stock
-            availability: false // add a default availability
-          } 
-        })}
+          onPress={() => navigation?.navigate('ChooseAddUpdateItems')}
         >
           <Text style={styles.itemText}>{item.name}</Text>
         </TouchableOpacity>
       ))}
       </View>
 
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
-            <Image source={require("../assets/images/home_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-                  
-        <TouchableOpacity onPress={() => navigation.navigate("DiseaseIdentification2")} >
-          <Image source={require("../assets/images/disease_icon.png") } style={styles.footerIcon} />
-        </TouchableOpacity>
-                  
-        <TouchableOpacity onPress={() => navigation.navigate("PersonalTrackerMain")} >
-          <Image source={require("../assets/images/finance_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-                  
-        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-          <Image source={require("../assets/images/profile_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-      </View>
     </View>
 
     
@@ -142,20 +122,24 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
 
-  backButton: { 
-    marginRight: 10,
-    borderColor: "#DDD", 
-    borderWidth: 2, 
-    borderRadius: 15, 
-    paddingLeft: 13, 
-    paddingRight: 15,
-    paddingBottom: 5, 
-    textAlign: "center", 
-    width: "14%",
+  backButton: {
+    width: 45, // Square shape
+    height: 45, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    backgroundColor: "#fff",
+    borderRadius: 10, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.3, 
+    shadowRadius: 4, 
+    elevation: 5, 
   },
-    backButtonText: { 
-    fontSize: 25, 
-    fontWeight: "bold" 
+  buttonIcon: {
+    marginTop: 20,
+    width: 24, // Icon size
+    height: 24,
+    tintColor: "#000", // Change color if needed
   },
   item: {
     borderWidth: 1,
