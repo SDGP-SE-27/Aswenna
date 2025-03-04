@@ -3,11 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const ShopItemsScreen = () => {
   // List of items
-  const items = ['ADD ITEMS', 'UPDATE ITEMS'];
+  const items = [
+    { label: 'ADD ITEMS', screen: 'AddItemScreen' },
+    { label: 'UPDATE ITEMS', screen: 'UpdateItemScreen' }
+  ];
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>{"<"}</Text>
       </TouchableOpacity>
 
@@ -17,9 +20,13 @@ const ShopItemsScreen = () => {
 
       {/* Map through the items and create TouchableOpacity for each */}
       {items.map((item, index) => (
-        <TouchableOpacity key={index} style={styles.item}>
+        <TouchableOpacity 
+          key={index} 
+          style={styles.item} 
+          onPress={() => navigation.navigate(item.screen)}
+        >
           <View style={styles.itemBox}>
-            <Text style={[styles.itemText, styles.alignLeft]}>{item}</Text>
+            <Text style={[styles.itemText, styles.alignLeft]}>{item.label}</Text>
           </View>
         </TouchableOpacity>
       ))}
