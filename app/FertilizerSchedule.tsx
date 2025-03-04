@@ -89,6 +89,7 @@ const FertilizerSchedule = () => {
       />
 
       <Button title="Save Schedule" onPress={submitSchedule} />
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
     </View>
   );
 };
@@ -118,6 +119,13 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginBottom: 15,
+  },
+  successMessage: {
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "green", 
   },
 });
 
