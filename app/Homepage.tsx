@@ -18,6 +18,7 @@ import { useRoute } from "@react-navigation/native";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+
 const Homepage = () => {
   const navigation = useNavigation<NavigationProp>();
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,16 @@ const Homepage = () => {
   const [newPassword, setNewPassword] = useState("");
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
+  const handleReminderClick = async () => {
+    // await fetchFertilizerReminders(); //          Fetch reminders first
+    navigation.navigate("FertilizerHistory"); // ✅ Navigate to FertilizerHistory page
+    };
+
+  interface Reminder {
+    crop_type: string;
+    fertilizer: string;
+    application_date: string;
+  }
 
   useEffect(() => {
       navigation.setOptions({ headerShown: false }); 
@@ -74,6 +85,47 @@ const Homepage = () => {
       Alert.alert("Error", "Something went wrong. Try again.");
     }
   };
+
+  useEffect(() => {
+    const fetchFertilizerReminders = async () => {
+      try {
+        const token = await AsyncStorage.getItem("accessToken");
+        if (!token) return;
+  
+        const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (response.ok) {
+          const reminders = await response.json();
+          const today = new Date();
+  
+          reminders.forEach((reminder: Reminder) => {
+            const reminderDate = new Date(reminder.application_date);
+            reminderDate.setDate(reminderDate.getDate() - 2); // ✅ Changed: Show reminder 2 days before
+  
+            if (reminderDate.toDateString() === today.toDateString()) {
+              //  Added: Show pop-up reminder alert
+              Alert.alert(
+                "Fertilizer Reminder",
+                `Reminder: Apply ${reminder.fertilizer} for ${reminder.crop_type} soon!`
+              );
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching reminders:", error);
+      }
+    };
+  
+    fetchFertilizerReminders();
+  }, []);
+  
+  
 
   const handleMenuClick = async () => {
     await fetchUserFarmland(); // ✅ Ensure latest data is fetched
@@ -243,12 +295,13 @@ const Homepage = () => {
           />
         </TouchableOpacity>
 
-      <TouchableOpacity onPress={fetchFertilizerReminders}>
+        <TouchableOpacity onPress={handleReminderClick}>
         <Image
           source={require("../assets/icons/reminder.png")}
           style={styles.remindericon}
         />
-      </TouchableOpacity>
+        </TouchableOpacity>
+        
         
         <TouchableOpacity onPress={handleProfileClick}>
           <Image
