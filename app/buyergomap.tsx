@@ -187,7 +187,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
     width: "14%",
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
   },
     backButtonText: {
     fontSize: 25,

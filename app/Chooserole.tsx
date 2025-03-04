@@ -140,6 +140,11 @@ const styles = StyleSheet.create({
         borderColor: "#51B936",
         borderWidth: 3,
         margin: 10,
+        shadowColor: "#000", 
+        shadowOffset: { width: 2, height: 4 }, 
+        shadowOpacity: 0.15, 
+        shadowRadius: 6, 
+        elevation: 6,
     },
 
     next: {
@@ -156,7 +161,12 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         margin: 10,
         borderRadius: 10,
-        marginTop: 20
+        marginTop: 20,
+        shadowColor: "#000", 
+        shadowOffset: { width: 2, height: 4 }, 
+        shadowOpacity: 0.15, 
+        shadowRadius: 6, 
+        elevation: 6,
     },
 
     selected: {

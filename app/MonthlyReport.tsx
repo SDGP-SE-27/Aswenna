@@ -6,10 +6,20 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PieChart } from "react-native-chart-kit";
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from "./types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useRoute, RouteProp } from "@react-navigation/native";
+import { getMainColorOfGraphicItem } from "recharts/types/util/ChartUtils";
+
+type MonthlyReportScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "MonthlyReport"
+>;
 
 type ReportData = {
   total_income: number;
@@ -21,7 +31,7 @@ type ReportData = {
 
 
 const MonthlyReport = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<MonthlyReportScreenProp>();
   const [reportData, setReportData] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -66,7 +76,14 @@ const MonthlyReport = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Monthly Report</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PersonalTrackerMain')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+          <Text style={styles.headerTitle}>Monthly Report</Text>
+      </View>
+      <View style={styles.mainContainer}>
+    
       <View style={styles.subcontainer}>
       {loading ? (
         <ActivityIndicator size="large" color="#51b936" />
@@ -126,13 +143,52 @@ const MonthlyReport = () => {
         
       )}
       </View>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, backgroundColor: "#fff" },
-  header: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 10 },
+  container: { flexGrow: 1, backgroundColor: "#fff" },
+  mainContainer: {
+    padding: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 60, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
   text: { fontSize: 18, marginBottom: 5 },
   subHeader: { fontSize: 20, fontWeight: "bold", marginTop: 10, color: "#333" },
   subcontainer:{

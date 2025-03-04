@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from "./types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type NotificationScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "MonthlyReport"
+>;
 
 const NotifiScreen = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<NotificationScreenProp>();
     const [reminders, setReminders] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -27,7 +34,12 @@ const NotifiScreen = () => {
 
   return (
     <View style={styles.container}>
-            <Text style={styles.title}>Fertilizer Reminders</Text>
+        <View style={styles.header}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+                <Text style={styles.backText}>{"<"}</Text>
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Fertilizer Reminders</Text>
+        </View>
             {loading ? (
                 <ActivityIndicator size="large" color="green" />
             ) : reminders.length === 0 ? (
@@ -51,7 +63,43 @@ const NotifiScreen = () => {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: '#fff' },
+    container: { flex: 1, backgroundColor: '#fff' },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20,
+        backgroundColor: "#FFFFFF",
+        borderBottomWidth: 1,
+        borderBottomColor: "#d3d3d3",
+        fontSize: 25,
+      },
+      headerTitle: { 
+        fontSize: 20, 
+        fontWeight: "bold", 
+        flex: 1, 
+        paddingLeft: 50, 
+      },
+      backButton: { 
+        marginRight: 10,
+        backgroundColor: "#fff", 
+        borderRadius: 15, 
+        borderWidth: 2, 
+        borderColor: "#DDD", 
+        shadowColor: "#000", 
+        shadowOffset: { width: 2, height: 4 }, 
+        shadowOpacity: 0.15, 
+        shadowRadius: 6, 
+        elevation: 6,
+        paddingLeft: 13, 
+        paddingRight: 15,
+        paddingBottom: 5, 
+        textAlign: "center", 
+      },
+        backText: { 
+        fontSize: 25, 
+        fontWeight: "bold"
+      },
     title: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 15 },
     reminderItem: { padding: 15, marginVertical: 5, backgroundColor: '#eaf7ea', borderRadius: 5 },
     cropName: { fontWeight: 'bold', fontSize: 16 },

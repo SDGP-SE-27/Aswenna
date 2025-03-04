@@ -20,6 +20,7 @@ type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
 
 const PersonalTrackerExpense = () => {
   const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false }); 
@@ -108,6 +109,7 @@ const PersonalTrackerExpense = () => {
 
       if (response.ok) {
         const responseData = await response.json();
+        setSuccessMessage("Transaction saved successfully!");
         console.log('Response data:', responseData);
         handleReset(); // Reset form after successful submission
         return true;
@@ -126,17 +128,15 @@ const PersonalTrackerExpense = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("PersonalTrackerMain")}
-      >
-   
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PersonalTrackerMain')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+          <Text style={styles.headerTitle}>Personal Finance Tracker</Text>
+      </View>
 
-      <Text style={styles.header}>Personal Finance Tracker</Text>
-
-       <View style={styles.subcontainer}>
+      <View style={styles.mainContainer}>
+      <View style={styles.subcontainer}>
 
       {/* Date Input */}
       <Text style={styles.label}>Enter Date:</Text>
@@ -157,6 +157,9 @@ const PersonalTrackerExpense = () => {
         >
           <Picker.Item label="Select an expense type" value="" />
           <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
+          <Picker.Item label="Labour cost" value="Labour cost" />
+          <Picker.Item label="Material cost" value="Material cost" />
+          <Picker.Item label="Fertilizer cost" value="Fertilizer cost" />
           <Picker.Item label="Other Expense" value="Other Expense" />
         </Picker>
       </View>
@@ -191,6 +194,7 @@ const PersonalTrackerExpense = () => {
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
 
       <TouchableOpacity
         style={styles.transactionHistory}
@@ -198,6 +202,7 @@ const PersonalTrackerExpense = () => {
       >
         <Text style={styles.transactionHistoryText}>Transaction History</Text>
       </TouchableOpacity>
+      </View>
       </View>
     </ScrollView>
   );
@@ -208,23 +213,45 @@ const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
       backgroundColor: '#fff',
-      alignItems: 'center',
-      padding: 10,
-    },
-    backButton: {
-      alignSelf: 'flex-start',
-      marginBottom: 10,
-      padding: 10,
-    },
-    backButtonText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: '#000',
     },
     header: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 20,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 20,
+      backgroundColor: "#FFFFFF",
+      borderBottomWidth: 1,
+      borderBottomColor: "#d3d3d3",
+      fontSize: 25,
+    },
+    headerTitle: { 
+      fontSize: 20, 
+      fontWeight: "bold", 
+      flex: 1, 
+      paddingLeft: 30, 
+    },
+    backButton: { 
+      marginRight: 10,
+      backgroundColor: "#fff", 
+      borderRadius: 15, 
+      borderWidth: 2, 
+      borderColor: "#DDD", 
+      shadowColor: "#000", 
+      shadowOffset: { width: 2, height: 4 }, 
+      shadowOpacity: 0.15, 
+      shadowRadius: 6, 
+      elevation: 6,
+      paddingLeft: 13, 
+      paddingRight: 15,
+      paddingBottom: 5, 
+      textAlign: "center", 
+    },
+      backText: { 
+      fontSize: 25, 
+      fontWeight: "bold"
+    },
+    mainContainer: {
+      padding: 20,
     },
     form: {
       width: '100%',
@@ -328,6 +355,14 @@ const styles = StyleSheet.create({
       paddingTop: 50,
       paddingBottom: 85, 
       borderRadius: 15
-    }
+    },
+    successMessage: {
+      marginTop: 20,
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: "center",
+      color: "red", 
+      marginBottom: 10
+    },
 });
 export default PersonalTrackerExpense;

@@ -68,7 +68,7 @@ const Welcome: React.FC = () => {
       />
 
       {/* Footer */}
-      <Text style={styles.footerText}>Powered By Innovatech.</Text>
+      <Text style={styles.footerText}>Powered By Innovatech</Text>
     </View>
   );
 };

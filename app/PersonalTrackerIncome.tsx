@@ -20,6 +20,7 @@ type PersonalTrackerIncomeScreenProp = NativeStackNavigationProp<
 
 const PersonalTrackerIncome = () => {
   const navigation = useNavigation<PersonalTrackerIncomeScreenProp>();
+  const [successMessage, setSuccessMessage] = useState('');
 
   // States for form fields
   const [incomeType, setIncomeType] = useState('');
@@ -108,6 +109,7 @@ const PersonalTrackerIncome = () => {
 
       if (response.ok) {
         const responseData = await response.json();
+        setSuccessMessage("Transaction saved successfully!");
         console.log('Response data:', responseData);
         handleReset(); // Reset form after successful submission
         return true;
@@ -126,15 +128,14 @@ const PersonalTrackerIncome = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("PersonalTrackerMain")}
-      >
-
-      </TouchableOpacity>
-
-      <Text style={styles.header}>Personal Finance Tracker</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('PersonalTrackerMain')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Personal Finance Tracker</Text>
+      </View>
+      
+      <View style={styles.mainContainer}>
 
       <View style={styles.subcontainer}>
 
@@ -157,6 +158,7 @@ const PersonalTrackerIncome = () => {
         >
           <Picker.Item label="Select an income type" value="" />
           <Picker.Item label="Harvesting income" value="Harvesting income" />
+          <Picker.Item label="Government incentives" value="Government incentives" />
           <Picker.Item label="Other income" value="Other income" />
         </Picker>
       </View>
@@ -191,6 +193,7 @@ const PersonalTrackerIncome = () => {
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
 
       <TouchableOpacity
         style={styles.transactionHistory}
@@ -198,6 +201,7 @@ const PersonalTrackerIncome = () => {
       >
         <Text style={styles.transactionHistoryText}>Transaction History</Text>
       </TouchableOpacity>
+      </View>
       </View>
     </ScrollView>
   );
@@ -208,23 +212,45 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    padding: 10,
-  },
-  backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 10,
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
   },
   header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 30, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
+    padding: 20,
   },
   form: {
     width: '100%',
@@ -328,7 +354,15 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 85, 
     borderRadius: 15
-  }
+  },
+  successMessage: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "red", 
+    marginBottom: 10
+  },
 });
 
 export default PersonalTrackerIncome;

@@ -43,7 +43,12 @@ const DiseaseIdentification2 = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Select a Crop</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Select a crop</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.gridContainer}>
         {crops.map((crop, index) => (
           <TouchableOpacity
@@ -56,14 +61,48 @@ const DiseaseIdentification2 = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+            {/* Bottom Navigation (Placeholder) */}
+            <View style={styles.footer}>
+              <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
+                <Image
+                  source={require("../assets/images/home_icon.png")}
+                  style={styles.footerIcon}
+                />
+              </TouchableOpacity>
+      
+              <TouchableOpacity
+                onPress={() => navigation.navigate("DiseaseIdentification2")}
+              >
+                <Image
+                  source={require("../assets/images/disease_icon.png")}
+                  style={styles.footerIcon}
+                />
+              </TouchableOpacity>
+      
+              <TouchableOpacity
+                onPress={() => navigation.navigate("PersonalTrackerMain")}
+              >
+                <Image
+                  source={require("../assets/images/finance_icon.png")}
+                  style={styles.footerIcon}
+                />
+              </TouchableOpacity>
+      
+              <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+                <Image
+                  source={require("../assets/images/profile_icon.png")}
+                  style={styles.footerIcon}
+                />
+              </TouchableOpacity>
+            </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8F8F8', padding: 20 },
-  header: { textAlign: 'center', fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
-  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
+  container: { flex: 1, backgroundColor: '#F8F8F8' },
+  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', padding: 20,marginBottom: 80 },
   cropContainer: {
     width: '45%',
     backgroundColor: '#fff',
@@ -71,10 +110,71 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     alignItems: 'center',
-    elevation: 2,
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 70, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
   },
   cropImage: { width: 75, height: 75, resizeMode: 'contain' },
   cropName: { fontSize: 16, fontWeight: 'bold' },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    backgroundColor: "#DFFFD8",
+    position: "absolute",
+    width: "90%",
+    bottom: 15,
+    alignSelf: "center",
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  footerIcon: {
+    width: 30,
+    height: 30,
+  },
 });
 
 export default DiseaseIdentification2;

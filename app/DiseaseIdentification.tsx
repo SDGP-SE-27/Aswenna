@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, SafeAreaView, ScrollView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,6 +18,10 @@ const DiseaseIdentification = () => {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+      navigation.setOptions({ headerShown: false }); 
+    }, [navigation]);
+    
   // Function to open the camera
   const takePhoto = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -104,15 +108,15 @@ const DiseaseIdentification = () => {
     <SafeAreaView style={styles.container}>
       {/* Disease Identification Header */}
       {/* Back Button */}
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.navigate("DiseaseIdentification2")}
-            >
-              <Text style={styles.backButtonText}>←Back</Text>
-            </TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('DiseaseIdentification2')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Disease Identification</Text>
+      </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.subHeader}>Selected Crop: {crop}</Text>
+        <Text style={styles.subHeader}>{crop}</Text>
 
         <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={takePhoto}>
@@ -151,27 +155,49 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F8F8F8",
   },
-  header: { alignItems: "center", marginBottom: 20 },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "space-between",
   },
-  backButton: {
-    marginRight: 8,
-    paddingTop: 3,
-    paddingBottom: 3,
-    paddingLeft: 9,
-    paddingRight: 9,
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
     backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    elevation: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
   },
-  backButtonText: {
-    fontSize: 20,
-    fontWeight: "bold",
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 40, 
   },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+ 
   headerText: { fontSize: 22, fontWeight: "bold" },
-  subHeader: { textAlign: "center", fontSize: 16, marginBottom: 20 },
+  subHeader: { textAlign: "center", fontSize: 20, fontWeight: "semibold", marginBottom: 20, backgroundColor: "#F0FFF0", },
   buttonContainer: { flexDirection: "column", marginBottom: 10, justifyContent: "flex-start" },
   button: { backgroundColor: "#4CAF50", padding: 16, borderRadius: 8, alignItems: "center", flex: 1, marginHorizontal: 10, marginVertical: 10 },
   buttonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },

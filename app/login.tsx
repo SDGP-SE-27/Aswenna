@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 
@@ -219,7 +218,7 @@ return (
       <View style={styles.signUpContainer}>
         <Text>Don’t have an account?</Text>
         <TouchableOpacity>
-          <Text style={styles.signUpText}> Sign up</Text>
+          <Text style={styles.signUpText} onPress={() => navigation.navigate('Chooserole', { role: 'someRole' })}> Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>

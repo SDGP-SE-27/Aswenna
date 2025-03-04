@@ -11,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useRoute, RouteProp } from "@react-navigation/native";
-import MarketPrice3 from "./MarketPrice3";
 
 type MarketPrice2ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -52,7 +51,12 @@ const MarketPrice2 = () => {
     <View style={styles.container}>
       {/* Crop Selection */}
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>Select a Crop</Text>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('MarketPrice1')}>
+            <Text style={styles.backText}>{"<"}</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Select a crop</Text>
+        </View>
         <View style={styles.gridContainer}>
           {crops.map((crop, index) => (
             <TouchableOpacity
@@ -127,6 +131,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#d3d3d3",
     fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 70, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
   },
   cropSelectionContainer: {
     padding: 20,
