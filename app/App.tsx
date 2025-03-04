@@ -32,7 +32,7 @@ import buyergomap from "./buyergomap";
 import buyersItem from "./buyersItem";
 import FertilizerSchedule from "./FertilizerSchedule";
 import sellerMap from "./sellerMap"
-
+import FertilizerHistory from "./FertilizerHistory";
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
 
@@ -67,6 +67,9 @@ const App = () => {
         <Stack.Screen name= "buyersItem" component={buyersItem}/>
         <Stack.Screen name="FertilizerSchedule" component={FertilizerSchedule}/>
         <Stack.Screen name="sellerMap" component={sellerMap}/>
+        <Stack.Screen name="FertilizerHistory" component={FertilizerHistory}/>
+       
+        
         
       </Stack.Navigator>
     </NavigationContainer>
