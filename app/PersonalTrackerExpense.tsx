@@ -20,6 +20,7 @@ type PersonalTrackerExpenseScreenProp = NativeStackNavigationProp<
 
 const PersonalTrackerExpense = () => {
   const navigation = useNavigation<PersonalTrackerExpenseScreenProp>();
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false }); 
@@ -108,6 +109,7 @@ const PersonalTrackerExpense = () => {
 
       if (response.ok) {
         const responseData = await response.json();
+        setSuccessMessage("Transaction saved successfully!");
         console.log('Response data:', responseData);
         handleReset(); // Reset form after successful submission
         return true;
@@ -155,6 +157,9 @@ const PersonalTrackerExpense = () => {
         >
           <Picker.Item label="Select an expense type" value="" />
           <Picker.Item label="Land Preparation expense" value="Land Preparation expense" />
+          <Picker.Item label="Labour cost" value="Labour cost" />
+          <Picker.Item label="Material cost" value="Material cost" />
+          <Picker.Item label="Fertilizer cost" value="Fertilizer cost" />
           <Picker.Item label="Other Expense" value="Other Expense" />
         </Picker>
       </View>
@@ -189,6 +194,7 @@ const PersonalTrackerExpense = () => {
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
 
       <TouchableOpacity
         style={styles.transactionHistory}
@@ -349,6 +355,14 @@ const styles = StyleSheet.create({
       paddingTop: 50,
       paddingBottom: 85, 
       borderRadius: 15
-    }
+    },
+    successMessage: {
+      marginTop: 20,
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: "center",
+      color: "red", 
+      marginBottom: 10
+    },
 });
 export default PersonalTrackerExpense;

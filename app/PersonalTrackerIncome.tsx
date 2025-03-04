@@ -20,6 +20,7 @@ type PersonalTrackerIncomeScreenProp = NativeStackNavigationProp<
 
 const PersonalTrackerIncome = () => {
   const navigation = useNavigation<PersonalTrackerIncomeScreenProp>();
+  const [successMessage, setSuccessMessage] = useState('');
 
   // States for form fields
   const [incomeType, setIncomeType] = useState('');
@@ -108,6 +109,7 @@ const PersonalTrackerIncome = () => {
 
       if (response.ok) {
         const responseData = await response.json();
+        setSuccessMessage("Transaction saved successfully!");
         console.log('Response data:', responseData);
         handleReset(); // Reset form after successful submission
         return true;
@@ -156,6 +158,7 @@ const PersonalTrackerIncome = () => {
         >
           <Picker.Item label="Select an income type" value="" />
           <Picker.Item label="Harvesting income" value="Harvesting income" />
+          <Picker.Item label="Government incentives" value="Government incentives" />
           <Picker.Item label="Other income" value="Other income" />
         </Picker>
       </View>
@@ -190,6 +193,7 @@ const PersonalTrackerIncome = () => {
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
 
       <TouchableOpacity
         style={styles.transactionHistory}
@@ -350,7 +354,15 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 85, 
     borderRadius: 15
-  }
+  },
+  successMessage: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "red", 
+    marginBottom: 10
+  },
 });
 
 export default PersonalTrackerIncome;
