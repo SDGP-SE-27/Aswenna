@@ -107,4 +107,6 @@ export type RootStackParamList = {
   sellerMap : undefined; 
 
   FertilizerSchedule : undefined ; 
+
+  FertilizerHistory : undefined;
 };
