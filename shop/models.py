@@ -8,6 +8,13 @@ class Shop(models.Model):
     address = models.TextField()
     contact_number = models.CharField(max_length=10)
 
+class AddItem(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
+    availability = models.BooleanField(default=True)
+
 class Item(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
