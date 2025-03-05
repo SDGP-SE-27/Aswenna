@@ -23,6 +23,15 @@ def update_item(request, item_id):
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
 
+@api_view(['POST'])
+def add_item(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    serializer = ItemSerializer(item, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
 @api_view(['GET'])
 def get_shops(request):
     shops = Shop.objects.prefetch_related('item_set').all()
