@@ -29,6 +29,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   const [availability, setAvailability] = useState(item.availability);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [shopAddress, setShopAddress] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleAvailabilityChange = (value: boolean) => {
     setAvailability(value);
@@ -80,8 +81,9 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
       });
 
       if (response.ok) {
-        Alert.alert('Success', 'Item details updated successfully');
+        setSuccessMessage("Update saved successfully!");
         console.log("updates succesfully");
+        navigation.navigate("buyergomap");
       } else {
         try {
           const errorData = await response.json();
@@ -92,7 +94,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
           console.error("Response was not JSON:", await response.text()); // Log the raw response
         }
       }
-      navigation.navigate('buyergomap');
+      
     } catch (error) {
       console.error('Error updating item:', error);
       Alert.alert('Error', 'Something went wrong, please try again later');
@@ -147,6 +149,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
       />
 
       <Button title="Update Item" onPress={updateItemDetails}/>
+      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
     </View>
     </View>
   );
@@ -197,6 +200,14 @@ const styles = StyleSheet.create({
   label: { fontSize: 16, fontWeight: 'bold', marginVertical: 20 },
   input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginTop: 5, borderRadius: 5 },
   switchContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
+  successMessage: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "red", 
+    marginBottom: 10
+  },
 });
 
 export default ItemDetails;
