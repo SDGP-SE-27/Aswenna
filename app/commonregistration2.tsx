@@ -188,8 +188,9 @@ const commonregistration2 = () => {
 
       formContainer: {
         width: '100%',
+        maxWidth: 350,
         backgroundColor: '#CFFFC2',
-        padding: 50,
+        padding: 20,
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -208,9 +209,9 @@ const commonregistration2 = () => {
 
       label: {
         fontSize: 16,
-        marginBottom: 5,
+        marginBottom: 20,
         fontWeight: "bold",
-        textAlign: "left"
+        
       },
 
       input: {
@@ -218,11 +219,10 @@ const commonregistration2 = () => {
         borderColor: "#CCCCCC",
         borderRadius: 8,
         padding: 10,
-        backgroundColor: '#FFFFFF', 
-        margin: 10, 
+        backgroundColor: '#FFFFFF',  
         textAlign: "left",
-        width: 230,
-       
+        width: 300,
+        marginBottom: 25,
       },
     
     

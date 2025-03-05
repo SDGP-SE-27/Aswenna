@@ -280,31 +280,38 @@ const MarketPrice3 = () => {
 
       {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image
             source={require("../assets/images/home_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+      
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DiseaseIdentification2")}
+        >
           <Image
             source={require("../assets/images/disease_icon.png")}
             style={styles.footerIcon}
           />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require("../assets/images/finance_icon.png")}
-            style={styles.footerIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require("../assets/images/profile_icon.png")}
-            style={styles.footerIcon}
-          />
-        </TouchableOpacity>
-      </View>
+          </TouchableOpacity>
+      
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PersonalTrackerMain")}
+          >
+            <Image
+              source={require("../assets/images/finance_icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+      
+          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+            <Image
+              source={require("../assets/images/profile_icon.png")}
+              style={styles.footerIcon}
+            />
+          </TouchableOpacity>
+            </View>
     </ScrollView>
   );
 };

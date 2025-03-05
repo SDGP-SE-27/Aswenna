@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '100%',
-    maxWidth: 400,
+    maxWidth: 350,
     backgroundColor: '#CFFFC2',
     padding: 50,
     borderRadius: 20,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius:20,
     padding: 10,
     marginBottom: 15,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#FFFFFF',
     
   },
 
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 20,
     marginBottom: 15,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#FFFFFF',
     padding: 10,
     fontFamily: 'poppins',
   },

@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         top: 10,
         height: "90%",
+        backgroundColor: "#fff",
     },
     
     text: {

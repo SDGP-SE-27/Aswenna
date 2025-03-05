@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: "100%",
-    maxWidth: 400,
+    maxWidth: 350,
     backgroundColor: "#CFFFC2",
     padding: 20,
     borderRadius: 20,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   label: {
-    marginBottom: 5,
+    marginBottom: 20,
     fontWeight: "bold",
     fontSize: 16,
   },
@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     backgroundColor: "#FFFFFF",
+    marginBottom: 20,
   },
   inputError: {
     borderColor: "red",
