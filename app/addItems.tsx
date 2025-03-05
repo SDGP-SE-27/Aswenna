@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, Switch, TouchableOpacity } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from './types';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// Define Props Type
-type addItemsScreenProp = RouteProp<RootStackParamList, 'addItems'> & {
-  params: {
-    item: {
-      id: number;
-      price: number;
-      stock: number;
-      availability: boolean;
-    };
-  };
-};
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "addItems">;
 
@@ -27,9 +15,12 @@ const isValidPhoneNumber = (phone: string) => {
 };
 
 // Fix the component with proper type annotation
-const addItems = ({ route }: { route: addItemsScreenProp }) => {
+const addItems = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'addItems'>>();
   const item = (route.params as { item: { id: number; price: number; stock: number; availability: boolean } })?.item || { id: 1, price: 0, stock: 0, availability: false };
+
+  console.log("Route Params:", route.params);
 
   const [price, setPrice] = useState(item.price.toString());
   const [stock, setStock] = useState(item.stock.toString());
@@ -103,6 +94,7 @@ const addItems = ({ route }: { route: addItemsScreenProp }) => {
           console.error("Response was not JSON:", await response.text());
         }
       }
+      navigation.navigate('buyergomap');
     } catch (error) {
       console.error('Error updating item:', error);
       Alert.alert('Error', 'Something went wrong, please try again later');

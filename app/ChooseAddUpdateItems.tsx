@@ -63,23 +63,7 @@ const ShopItemsScreen = () => {
       ))}
 
       </View>
-      <View style={styles.footer}>
-        <TouchableOpacity>
-          <Image source={require("../assets/images/home_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity>
-          <Image source={require("../assets/images/disease_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity>
-          <Image source={require("../assets/images/finance_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity>
-          <Image source={require("../assets/images/profile_icon.png")} style={styles.footerIcon} />
-        </TouchableOpacity>
-      </View>
+      
     </View>
   );
 };

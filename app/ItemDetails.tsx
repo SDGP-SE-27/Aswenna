@@ -58,7 +58,6 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
 
       const token = await AsyncStorage.getItem("accessToken");
       console.log("token recieved");
-
       if (!token) {
         Alert.alert("Authentication Error", "No access token found. Please log in again.");
         console.log("No token");
@@ -93,6 +92,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
           console.error("Response was not JSON:", await response.text()); // Log the raw response
         }
       }
+      navigation.navigate('buyergomap');
     } catch (error) {
       console.error('Error updating item:', error);
       Alert.alert('Error', 'Something went wrong, please try again later');
@@ -102,7 +102,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
   return (
     <View style={styles.newContainer}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('shopItem')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('ChooseAddUpdateItems')}>
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
           <Text style={styles.headerTitle}>Item Details</Text>
@@ -146,7 +146,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
         onChangeText={setShopAddress}
       />
 
-      <Button title="Update Item" onPress={updateItemDetails} />
+      <Button title="Update Item" onPress={updateItemDetails}/>
     </View>
     </View>
   );

@@ -42,6 +42,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="Homepage" component={Homepage} />
         <Stack.Screen name="login" component={login} />
         <Stack.Screen name="commonregistration1"  component={commonregistration1}/>
@@ -73,8 +74,6 @@ const App = () => {
         <Stack.Screen name="addItems" component={addItems}/>
         <Stack.Screen name="FertilizerHistory" component={FertilizerHistory}/>
        
-        
-        
       </Stack.Navigator>
     </NavigationContainer>
   );

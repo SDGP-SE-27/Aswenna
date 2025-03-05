@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"; 
 import {
   View,
   Text,
@@ -18,9 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-
 const Homepage = () => {
-  
   const navigation = useNavigation<NavigationProp>();
   const [modalVisible, setModalVisible] = useState(false);
   const [userData, setUserData] = useState({ cropType: "", landArea: "" });
@@ -303,7 +303,8 @@ const Homepage = () => {
 
   return (
     
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
           <Image
@@ -526,7 +527,8 @@ const Homepage = () => {
           />
         </TouchableOpacity>
       </View>
-    </View>
+      
+    </SafeAreaView>
     
   );
 };
