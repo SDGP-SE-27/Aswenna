@@ -9,17 +9,18 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRoute } from "@react-navigation/native";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 
 const Homepage = () => {
+  
   const navigation = useNavigation<NavigationProp>();
   const [modalVisible, setModalVisible] = useState(false);
   const [userData, setUserData] = useState({ cropType: "", landArea: "" });
@@ -33,6 +34,21 @@ const Homepage = () => {
   const [newPassword, setNewPassword] = useState("");
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
+  const [userName, setUserName] = useState('');
+  useEffect(() => {
+    const getUserName = async () => {
+        try {
+            const name = await AsyncStorage.getItem('username');
+            if (name) {
+                setUserName(name);
+            }
+        } catch (error) {
+            console.error('Error retrieving user name:', error);
+        }
+    };
+    getUserName();
+}, []);
+
   const handleReminderClick = async () => {
     // await fetchFertilizerReminders(); //          Fetch reminders first
     navigation.navigate("FertilizerHistory"); // ✅ Navigate to FertilizerHistory page
@@ -286,6 +302,7 @@ const Homepage = () => {
   };
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
@@ -294,6 +311,11 @@ const Homepage = () => {
             style={styles.icon}
           />
         </TouchableOpacity>
+
+        <View style={styles.headerContainer}>
+            <Text style={styles.greetingText}>Hi {userName}! 👋</Text>
+            <Text style={styles.subText}>Enjoy our services!</Text>
+        </View>
 
         <TouchableOpacity onPress={handleReminderClick}>
         <Image
@@ -311,16 +333,22 @@ const Homepage = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.searchBar}>
+      <View>
+      <TouchableOpacity
+        style={styles.banner}
+        onPress={() => navigation.navigate("InstructorsScreen")}
+      >
         <Image
-          source={require("../assets/icons/search.png")}
-          style={styles.searchIcon}
+          source={require("../assets/images/banner.jpg")} 
+          style={styles.bannerImage}
         />
-        <TextInput
-          placeholder="Search any categories"
-          placeholderTextColor="#000"
-          style={[styles.searchInput, { fontFamily: "Poppins-Regular" }]}
-        />
+        <View style={styles.bannerTextContainer}>
+          <Text style={styles.bannerTitle}>Need Farming Guidance?</Text>
+          <Text style={styles.bannerSubtitle}>
+            Contact Agricultural Experts now!
+          </Text>
+        </View>
+      </TouchableOpacity>
       </View>
 
       <View style={styles.categories}>
@@ -499,6 +527,7 @@ const Homepage = () => {
         </TouchableOpacity>
       </View>
     </View>
+    
   );
 };
 
@@ -506,12 +535,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffff",
-    padding: 20,
+    paddingHorizontal: 20,
+    position: "relative",
+    paddingVertical: 20,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
   },
   icon: {
     width: 40,
@@ -522,43 +554,82 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     tintColor: "#000",
-    left: 90,
+    left: 10,
     top: 5,
   },
+  headerContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff', 
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5, 
+},
+greetingText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+},
+subText: {
+    fontSize: 14,
+    color: '#808080', 
+    marginTop: 4,
+},
   profileIcon: {
     width: 40,
     height: 40,
     borderRadius: 50,
   },
-  searchBar: {
+  banner: {
+    backgroundColor: "#4CAF50", // Green theme for agriculture
+    borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#d4ffb6",
-    margin: 15,
-    borderRadius: 30,
-    paddingHorizontal: 15,
+    width: "100%",
+    height: 120,
+    padding: 15,
+    overflow: "hidden",
+    marginTop: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // Android shadow effect
   },
-  searchIcon: {
-    width: 20,
-    height: 20,
-    tintColor: "#333",
+  bannerImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
     marginRight: 10,
   },
-  searchInput: {
+  bannerTextContainer: {
     flex: 1,
+  },
+  bannerTitle: {
     fontSize: 16,
-    color: "#0000",
+    fontWeight: "bold",
+    color: "#FFF",
+  },
+  bannerSubtitle: {
+    fontSize: 12,
+    color: "#FFF",
+    marginTop: 4,
   },
   categories: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 10,
+    paddingBottom: 80,
     width: "100%",
   },
   categoryBox: {
-    width: "90%",
+    width: "80%",
     height: 120,
     alignItems: "center",
     justifyContent: "center",
@@ -573,18 +644,18 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   categoryContainer: {
-    width: "48%",
+    width: "45%",
     alignItems: "center",
     marginVertical: 10,
   },
   categoryIcon: {
     width: 50,
     height: 50,
-    marginBottom: 10,
+    marginBottom: 5,
     tintColor: "green",
   },
   categoryLabel: {
-    marginTop: 8,
+    marginTop: 4,
     fontSize: 15,
     fontWeight: "600",
     color: "#333",
@@ -649,12 +720,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   footer: {
+    
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     paddingVertical: 12,
     backgroundColor: "#DFFFD8",
-    position: "absolute",
+    position: "relative",
     width: "90%",
     bottom: 15,
     alignSelf: "center",
