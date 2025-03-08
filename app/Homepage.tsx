@@ -95,7 +95,7 @@ const Homepage = () => {
 
         setUserData({
           cropType: data.crop_type || "Not set",
-          landArea: data.land_area ? `${data.land_area} sq.ft` : "Not set",
+          landArea: data.land_area ? `${data.land_area}` : "Not set",
         });
       } else {
         const errorData = await response.json();
@@ -155,42 +155,9 @@ const Homepage = () => {
     setModalVisible(true);
   };
 
-  const fetchUserDetails = async () => {
-    setLoading(true);
-    try {
-      const token = await AsyncStorage.getItem("accessToken");
-      if (!token) {
-        Alert.alert("Error", "You need to log in first.");
-        return;
-      }
-
-      const response = await fetch(
-        "https://api.aswenna.site/api/homepage/user-details/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setUserDetails(data);
-        setProfileModalVisible(true);
-      } else {
-        Alert.alert("Error", "Failed to fetch user details.");
-      }
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleProfileClick = async () => {
-    await fetchUserDetails();
+    navigation.navigate("UserProfile");
   };
 
   const handlePasswordReset = async () => {

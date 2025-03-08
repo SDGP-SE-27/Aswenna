@@ -35,6 +35,7 @@ import sellerMap from "./sellerMap";
 import ChooseAddUpdateItems from "./ChooseAddUpdateItems";
 import addItems from "./addItems";
 import FertilizerHistory from "./FertilizerHistory";
+import UserProfile from "./UserProfile";
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
 
@@ -73,7 +74,7 @@ const App = () => {
         <Stack.Screen name="ChooseAddUpdateItems" component={ChooseAddUpdateItems}/>  
         <Stack.Screen name="addItems" component={addItems}/>
         <Stack.Screen name="FertilizerHistory" component={FertilizerHistory}/>
-       
+        <Stack.Screen name="UserProfile" component={UserProfile}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
