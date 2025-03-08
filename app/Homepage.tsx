@@ -108,47 +108,47 @@ const Homepage = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchFertilizerReminders = async () => {
-      try {
-        const token = await AsyncStorage.getItem("accessToken");
-        if (!token) return;
+  // useEffect(() => {
+  //   // const fetchFertilizerReminders = async () => {
+  //   //   try {
+  //   //     const token = await AsyncStorage.getItem("accessToken");
+  //   //     if (!token) return;
 
-        const response = await fetch(
-          "https://api.aswenna.site/reminder/get-schedule-history/",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  //   //     const response = await fetch(
+  //   //       "https://api.aswenna.site/reminder/get-schedule-history/",
+  //   //       {
+  //   //         method: "GET",
+  //   //         headers: {
+  //   //           Authorization: `Bearer ${token}`,
+  //   //           "Content-Type": "application/json",
+  //   //         },
+  //   //       }
+  //   //     );
 
-        if (response.ok) {
-          const reminders = await response.json();
-          const today = new Date();
+  //   //     if (response.ok) {
+  //   //       const reminders = await response.json();
+  //   //       const today = new Date();
 
-          reminders.forEach((reminder: Reminder) => {
-            const reminderDate = new Date(reminder.application_date);
-            reminderDate.setDate(reminderDate.getDate() - 2); // ✅ Changed: Show reminder 2 days before
+  //   //       reminders.forEach((reminder: Reminder) => {
+  //   //         const reminderDate = new Date(reminder.application_date);
+  //   //         reminderDate.setDate(reminderDate.getDate() - 2); // ✅ Changed: Show reminder 2 days before
 
-            if (reminderDate.toDateString() === today.toDateString()) {
-              //  Added: Show pop-up reminder alert
-              Alert.alert(
-                "Fertilizer Reminder",
-                `Reminder: Apply ${reminder.fertilizer} for ${reminder.crop_type} soon!`
-              );
-            }
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching reminders:", error);
-      }
-    };
+  //   //         if (reminderDate.toDateString() === today.toDateString()) {
+  //   //           //  Added: Show pop-up reminder alert
+  //   //           Alert.alert(
+  //   //             "Fertilizer Reminder",
+  //   //             `Reminder: Apply ${reminder.fertilizer} for ${reminder.crop_type} soon!`
+  //   //           );
+  //   //         }
+  //   //       });
+  //   //     }
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching reminders:", error);
+  //   //   }
+  //   // };
 
-    fetchFertilizerReminders();
-  }, []);
+    // fetchFertilizerReminders();
+  // }, []);
 
   const handleMenuClick = async () => {
     await fetchUserFarmland(); // ✅ Ensure latest data is fetched
@@ -302,37 +302,37 @@ const Homepage = () => {
     }
   };
 
-  const fetchFertilizerReminders = async () => {
-    try {
-      const token = await AsyncStorage.getItem("accessToken");
-      if (!token) {
-        Alert.alert("Error", "Please log in to view reminders.");
-        return;
-      }
+  // const fetchFertilizerReminders = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem("accessToken");
+  //     if (!token) {
+  //       Alert.alert("Error", "Please log in to view reminders.");
+  //       return;
+  //     }
 
-      const response = await fetch(
-        "https://api.aswenna.site/reminder/get-schedule-history/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //     const response = await fetch(
+  //       "https://api.aswenna.site/reminder/get-schedule-history/",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Reminders:", data);
-        Alert.alert("Fertilizer Reminders", JSON.stringify(data, null, 2));
-      } else {
-        Alert.alert("Error", "Failed to fetch reminders.");
-      }
-    } catch (error) {
-      console.error("Error fetching reminders:", error);
-      Alert.alert("Error", "Something went wrong.");
-    }
-  };
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log("Reminders:", data);
+  //       Alert.alert("Fertilizer Reminders", JSON.stringify(data, null, 2));
+  //     } else {
+  //       Alert.alert("Error", "Failed to fetch reminders.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching reminders:", error);
+  //     Alert.alert("Error", "Something went wrong.");
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -577,7 +577,7 @@ const Homepage = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+        <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
           <Image
             source={require("../assets/images/profile_icon.png")}
             style={styles.footerIcon}
