@@ -29,9 +29,9 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({ cropType: "", landArea: "" });
   const [showPasswordInput, setShowPasswordInput] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     setLoading(false);
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchUserData(); // fetching user data
@@ -244,8 +244,32 @@ const UserProfile = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
-        <Text style={styles.buttonText}>Reset Password</Text>
+      <TouchableOpacity onPress={handlePasswordReset}>
+        {/* <Text style={styles.buttonText}>Reset Password</Text> */}
+        {showPasswordInput ? (
+          <>
+            <TextInput
+              placeholder="Enter New Password"
+              secureTextEntry
+              style={styles.input}
+              value={newPassword}
+              onChangeText={setNewPassword}
+            />
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={handlePasswordReset}
+            >
+              <Text style={styles.buttonText}>Confirm Reset</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <TouchableOpacity
+            style={styles.resetButton}
+            onPress={() => setShowPasswordInput(true)}
+          >
+            <Text style={styles.buttonText}>Reset Password</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -319,6 +343,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logOutButton: {
+    backgroundColor: "#ff6347",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  resetButton: {
+    backgroundColor: "#35993a",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: "center",
+  },
+  confirmButton: {
     backgroundColor: "#ff6347",
     padding: 10,
     borderRadius: 10,
