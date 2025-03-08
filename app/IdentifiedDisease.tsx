@@ -38,7 +38,7 @@ const IdentifiedDisease = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate("DiseaseIdentification2")}
+        onPress={() => navigation.navigate("InstructorsScreen")}
       >
         <Text style={styles.backButtonText}>Contact agricultural instructor</Text>
       </TouchableOpacity>
