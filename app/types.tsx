@@ -114,4 +114,5 @@ export type RootStackParamList = {
     item: { id: number; price: number; stock: number; availability: boolean }
   },
   FertilizerHistory : undefined;
+  InstructorsScreen: undefined;
 };
