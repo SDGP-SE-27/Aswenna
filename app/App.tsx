@@ -7,7 +7,6 @@ import Homepage from "./Homepage";
 import DiseaseIdentificationScreen from "./DiseaseIdentification";
 import commonregistration1 from "./commonregistration1";
 import commonregistration2 from "./commonregistration2";
-import chatscreen from "./ChatScreen";
 import login from "./login"; 
 import PersonalTrackerExpense from "./PersonalTrackerExpense";
 import PersonalTrackerIncome from "./PersonalTrackerIncome";
@@ -35,6 +34,7 @@ import sellerMap from "./sellerMap";
 import ChooseAddUpdateItems from "./ChooseAddUpdateItems";
 import addItems from "./addItems";
 import FertilizerHistory from "./FertilizerHistory";
+import InstructorsScreen from "./InstructorsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>() ;
 
@@ -59,6 +59,7 @@ const App = () => {
         <Stack.Screen name= "MarketPrice3" component={MarketPrice3}/>
         <Stack.Screen name ="passwordReset" component={passwordReset}/>
         <Stack.Screen name="DiseaseIdentification2" component={DiseaseIdentification2}/>
+        <Stack.Screen name="InstructorsScreen" component={InstructorsScreen} />
         <Stack.Screen name = "WeeklyReport" component={WeeklyReport}/>
         <Stack.Screen name = "MonthlyReport" component={MonthlyReport}/>
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
@@ -73,6 +74,7 @@ const App = () => {
         <Stack.Screen name="ChooseAddUpdateItems" component={ChooseAddUpdateItems}/>  
         <Stack.Screen name="addItems" component={addItems}/>
         <Stack.Screen name="FertilizerHistory" component={FertilizerHistory}/>
+        
        
       </Stack.Navigator>
     </NavigationContainer>
