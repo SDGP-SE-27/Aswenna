@@ -39,7 +39,7 @@ const Welcome: React.FC = () => {
         }
         return newProgress; // Update the progress state
       });
-    }, 100); // Add the time interval
+    }, 30); // Add the time interval
   
     return () => clearInterval(interval);
   }, [navigation]);
