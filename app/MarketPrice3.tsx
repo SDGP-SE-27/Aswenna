@@ -7,23 +7,14 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
-import { LineChart as RNLineChart } from "react-native-chart-kit";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "./types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import {
-  LineChart,
-  CartesianGrid,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import axios from "axios";
+import { LineChart } from "react-native-chart-kit";
 
 type MarketPrice3ScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -44,12 +35,15 @@ const MarketPrice3 = () => {
   console.log(cropName);
   const [prices, setPrices] = useState<PriceEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedView, setSelectedView] = useState("prices");
+  const [selectedView, setSelectedView] = useState("lastYear");
+  const screenWidth = Dimensions.get("window").width;
+  const [plotSize, setPlotSize] = useState(1);
+  const extendedWidth = screenWidth * plotSize;
 
   useEffect(() => {
-      navigation.setOptions({ headerShown: false }); 
-    }, [navigation]);
-    
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   const formattedCropName = String(cropName);
   const nameMapping = {
     long_beans: "Long Beans",
@@ -171,14 +165,16 @@ const MarketPrice3 = () => {
 
       {/* Product Information */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('MarketPrice1')}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate("MarketPrice1")}
+        >
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {nameMapping[formattedCropName as keyof typeof nameMapping]}
         </Text>
       </View>
-      
 
       <View style={styles.productInfo}>
         <Text style={styles.priceText}>
@@ -199,83 +195,102 @@ const MarketPrice3 = () => {
 
       <ScrollView horizontal={true}>
         <View style={styles.chart}>
-          <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
-            <LineChart data={getSelectedData()}>
-              <XAxis
-                dataKey="date"
-                tickFormatter={(date) => date.slice(0, 7)}
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="retail_price"
-                stroke="#8884d8"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <LineChart
+            data={{
+              labels: getSelectedData().map((entry) => entry.date.slice(0, 7)),
+              datasets: [
+                {
+                  data: getSelectedData().map((entry) => entry.retail_price),
+                  color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+                  strokeWidth: 3,
+                },
+              ],
+            }}
+            width={extendedWidth}
+            height={400}
+            yAxisLabel="LKR "
+            yAxisInterval={1}
+            chartConfig={{
+              backgroundGradientFrom: "#f9f9f9",
+              backgroundGradientTo: "#ffffff",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#ffa726",
+              },
+            }}
+            bezier
+            style={{
+              marginVertical: 10,
+              borderRadius: 16,
+            }}
+          />
         </View>
       </ScrollView>
 
       <ScrollView>
-      {/* View Selection Buttons */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedView === "lastYear" && styles.activeButton,
-          ]}
-          onPress={() => setSelectedView("lastYear")}
-        >
-          <Text
+        {/* View Selection Buttons */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              selectedView === "lastYear" && styles.activeButtonText,
+              styles.button,
+              selectedView === "lastYear" && styles.activeButton,
             ]}
+            onPress={() => [setPlotSize(2), setSelectedView("lastYear")]}
           >
-            1 Yrs
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedView === "lastThreeYears" && styles.activeButton,
-          ]}
-          onPress={() => setSelectedView("lastThreeYears")}
-        >
-          <Text
+            <Text
+              style={[
+                styles.buttonText,
+                selectedView === "lastYear" && styles.activeButtonText,
+              ]}
+            >
+              1 Yrs
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              selectedView === "lastThreeYears" && styles.activeButtonText,
+              styles.button,
+              selectedView === "lastThreeYears" && styles.activeButton,
             ]}
+            onPress={() => [setPlotSize(5), setSelectedView("lastThreeYears")]}
           >
-            3 Yrs
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            selectedView === "prices" && styles.activeButton,
-          ]}
-          onPress={() => setSelectedView("prices")}
-        >
-          <Text
+            <Text
+              style={[
+                styles.buttonText,
+                selectedView === "lastThreeYears" && styles.activeButtonText,
+              ]}
+            >
+              3 Yrs
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              selectedView === "prices" && styles.activeButtonText,
+              styles.button,
+              selectedView === "prices" && styles.activeButton,
             ]}
+            onPress={() => [setPlotSize(15), setSelectedView("prices")]}
           >
-            All Time
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={[
+                styles.buttonText,
+                selectedView === "prices" && styles.activeButtonText,
+              ]}
+            >
+              All Time
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Description */}
-      <Text style={styles.description}>
-        click buttons above to view daily, weekly and monthly prices
-      </Text>
+        {/* Description */}
+        <Text style={styles.description}>
+          click buttons above to view daily, weekly and monthly prices
+        </Text>
       </ScrollView>
 
       {/* Bottom Navigation (Placeholder) */}
@@ -286,7 +301,7 @@ const MarketPrice3 = () => {
             style={styles.footerIcon}
           />
         </TouchableOpacity>
-      
+
         <TouchableOpacity
           onPress={() => navigation.navigate("DiseaseIdentification2")}
         >
@@ -294,24 +309,24 @@ const MarketPrice3 = () => {
             source={require("../assets/images/disease_icon.png")}
             style={styles.footerIcon}
           />
-          </TouchableOpacity>
-      
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PersonalTrackerMain")}
-          >
-            <Image
-              source={require("../assets/images/finance_icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-      
-          <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
-            <Image
-              source={require("../assets/images/profile_icon.png")}
-              style={styles.footerIcon}
-            />
-          </TouchableOpacity>
-            </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("PersonalTrackerMain")}
+        >
+          <Image
+            source={require("../assets/images/finance_icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+          <Image
+            source={require("../assets/images/profile_icon.png")}
+            style={styles.footerIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -332,31 +347,31 @@ const styles = StyleSheet.create({
     borderBottomColor: "#d3d3d3",
     fontSize: 25,
   },
-  headerTitle: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    flex: 1, 
-    paddingLeft: 70, 
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    flex: 1,
+    paddingLeft: 70,
   },
-  backButton: { 
+  backButton: {
     marginRight: 10,
-    backgroundColor: "#fff", 
-    borderRadius: 15, 
-    borderWidth: 2, 
-    borderColor: "#DDD", 
-    shadowColor: "#000", 
-    shadowOffset: { width: 2, height: 4 }, 
-    shadowOpacity: 0.15, 
-    shadowRadius: 6, 
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "#DDD",
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
     elevation: 6,
-    paddingLeft: 13, 
+    paddingLeft: 13,
     paddingRight: 15,
-    paddingBottom: 5, 
-    textAlign: "center", 
+    paddingBottom: 5,
+    textAlign: "center",
   },
-    backText: { 
-    fontSize: 25, 
-    fontWeight: "bold"
+  backText: {
+    fontSize: 25,
+    fontWeight: "bold",
   },
   productInfo: {
     backgroundColor: "#F0FFF0",
