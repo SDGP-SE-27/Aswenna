@@ -198,7 +198,7 @@ return (
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Google and Apple Sign-In Buttons */}
+      {/* Google and Apple Sign-In Buttons
       <View style={styles.socialButtonContainer}>
         <TouchableOpacity style={styles.socialButton}>
           <Image
@@ -212,7 +212,7 @@ return (
             style={styles.socialIcon}
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Sign-Up */}
       <View style={styles.signUpContainer}>
