@@ -19,7 +19,7 @@ const addItems = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'addItems'>>();
   const item = (route.params as { item: { id: number; price: number; stock: number; availability: boolean } })?.item || { id: 1, price: 0, stock: 0, availability: false };
-
+  const [successMessage, setSuccessMessage] = useState('');
   console.log("Route Params:", route.params);
 
   const [price, setPrice] = useState(item.price.toString());
@@ -56,7 +56,7 @@ const addItems = () => {
     }
 
     try {
-      const API_BASE_URL = 'https://api.aswenna.site/shop/items';
+      const API_BASE_URL = 'https://api.aswenna.site/shop/';
 
       const token = await AsyncStorage.getItem("accessToken");
       console.log("token received");
@@ -67,7 +67,7 @@ const addItems = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/${item.id}/`, {
+      const response = await fetch(`${API_BASE_URL}add_item/${item.id}/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const addItems = () => {
       });
 
       if (response.ok) {
-        Alert.alert('Success', 'Item details Added successfully');
+        setSuccessMessage("Item saved successfully!");
         console.log("Added successfully");
       } else {
         try {
@@ -150,6 +150,7 @@ const addItems = () => {
         />
 
         <Button title="Add Item" onPress={updateItemDetails} />
+        {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
       </View>
     </View>
   );
@@ -217,6 +218,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 5
+  },
+  successMessage: {
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "red", 
+    marginBottom: 10
   },
 });
 

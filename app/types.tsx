@@ -1,4 +1,5 @@
 export type RootStackParamList = {
+
   PersonalTrackerMain : undefined;
 
   PersonalTrackerIncome: undefined;
@@ -8,6 +9,7 @@ export type RootStackParamList = {
   TransactionHistory : undefined;
 
   NotifiScreen: undefined; 
+  UserProfile: undefined;
 
   commonregistration1 : {
     username: string;
@@ -114,4 +116,5 @@ export type RootStackParamList = {
     item: { id: number; price: number; stock: number; availability: boolean }
   },
   FertilizerHistory : undefined;
+  InstructorsScreen: undefined;
 };

@@ -39,25 +39,29 @@ const Homepage = () => {
   const [newPassword, setNewPassword] = useState("");
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
+  const [reminders, setReminders] = useState<Reminder[]>([]); // ✅ Stores fetched reminders
+  const [showModal, setShowModal] = useState(false); //
+  const [fetchedOnce, setFetchedOnce] = useState(false); //
+
   useEffect(() => {
     const getUserName = async () => {
-        try {
-            const name = await AsyncStorage.getItem('username');
-            if (name) {
-                setUserName(name);
-            }
-        } catch (error) {
-            console.error('Error retrieving user name:', error);
+      try {
+        const name = await AsyncStorage.getItem("username");
+        if (name) {
+          setUserName(name);
         }
+      } catch (error) {
+        console.error("Error retrieving user name:", error);
+      }
     };
     getUserName();
-}, []);
+  }, []);
 
   const handleReminderClick = async () => {
     // await fetchFertilizerReminders(); //          Fetch reminders first
     navigation.navigate("FertilizerHistory"); // ✅ Navigate to FertilizerHistory page
-    };
+  };
 
   interface Reminder {
     crop_type: string;
@@ -66,9 +70,12 @@ const Homepage = () => {
   }
 
   useEffect(() => {
-      navigation.setOptions({ headerShown: false }); 
-    }, [navigation]);
-
+    navigation.setOptions({ headerShown: false });
+    if (!fetchedOnce) {
+      checkFertilizerReminders();
+      setFetchedOnce(true); // ✅ Ensure fetch happens only once
+    }
+  }, []);
   useEffect(() => {
     fetchUserFarmland(); // Fetch farmland details when component loads
   }, []);
@@ -94,7 +101,7 @@ const Homepage = () => {
 
         setUserData({
           cropType: data.crop_type || "Not set",
-          landArea: data.land_area ? `${data.land_area} sq.ft` : "Not set",
+          landArea: data.land_area ? `${data.land_area}` : "Not set",
         });
       } else {
         const errorData = await response.json();
@@ -107,88 +114,56 @@ const Homepage = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchFertilizerReminders = async () => {
-      try {
-        const token = await AsyncStorage.getItem("accessToken");
-        if (!token) return;
-  
-        const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-  
-        if (response.ok) {
-          const reminders = await response.json();
-          const today = new Date();
-  
-          reminders.forEach((reminder: Reminder) => {
-            const reminderDate = new Date(reminder.application_date);
-            reminderDate.setDate(reminderDate.getDate() - 2); // ✅ Changed: Show reminder 2 days before
-  
-            if (reminderDate.toDateString() === today.toDateString()) {
-              //  Added: Show pop-up reminder alert
-              Alert.alert(
-                "Fertilizer Reminder",
-                `Reminder: Apply ${reminder.fertilizer} for ${reminder.crop_type} soon!`
-              );
-            }
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching reminders:", error);
-      }
-    };
-  
-    fetchFertilizerReminders();
-  }, []);
-  
-  
+  // useEffect(() => {
+  //   // const fetchFertilizerReminders = async () => {
+  //   //   try {
+  //   //     const token = await AsyncStorage.getItem("accessToken");
+  //   //     if (!token) return;
+
+  //   //     const response = await fetch(
+  //   //       "https://api.aswenna.site/reminder/get-schedule-history/",
+  //   //       {
+  //   //         method: "GET",
+  //   //         headers: {
+  //   //           Authorization: `Bearer ${token}`,
+  //   //           "Content-Type": "application/json",
+  //   //         },
+  //   //       }
+  //   //     );
+
+  //   //     if (response.ok) {
+  //   //       const reminders = await response.json();
+  //   //       const today = new Date();
+
+  //   //       reminders.forEach((reminder: Reminder) => {
+  //   //         const reminderDate = new Date(reminder.application_date);
+  //   //         reminderDate.setDate(reminderDate.getDate() - 2); // ✅ Changed: Show reminder 2 days before
+
+  //   //         if (reminderDate.toDateString() === today.toDateString()) {
+  //   //           //  Added: Show pop-up reminder alert
+  //   //           Alert.alert(
+  //   //             "Fertilizer Reminder",
+  //   //             `Reminder: Apply ${reminder.fertilizer} for ${reminder.crop_type} soon!`
+  //   //           );
+  //   //         }
+  //   //       });
+  //   //     }
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching reminders:", error);
+  //   //   }
+  //   // };
+
+    // fetchFertilizerReminders();
+  // }, []);
 
   const handleMenuClick = async () => {
     await fetchUserFarmland(); // ✅ Ensure latest data is fetched
     setModalVisible(true);
   };
 
-  const fetchUserDetails = async () => {
-    setLoading(true);
-    try {
-      const token = await AsyncStorage.getItem("accessToken");
-      if (!token) {
-        Alert.alert("Error", "You need to log in first.");
-        return;
-      }
-
-      const response = await fetch(
-        "https://api.aswenna.site/api/homepage/user-details/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setUserDetails(data);
-        setProfileModalVisible(true);
-      } else {
-        Alert.alert("Error", "Failed to fetch user details.");
-      }
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleProfileClick = async () => {
-    await fetchUserDetails();
+    navigation.navigate("UserProfile");
   };
 
   const handlePasswordReset = async () => {
@@ -277,39 +252,123 @@ const Homepage = () => {
     },
   ];
 
-  const fetchFertilizerReminders = async () => {
+  interface Reminder {
+    crop: { name: string };
+    fertilizer_type: string;
+    application_date: string;
+  }
+
+  const checkFertilizerReminders = async () => {
     try {
       const token = await AsyncStorage.getItem("accessToken");
-      if (!token) {
-        Alert.alert("Error", "Please log in to view reminders.");
-        return;
-      }
+      if (!token) return;
 
-      const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
-        method: "GET",
-        headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      });
+      const response = await fetch(
+        "https://api.aswenna.site/reminder/get-schedule-history/",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
-        const data = await response.json();
-        console.log("Reminders:", data);
-        Alert.alert("Fertilizer Reminders", JSON.stringify(data, null, 2));
+        const fetchedReminders: Reminder[] = await response.json();
+        console.log("Fetched Reminders:", fetchedReminders);
+        const today = new Date();
+        const targetDate = new Date(today);
+        targetDate.setDate(today.getDate() + 2); // ✅ Target date = today + 2 days
+
+        const upcomingReminders = fetchedReminders.filter((reminder) => {
+          const reminderDate = new Date(reminder.application_date);
+
+          return (
+            reminderDate.getFullYear() === targetDate.getFullYear() &&
+            reminderDate.getMonth() === targetDate.getMonth() &&
+            reminderDate.getDate() === targetDate.getDate()
+          );
+        });
+
+        if (upcomingReminders.length > 0) {
+          setReminders(upcomingReminders); // ✅ Store reminders in state
+          setShowModal(true); // ✅ Show Modal with reminders
+        } else {
+          console.log("No reminders for the selected date.");
+        }
       } else {
-        Alert.alert("Error", "Failed to fetch reminders.");
+        console.error(
+          "Failed to fetch reminders. Response Text:",
+          await response.text()
+        );
       }
     } catch (error) {
-      console.error("Error fetching reminders:", error);
-      Alert.alert("Error", "Something went wrong.");
+      console.error("Error checking reminders:", error);
     }
   };
 
+  // const fetchFertilizerReminders = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem("accessToken");
+  //     if (!token) {
+  //       Alert.alert("Error", "Please log in to view reminders.");
+  //       return;
+  //     }
+
+  //     const response = await fetch(
+  //       "https://api.aswenna.site/reminder/get-schedule-history/",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log("Reminders:", data);
+  //       Alert.alert("Fertilizer Reminders", JSON.stringify(data, null, 2));
+  //     } else {
+  //       Alert.alert("Error", "Failed to fetch reminders.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching reminders:", error);
+  //     Alert.alert("Error", "Something went wrong.");
+  //   }
+  // };
+
   return (
-    
     <SafeAreaView style={styles.container}>
-      
+      <Modal visible={showModal} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Fertilizer Reminder</Text>
+            {reminders.map((reminder, index) => (
+              <View key={index} style={styles.reminderItem}>
+                <Text style={styles.reminderText}>
+                  Crop: {reminder.crop?.name || "Unknown Crop"}
+                </Text>
+                <Text style={styles.reminderText}>
+                  Fertilizer: {reminder.fertilizer_type}
+                </Text>
+                <Text style={styles.reminderText}>
+                  Application Date:{" "}
+                  {new Date(reminder.application_date).toDateString()}
+                </Text>
+              </View>
+            ))}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleMenuClick}>
           <Image
@@ -319,18 +378,17 @@ const Homepage = () => {
         </TouchableOpacity>
 
         <View style={styles.headerContainer}>
-            <Text style={styles.greetingText}>Hi {userName}! 👋</Text>
-            <Text style={styles.subText}>Enjoy our services!</Text>
+          <Text style={styles.greetingText}>Hi {userName}! 👋</Text>
+          <Text style={styles.subText}>Enjoy our services!</Text>
         </View>
 
         <TouchableOpacity onPress={handleReminderClick}>
-        <Image
-          source={require("../assets/icons/reminder.png")}
-          style={styles.remindericon}
-        />
+          <Image
+            source={require("../assets/icons/reminder.png")}
+            style={styles.remindericon}
+          />
         </TouchableOpacity>
-        
-        
+
         <TouchableOpacity onPress={handleProfileClick}>
           <Image
             source={require("../assets/icons/farmer_2.png")}
@@ -340,21 +398,21 @@ const Homepage = () => {
       </View>
 
       <View>
-      <TouchableOpacity
-        style={styles.banner}
-        onPress={() => navigation.navigate("InstructorsScreen")}
-      >
-        <Image
-          source={require("../assets/images/banner.jpg")} 
-          style={styles.bannerImage}
-        />
-        <View style={styles.bannerTextContainer}>
-          <Text style={styles.bannerTitle}>Need Farming Guidance?</Text>
-          <Text style={styles.bannerSubtitle}>
-            Contact Agricultural Experts now!
-          </Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.banner}
+          onPress={() => navigation.navigate("InstructorsScreen")}
+        >
+          <Image
+            source={require("../assets/images/banner.jpg")}
+            style={styles.bannerImage}
+          />
+          <View style={styles.bannerTextContainer}>
+            <Text style={styles.bannerTitle}>Need Farming Guidance?</Text>
+            <Text style={styles.bannerSubtitle}>
+              Contact Agricultural Experts now!
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.categories}>
@@ -525,16 +583,14 @@ const Homepage = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+        <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
           <Image
             source={require("../assets/images/profile_icon.png")}
             style={styles.footerIcon}
           />
         </TouchableOpacity>
       </View>
-      
     </SafeAreaView>
-    
   );
 };
 
@@ -574,10 +630,10 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingVertical: 10,
     paddingHorizontal: 10,
-    backgroundColor: '#fff', 
+    backgroundColor: "#fff",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,

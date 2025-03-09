@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
@@ -40,6 +39,7 @@ interface ItemDetailsProps {
 const ShopScreen = () => {
   const navigation = useNavigation<BuyerGoMapScreenProp>();
   const [shops, setShops] = useState<Shop[]>([]);
+  
   const [selectedShop, setSelectedShop] = useState<Shop | null>(null);
   useEffect(() => {
         navigation.setOptions({ headerShown: false }); 
@@ -122,7 +122,7 @@ const ShopScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('ItemDetails', itemDetails)}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>{"<"}</Text>
       </TouchableOpacity>
 
@@ -262,3 +262,7 @@ const styles = StyleSheet.create({
 });
 
 export default ShopScreen;
+
+function setSelectedShop(shop: Shop) {
+  throw new Error('Function not implemented.');
+}

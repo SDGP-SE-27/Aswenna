@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, Linking, Pressable, Text, View } from 'react-native';
+import { Alert, Button, Linking, Pressable, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -56,6 +56,9 @@ const App = () => {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Getting your current location...</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>      
+              <Text style={styles.backButtonText}>{"<"}</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -74,5 +77,29 @@ const App = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  backButton: {
+      marginRight: 10,
+      borderColor: "#DDD",
+      borderWidth: 2,
+      borderRadius: 15,
+      paddingLeft: 13,
+      paddingRight: 15,
+      paddingBottom: 5,
+      marginBottom: 20,
+      textAlign: "center",
+      width: "14%",
+      backgroundColor: '#fff',
+      shadowColor: "#000", 
+      shadowOffset: { width: 2, height: 4 }, 
+      shadowOpacity: 0.15, 
+      shadowRadius: 6, 
+      elevation: 6,
+    },
+      backButtonText: {
+      fontSize: 25,
+      fontWeight: "bold"}}
+    );
 
 export default App;

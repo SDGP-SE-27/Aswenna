@@ -34,12 +34,12 @@ const Welcome: React.FC = () => {
         if (newProgress >= 1) {
           clearInterval(interval); // Stop the interval at 100%
           setTimeout(() => {
-            navigation.replace("Chooserole", { role: "farmer" }); // Navigate to Chooserole
+            navigation.navigate("login", {username : ""}); // Navigate to Chooserole
           }, 500); // Small delay before navigating
         }
         return newProgress; // Update the progress state
       });
-    }, 100); // Add the time interval
+    }, 30); // Add the time interval
   
     return () => clearInterval(interval);
   }, [navigation]);

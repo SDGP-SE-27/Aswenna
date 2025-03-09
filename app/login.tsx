@@ -113,51 +113,8 @@ const handleLogin = async () => {
   }
 };
 
-interface Reminder {
-  crop_type: string;
-  fertilizer: string;
-  application_date: string;
-}
-
-const checkFertilizerReminders = async () => {
-  try {
-    const token = await AsyncStorage.getItem("accessToken");
-    if (!token) return;
-
-    const response = await fetch("https://api.aswenna.site/reminder/get-schedule-history/", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const reminders = await response.json();
-      const today = new Date();
-      reminders.forEach((reminder: Reminder) => {
-        const reminderDate = new Date(reminder.application_date);
-        reminderDate.setDate(reminderDate.getDate() - 2);
-        
-        if (reminderDate.toDateString() === today.toDateString()) {
-          Alert.alert("Fertilizer Reminder", `Time to apply ${reminder.fertilizer} for ${reminder.crop_type}!`);
-        }
-      });
-    }
-  } catch (error) {
-    console.error("Error checking reminders:", error);
-  }
-};
-
-// Call this after successful login
-useEffect(() => {
-  checkFertilizerReminders();
-}, []);
-
 return (
     <View style={styles.container}>
-
-
       {/* Logo */}
       <Image source={require("../assets/images/logo.png")} style={styles.logo} />
 
@@ -191,14 +148,12 @@ return (
         </TouchableOpacity>
       </View>
 
-  
-
       {/* Login Button */}
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Google and Apple Sign-In Buttons */}
+      {/* Google and Apple Sign-In Buttons
       <View style={styles.socialButtonContainer}>
         <TouchableOpacity style={styles.socialButton}>
           <Image
@@ -212,7 +167,7 @@ return (
             style={styles.socialIcon}
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Sign-Up */}
       <View style={styles.signUpContainer}>
