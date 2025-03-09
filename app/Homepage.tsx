@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen"; 
+import { Dimensions, Platform } from 'react-native';
 import {
   View,
   Text,
@@ -19,6 +19,11 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+const { width, height } = Dimensions.get('window');
+
+// Scale function to create responsive sizes
+const scale = (size: number) => (width / 375) * size;
 
 const Homepage = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -537,30 +542,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffff",
-    paddingHorizontal: 20,
-    position: "relative",
-    paddingVertical: 20,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: 15,
+    paddingTop: Platform.OS === 'ios' ? 40 : 20,
+    paddingBottom: 0,
+    overflow: 'hidden', // Prevent any potential overflow
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+    alignItems: 'center',
+    height: height * 0.1,
+    paddingHorizontal: scale(5),
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: scale(35),
+    height: scale(35),
     tintColor: "#000",
   },
   remindericon: {
-    width: 40,
-    height: 40,
+    width: scale(35),
+    height: scale(35),
     tintColor: "#000",
     left: 10,
     top: 5,
   },
   headerContainer: {
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     backgroundColor: '#fff', 
     borderBottomLeftRadius: 20,
@@ -570,98 +582,100 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5, 
-},
-greetingText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-},
-subText: {
-    fontSize: 14,
-    color: '#808080', 
-    marginTop: 4,
-},
+  },
+  greetingText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#1A1A1A',
+  },
+  subText: {
+      fontSize: 14,
+      color: '#808080', 
+      marginTop: 4,
+  },
   profileIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(20),
   },
   banner: {
-    backgroundColor: "#4CAF50", // Green theme for agriculture
-    borderRadius: 10,
+    backgroundColor: "#4CAF50",
+    borderRadius: scale(10),
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    height: 120,
-    padding: 15,
+    height: height * 0.15,
     overflow: "hidden",
-    marginTop: 10,
-    marginBottom: 20,
+    padding: scale(15),
+    marginTop: scale(10),
+    marginBottom: scale(15),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 5, // Android shadow effect
+    elevation: 5, 
   },
   bannerImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-    marginRight: 10,
+    width: scale(60),
+    height: scale(60),
+    borderRadius: scale(10),
+    marginRight: scale(10),
   },
   bannerTextContainer: {
     flex: 1,
   },
   bannerTitle: {
-    fontSize: 16,
+    fontSize: scale(14),
     fontWeight: "bold",
     color: "#FFF",
   },
   bannerSubtitle: {
-    fontSize: 12,
+    fontSize: scale(12),
     color: "#FFF",
-    marginTop: 4,
+    marginTop: scale(4),
   },
   categories: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: 80,
+    height: height * 0.5,
+    paddingBottom: scale(20),
     width: "100%",
   },
+  categoryContainer: {
+    width: width < 375 ? "48%" : "45%", // Adjust for smaller screens
+    alignItems: "center",
+    height: height * 0.2,
+    marginVertical: scale(5),
+  },
   categoryBox: {
-    width: "80%",
-    height: 120,
+    width: "90%",
+    height: scale(110),
     alignItems: "center",
     justifyContent: "center",
-    elevation: 5,
-    marginVertical: 10,
     backgroundColor: "#ffff",
-    paddingVertical: 15,
-    borderRadius: 10,
+    paddingVertical: scale(10),
+    borderRadius: scale(10),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.2,
-    shadowRadius: 5,
-  },
-  categoryContainer: {
-    width: "45%",
-    alignItems: "center",
-    marginVertical: 10,
+    shadowRadius: scale(5),
+    elevation: Platform.OS === 'android' ? 3 : 0,
   },
   categoryIcon: {
-    width: 50,
-    height: 50,
-    marginBottom: 5,
+    width: scale(45),
+    height: scale(45),
+    marginBottom: scale(5),
     tintColor: "green",
   },
   categoryLabel: {
-    marginTop: 4,
-    fontSize: 15,
+    marginTop: scale(4),
+    fontSize: scale(13),
     fontWeight: "600",
     color: "#333",
     textAlign: "center",
+    flexWrap: 'wrap',
   },
   screen: {
     flex: 1,
@@ -675,20 +689,20 @@ subText: {
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContent: {
-    width: 300,
+    width: width * 0.8,
     backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
+    padding: scale(20),
+    borderRadius: scale(10),
     alignItems: "center",
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: scale(18),
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: scale(10),
   },
   modalText: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: scale(16),
+    marginBottom: scale(5),
   },
   closeButton: {
     backgroundColor: "#51b936",
@@ -711,9 +725,9 @@ subText: {
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
-    width: "80%",
+    width: width * 0.7,
     marginBottom: 15,
-    fontSize: 16,
+    fontSize: scale(14),
   },
   confirmButton: {
     backgroundColor: "#ff6347",
@@ -722,26 +736,26 @@ subText: {
     marginTop: 10,
   },
   footer: {
-    
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: scale(12),
     backgroundColor: "#DFFFD8",
-    position: "relative",
+    position: "absolute",
+    
     width: "90%",
-    bottom: 15,
+    bottom: scale(15),
     alignSelf: "center",
-    borderRadius: 30,
-    elevation: 5,
+    borderRadius: scale(30),
+    elevation: Platform.OS === 'android' ? 5 : 0,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
   },
   footerIcon: {
-    width: 30,
-    height: 30,
+    width: scale(30),
+    height: scale(30),
   },
 
   logOutButton: {
@@ -750,6 +764,7 @@ subText: {
     borderRadius: 10,
     marginTop: 10,
   },
+
 });
 
 export default Homepage;
