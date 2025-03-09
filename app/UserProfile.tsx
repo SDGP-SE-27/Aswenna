@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from 'react-native';
+import { verticalScale, moderateScale } from "react-native-size-matters";
 import {
   View,
   Text,
@@ -10,11 +12,15 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  Image
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+const { width, height } = Dimensions.get('window');
+const scale = (size: number) => (width / 375) * size;
 
 const UserProfile = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -28,6 +34,10 @@ const UserProfile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [userData, setUserData] = useState({ cropType: "", landArea: "" });
   const [showPasswordInput, setShowPasswordInput] = useState(false);
+
+  useEffect(() => {
+        navigation.setOptions({ headerShown: false }); 
+      }, [navigation]);
 
   useEffect(() => {
     setLoading(false);
@@ -184,66 +194,80 @@ const UserProfile = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>User Profile</Text>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>User Name</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={userDetails.username}
-          onChangeText={(text) =>
-            setUserDetails({ ...userDetails, username: text })
-          }
-          editable={isEditing}
-        />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Homepage')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+          <Text style={styles.headerTitle}>User Profile</Text>
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={userDetails.email}
-          onChangeText={(text) =>
-            setUserDetails({ ...userDetails, email: text })
-          }
-          editable={isEditing}
-          keyboardType="email-address"
-        />
-      </View>
+      <View style={styles.mainContainer}>
+        <TouchableOpacity>
+          <Image
+            source={require("../assets/icons/farmer_2.png")}
+            style={styles.profileIcon}
+          />
+        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>User Name</Text>
+          <TextInput
+            style={[styles.input, !isEditing && styles.disabledInput]}
+            value={userDetails.username}
+            onChangeText={(text) =>
+              setUserDetails({ ...userDetails, username: text })
+            }
+            editable={isEditing}
+          />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Contact No</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={userDetails.phone_number}
-          onChangeText={(text) =>
-            setUserDetails({ ...userDetails, phone_number: text })
-          }
-          editable={isEditing}
-          keyboardType="phone-pad"
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={[styles.input, !isEditing && styles.disabledInput]}
+            value={userDetails.email}
+            onChangeText={(text) =>
+              setUserDetails({ ...userDetails, email: text })
+            }
+            editable={isEditing}
+            keyboardType="email-address"
+          />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Crop Type</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={userData.cropType}
-          onChangeText={(text) => setUserData({ ...userData, cropType: text })}
-          editable={isEditing}
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Contact No</Text>
+          <TextInput
+            style={[styles.input, !isEditing && styles.disabledInput]}
+            value={userDetails.phone_number}
+            onChangeText={(text) =>
+              setUserDetails({ ...userDetails, phone_number: text })
+            }
+            editable={isEditing}
+            keyboardType="phone-pad"
+          />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Land Area</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={userData.landArea}
-          onChangeText={(text) => setUserData({ ...userData, landArea: text })}
-          editable={isEditing}
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Crop Type</Text>
+          <TextInput
+            style={[styles.input, !isEditing && styles.disabledInput]}
+            value={userData.cropType}
+            onChangeText={(text) => setUserData({ ...userData, cropType: text })}
+            editable={isEditing}
+          />
+        </View>
 
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Land Area</Text>
+          <TextInput
+            style={[styles.input, !isEditing && styles.disabledInput]}
+            value={userData.landArea}
+            onChangeText={(text) => setUserData({ ...userData, landArea: text })}
+            editable={isEditing}
+          />
+        </View>
+
+      <View>
       <TouchableOpacity onPress={handlePasswordReset}>
         {/* <Text style={styles.buttonText}>Reset Password</Text> */}
         {showPasswordInput ? (
@@ -287,6 +311,8 @@ const UserProfile = () => {
       >
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
+      </View>
+      </View>
     </View>
   );
 };
@@ -294,14 +320,57 @@ const UserProfile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#f9f9f9",
   },
   header: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 70, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
     textAlign: "center",
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
+    padding: 20,
+    flex: 1,
+    alignItems: "center",  
+
+  },
+  profileIcon: {
+    width: scale(80),
+    height: scale(80),
+    borderRadius: scale(40),
+    marginBottom: scale(40),
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
     marginBottom: 12,
@@ -316,7 +385,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#fff",
     borderRadius: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 50,
     borderWidth: 1,
     borderColor: "#ddd",
   },
@@ -364,3 +433,4 @@ const styles = StyleSheet.create({
 });
 
 export default UserProfile;
+

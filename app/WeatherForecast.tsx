@@ -166,7 +166,7 @@ const WeatherScreen = () => {
           <Image source={require("../assets/images/finance_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       
-        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+        <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
           <Image source={require("../assets/images/profile_icon.png")} style={styles.footerIcon} />
         </TouchableOpacity>
       </View>

@@ -106,7 +106,7 @@ const MarketPrice2 = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("MarketPrice1")}>
+        <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
           <Image
             source={require("../assets/images/profile_icon.png")}
             style={styles.footerIcon}

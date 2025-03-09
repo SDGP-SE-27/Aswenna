@@ -29,6 +29,10 @@ const InstructorsScreen = () => {
   const defaultImage = require("../assets/images/default_profile.png"); // Ensure you have this file
 
   useEffect(() => {
+        navigation.setOptions({ headerShown: false }); 
+      }, [navigation]);
+
+  useEffect(() => {
     // Simulating API call to fetch instructors without images
     setTimeout(() => {
       setInstructors([
@@ -61,8 +65,14 @@ const InstructorsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Agricultural Instructors</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('DiseaseIdentification2')}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Agricultural Instructors</Text>
+      </View>
 
+      <View style={styles.mainContainer}>
       {loading ? (
         <ActivityIndicator size="large" color="#4CAF50" />
       ) : (
@@ -90,11 +100,13 @@ const InstructorsScreen = () => {
         />
       )}
 
+      </View>
+
       <TouchableOpacity
-        style={styles.backButton}
+        style={styles.backButtonBottom}
         onPress={() => navigation.navigate("Homepage")}
       >
-        <Text style={styles.backButtonText}>← Back to homepage</Text>
+        <Text style={styles.backButtonText}>Back to homepage</Text>
       </TouchableOpacity>
     </View>
   );
@@ -104,14 +116,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F8F8F8",
-    padding: 20,
   },
   header: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
-    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3",
+    fontSize: 25,
+  },
+  headerTitle: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    flex: 1, 
+    paddingLeft: 35, 
+  },
+  backButton: { 
+    marginRight: 10,
+    backgroundColor: "#fff", 
+    borderRadius: 15, 
+    borderWidth: 2, 
+    borderColor: "#DDD", 
+    shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6,
+    paddingLeft: 13, 
+    paddingRight: 15,
+    paddingBottom: 5, 
+    textAlign: "center", 
+  },
+    backText: { 
+    fontSize: 25, 
+    fontWeight: "bold"
+  },
+  mainContainer: {
+    padding: 20,
   },
   instructorCard: {
     flexDirection: "row",
@@ -158,16 +201,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-  backButton: {
+  backButtonBottom: {
     backgroundColor: "#4CAF50",
-    padding: 15,
+    padding: 20,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 20,
+    position: "absolute",
+    justifyContent: "space-around",
+    width: "90%",
+    bottom: 15,
+    alignSelf: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   backButtonText: {
     color: "#FFFFFF",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
   },
 });

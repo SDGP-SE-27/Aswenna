@@ -120,6 +120,8 @@
 
         "react-native-screens": "~4.4.0",
 
+        "react-native-size-matters": "^0.4.2",
+
         "react-native-status-bar-height": "^2.6.0",
 
         "react-native-svg": "^15.8.0",
