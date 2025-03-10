@@ -12,10 +12,12 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
-  Image
+  Image,
+  ScrollView
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -202,7 +204,7 @@ const UserProfile = () => {
           <Text style={styles.headerTitle}>User Profile</Text>
       </View>
 
-      <View style={styles.mainContainer}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1,padding: 20, alignItems: "center",}}>
         <TouchableOpacity>
           <Image
             source={require("../assets/icons/farmer_2.png")}
@@ -312,7 +314,7 @@ const UserProfile = () => {
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
       </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
