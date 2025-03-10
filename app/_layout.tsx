@@ -30,7 +30,6 @@ export default function RootLayout() {
   return (
       <Stack initialRouteName="Welcome">
         <Stack.Screen name="Welcome" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
   );
 }
