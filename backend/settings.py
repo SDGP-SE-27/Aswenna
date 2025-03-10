@@ -83,7 +83,8 @@ MIDDLEWARE = [
 LOGIN_URL = '/api/users/login/'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",  # Replace with your frontend's origin
+    "http://localhost:8081",
+    "https://app.aswenna.site"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
