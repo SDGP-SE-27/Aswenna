@@ -120,7 +120,7 @@ const UserProfile = () => {
     if (isEditing) {
       // Save updated profile
       try {
-        await axios.put("https://your-api-url.com/api/user-profile", userData);
+        await axios.put("https://api.aswenna.site/api/user-profile", userData);
         alert("Profile updated successfully!");
       } catch (error) {
         console.error("Error updating profile:", error);
