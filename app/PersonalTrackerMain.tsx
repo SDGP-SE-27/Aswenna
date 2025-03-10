@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 30, 
+    paddingLeft: 20, 
   },
   backButton: { 
     marginRight: 10,
@@ -158,20 +158,19 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     padding: 20,
+    
   },
   label: {
     fontSize: 20,
-    color: '#000',
-    marginVertical: 10,
-    fontWeight: 'semibold',
-    marginTop: 50, 
+    color: "#333",
+    marginVertical: 15,
+    fontWeight: "bold",
   },
     label1: {
-    fontSize: 20,
-    color: '#000',
-    marginVertical: 10,
-    fontWeight: 'semibold', 
-    marginTop: 50
+      fontSize: 20,
+      color: "#333",
+      marginVertical: 15,
+      fontWeight: "bold",
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -179,27 +178,35 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   categoryButton: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
     flex: 1,
-    marginHorizontal: 5,
-    alignItems: 'center',
+    marginHorizontal: 10,
+    alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
 
   reportsContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 20,
   },
 
   reportButton: {
-    backgroundColor: '#fff',
+    backgroundColor: "#FFFF8F",
     borderRadius: 10,
-    padding: 10,
-    flex:1,
-    marginHorizontal: 5,
-    alignItems: 'center',
-    marginTop: 15
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    width: "80%",
+    alignItems: "center",
+    marginVertical: 10,
+    elevation: 4,
   },
 
   buttonText: {
@@ -237,10 +244,15 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   subcontainer:{
-    backgroundColor: '#77CB61', 
-    padding:30, 
-    paddingBottom: 200, 
-    borderRadius: 15
+    backgroundColor: "#77CB61", 
+    padding: 25, 
+    paddingBottom: 40, 
+    borderRadius: 15,
+    shadowColor: "#000", 
+    shadowOffset: { width: 4, height: 6 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 6, 
+    elevation: 6,
   }
 });
 

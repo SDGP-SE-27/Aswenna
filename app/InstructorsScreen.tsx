@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
+import { goBack } from "expo-router/build/global-state/routing";
 
 type Instructor = {
   id: number;
@@ -66,7 +67,7 @@ const InstructorsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('DiseaseIdentification2')}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Agricultural Instructors</Text>

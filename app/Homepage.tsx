@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: 'center',
-    height: height * 0.1,
+    height: height * 0.09,
     paddingHorizontal: scale(5),
   },
   icon: {
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
     top: 5,
   },
   headerContainer: {
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
     borderBottomLeftRadius: 20,
@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    height: height * 0.12,
+    height: height * 0.11,
     overflow: "hidden",
     padding: scale(15),
     marginTop: scale(10),
@@ -622,8 +622,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
-    height: height * 0.5,
-    paddingBottom: scale(20),
+    height: height * 0.4,
+    paddingBottom: scale(18),
     width: "100%",
   },
   categoryContainer: {
@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
   },
   categoryBox: {
     width: "90%",
-    height: scale(110),
+    height: scale(100),
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#ffff",

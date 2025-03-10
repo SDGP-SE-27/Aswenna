@@ -60,13 +60,13 @@ const FertilizerSchedule = () => {
       console.log("Response Status:", response.status);
 
       if (response.ok) {
-        setSuccessMessage("Fertlizer Schedule saved successfully!");
+        setSuccessMessage("✅ Fertlizer Schedule saved successfully!");
       } else {
-        setSuccessMessage("Failed to save fertilizer schedule. Try again.");
+        setSuccessMessage("❌ Failed to save fertilizer schedule. Try again.");
       }
     } catch (error) {
       console.error("Error saving schedule:", error);
-      setSuccessMessage("Error. Something went wrong.");
+      setSuccessMessage("⚠️ Error. Something went wrong.");
     }
   };
 
@@ -90,16 +90,17 @@ const FertilizerSchedule = () => {
       </Picker>
 
       <Text style={styles.label}>Select Fertilizer</Text>
-      <Picker
-        selectedValue={fertilizer}
-        onValueChange={(itemValue) => setFertilizer(itemValue)}
-      >
-        <Picker.Item label="Urea" value="Urea" />
-        <Picker.Item label="Compost" value="Compost" />
-        <Picker.Item label="DAP" value="DAP" />
-        <Picker.Item label="NPK" value="NPK" />
-      </Picker>
-
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={fertilizer}
+          onValueChange={(itemValue) => setFertilizer(itemValue)} style={styles.picker} mode="dropdown"
+        >
+          <Picker.Item label="Urea" value="Urea" />
+          <Picker.Item label="Compost" value="Compost" />
+          <Picker.Item label="DAP" value="DAP" />
+          <Picker.Item label="NPK" value="NPK" />
+        </Picker>
+      </View>
       <Text style={styles.label}>Application Date (YYYY-MM-DD)</Text>
       <TextInput
         style={styles.input}
@@ -108,8 +109,11 @@ const FertilizerSchedule = () => {
         onChangeText={setApplicationDate}
       />
 
-      <Button title="Save Schedule" onPress={submitSchedule} />
-      {successMessage ? <Text style = {styles.successMessage}>{successMessage}</Text> : null}
+        <TouchableOpacity style={styles.saveButton} onPress={submitSchedule}>
+          <Text style={styles.saveButtonText}>SAVE SCHEDULE</Text>
+        </TouchableOpacity>
+
+        {successMessage ? <Text style={styles.successMessage}>{successMessage}</Text> : null}
     </View>
     </View>
   );
@@ -157,41 +161,65 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   container: {
-    backgroundColor: '#fff', 
-    margin: 20,
-    paddingLeft: 70,
-    paddingRight: 70,
-    paddingTop: 50,
-    paddingBottom: 70, 
-    borderRadius: 15, 
-    marginTop: 150,
-    shadowColor: "#000", 
-    shadowOffset: { width: 2, height: 4 }, 
-    shadowOpacity: 0.15, 
-    shadowRadius: 6, 
+    backgroundColor: "#ffffff",
+    margin: 25,
+    padding: 25,
+    borderRadius: 15,
+    marginTop: 60,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
     elevation: 6,
   },
-
   label: {
     fontSize: 18,
-    marginVertical: 15,
-    marginRight: 0,
+    marginVertical: 20,
+    fontWeight: "bold",
+    color: "#37474F",
   },
-
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    overflow: "hidden",
+    backgroundColor: "#f5f5f5",
+    marginBottom: 15,
+  },
+  picker: {
+    height: 50,
+  },
   input: {
     backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 15,
+    padding: 12,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  saveButton: {
+    backgroundColor: "#1E88E5",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  saveButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   successMessage: {
-    marginTop: 20,
+    marginTop: 15,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
-    color: "green", 
+    color: "#2E7D32", 
   },
 });
 

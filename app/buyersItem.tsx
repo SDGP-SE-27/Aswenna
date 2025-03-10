@@ -31,7 +31,7 @@ const ShopItemsScreen = () => {
       </View>
 
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Choose Your Farm Types</Text>
+        <Text style={styles.headerText}>Choose Your Crop Types</Text>
       </View>
 
       {/* Map through the items and create TouchableOpacity for each */}
