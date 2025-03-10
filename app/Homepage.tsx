@@ -820,6 +820,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
+  reminderItem: {
+     marginBottom: 10,
+     padding: 10,
+     borderWidth: 1,
+     borderColor: "#CCC",
+     borderRadius: 5,
+     width: "100%",
+   },
+   reminderText: { 
+     fontSize: 16 
+   },
+   closeButtonText: { 
+     color: "#FFF", 
+     fontWeight: "bold" 
+   },
 
 });
 
