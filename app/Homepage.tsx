@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: Platform.OS === 'ios' ? 40 : 20,
     paddingBottom: 0,
-    overflow: 'hidden', // Prevent any potential overflow
+    overflow: 'hidden', 
   },
   header: {
     flexDirection: "row",
@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    height: height * 0.15,
+    height: height * 0.12,
     overflow: "hidden",
     padding: scale(15),
     marginTop: scale(10),
