@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 70, 
+    paddingLeft: 60, 
   },
   backButton: { 
     marginRight: 10,

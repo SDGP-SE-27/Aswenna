@@ -106,8 +106,6 @@ const DiseaseIdentification = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Disease Identification Header */}
-      {/* Back Button */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('DiseaseIdentification2')}>
           <Text style={styles.backText}>{"<"}</Text>
@@ -158,6 +156,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "space-between",
+    
   },
   header: {
     flexDirection: "row",
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 40, 
+    paddingLeft: 25, 
   },
   backButton: { 
     marginRight: 10,
@@ -198,8 +197,12 @@ const styles = StyleSheet.create({
  
   headerText: { fontSize: 22, fontWeight: "bold" },
   subHeader: { textAlign: "center", fontSize: 20, fontWeight: "semibold", marginBottom: 20, backgroundColor: "#F0FFF0", },
-  buttonContainer: { flexDirection: "column", marginBottom: 10, justifyContent: "flex-start" },
-  button: { backgroundColor: "#4CAF50", padding: 16, borderRadius: 8, alignItems: "center", flex: 1, marginHorizontal: 10, marginVertical: 10 },
+  buttonContainer: { flexDirection: "column", marginBottom: 10, justifyContent: "flex-start", marginHorizontal: 20 },
+  button: { backgroundColor: "#4CAF50", padding: 16, borderRadius: 8, shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6, alignItems: "center", flex: 1, marginHorizontal: 10, marginVertical: 10 },
   buttonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
   icon: {
     width: 50,
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
   imageContainer: { alignItems: "center", marginTop: 20 },
   previewText: { fontSize: 16, fontWeight: "bold" },
   previewImage: { width: 200, height: 200, borderRadius: 8 },
-  proceedButton: { backgroundColor: "#2196F3", padding: 16, borderRadius: 8, marginTop: 20, alignItems: "center" },
+  proceedButton: { backgroundColor: "#2196F3", padding: 16, marginHorizontal: 30, borderRadius: 8, marginTop: 20, bottom: 10, alignItems: "center" },
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
