@@ -193,8 +193,9 @@ const MarketPrice3 = () => {
         </Text>
       </View>
 
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
       <ScrollView horizontal={true}>
-        <View style={styles.chart}>
+        <View style={[styles.chart, { minHeight: 500 }]}>
           <LineChart
             data={{
               labels: getSelectedData().map((entry) => entry.date.slice(0, 7)),
@@ -232,6 +233,7 @@ const MarketPrice3 = () => {
             }}
           />
         </View>
+        </ScrollView>
       </ScrollView>
 
       <ScrollView>
@@ -289,11 +291,11 @@ const MarketPrice3 = () => {
 
         {/* Description */}
         <Text style={styles.description}>
-          click buttons above to view daily, weekly and monthly prices
+          Click the buttons above to view daily, weekly and monthly prices !
         </Text>
       </ScrollView>
 
-      {/* Bottom Navigation (Placeholder) */}
+      {/* Bottom Navigation */}
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image
@@ -341,7 +343,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
     borderBottomColor: "#d3d3d3",
@@ -375,8 +378,9 @@ const styles = StyleSheet.create({
   },
   productInfo: {
     backgroundColor: "#F0FFF0",
-    padding: 20,
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginBottom: 10,
   },
   productName: {
     fontSize: 24,
@@ -428,15 +432,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: "#000000",
     fontSize: 16,
+    padding: 10,
   },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 15,
-    backgroundColor: "#E0F8E0",
-    borderTopWidth: 1,
-    borderTopColor: "#d3d3d3",
-  },
+  
   footer: {
     flexDirection: "row",
     justifyContent: "space-around",
