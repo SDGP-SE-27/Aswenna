@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 40, 
+    paddingLeft: 30, 
   },
   backButton: { 
     marginRight: 10,
@@ -199,7 +199,11 @@ const styles = StyleSheet.create({
   headerText: { fontSize: 22, fontWeight: "bold" },
   subHeader: { textAlign: "center", fontSize: 20, fontWeight: "semibold", marginBottom: 20, backgroundColor: "#F0FFF0", },
   buttonContainer: { flexDirection: "column", marginBottom: 10, justifyContent: "flex-start" },
-  button: { backgroundColor: "#4CAF50", padding: 16, borderRadius: 8, alignItems: "center", flex: 1, marginHorizontal: 10, marginVertical: 10 },
+  button: { backgroundColor: "#4CAF50", padding: 16, borderRadius: 8, shadowColor: "#000", 
+    shadowOffset: { width: 2, height: 4 }, 
+    shadowOpacity: 0.15, 
+    shadowRadius: 6, 
+    elevation: 6, alignItems: "center", flex: 1, marginHorizontal: 10, marginVertical: 10 },
   buttonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
   icon: {
     width: 50,
