@@ -85,8 +85,13 @@ const FertilizerSchedule = () => {
         onValueChange={(itemValue) => setCropType(itemValue)}
       >
         <Picker.Item label="Bitter Gourd" value="Bitter Gourd" />
+        <Picker.Item label="Snake Gourd" value="Snake Gourd" />
+        <Picker.Item label="Ladies Fingers" value="Ladies Fingers" />
+        <Picker.Item label="Eggplant" value="Eggplant" />
         <Picker.Item label="Papaya" value="Papaya" />
         <Picker.Item label="Pineapple" value="Pineapple" />
+        <Picker.Item label="Mango" value="Mango" />
+        <Picker.Item label="Banana" value="Banana" />
       </Picker>
 
       <Text style={styles.label}>Select Fertilizer</Text>
