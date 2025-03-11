@@ -107,6 +107,7 @@ const WeatherScreen = () => {
         <Text style={styles.headerTitle}>Weather Forecast</Text>
       </View>
 
+      <ScrollView>
       {/* Location Selector */}
       <View style={[styles.locationPicker]}>
         <Image source={require('../assets/images/weather_location.png')} style={styles.locationIcon} />
@@ -130,12 +131,12 @@ const WeatherScreen = () => {
           <Text style={styles.temp}>{`${weatherData.temperature}°C`}</Text>
           <Text style={styles.condition}>{weatherData.description}</Text>
           <Text style={styles.details}>
-      {`Wind: ${weatherData.wind_speed || 'Data not available'} km/h | Humidity: ${weatherData.humidity || 'Data not available'}%`}
-    </Text>
-  </View>
-  ) : (
-    <ActivityIndicator size="large" color="green" />
-  )}
+          {`Wind: ${weatherData.wind_speed || 'Data not available'} km/h | Humidity: ${weatherData.humidity || 'Data not available'}%`}
+          </Text>
+        </View>
+      ) : (
+        <ActivityIndicator size="large" color="green" />
+      )}
 
       {/* 7-Day Forecast */}
       {forecastData.length > 0 ? (
@@ -151,6 +152,8 @@ const WeatherScreen = () => {
       ) : (
         <ActivityIndicator size="large" color="green" />
       )}
+
+    </ScrollView>
 
       {/* Bottom Navigation (Placeholder) */}
       <View style={styles.footer}>
@@ -276,14 +279,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   forecastContainer: {
-    flexDirection: 'row', // Ensure items are aligned horizontally
-    alignItems: 'center', // Align items vertically to the center
-    paddingLeft: 10, // Add padding to the left
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingLeft: 10,
+    marginBottom: 40,
   },
   forecastItem: {
-    width: 120, // Set width for each item
-    height: 150, // Set height for each item
-    marginRight: 10, // Add space between forecast items
+    width: 120, 
+    height: 150, 
+    marginRight: 10, 
     backgroundColor: '#ffffff',
     borderRadius: 10,
     alignItems: 'center',
@@ -301,9 +305,9 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   forecastImage: {
-    width: 50, // Size of the icon
-    height: 50, // Size of the icon
-    marginBottom: 10, // Space between the image and temperature
+    width: 50, 
+    height: 50, 
+    marginBottom: 10, 
   },
   forecastTemp: {
     fontSize: 16,

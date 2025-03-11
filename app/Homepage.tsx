@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    height: height * 0.11,
+    height: height * 0.12,
     overflow: "hidden",
     padding: scale(15),
     marginTop: scale(10),
