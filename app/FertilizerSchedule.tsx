@@ -90,8 +90,8 @@ const FertilizerSchedule = () => {
         <Picker.Item label="Eggplant" value="Eggplant" />
         <Picker.Item label="Papaya" value="Papaya" />
         <Picker.Item label="Pineapple" value="Pineapple" />
-        <Picker.Item label="Banana" value="Banana" />
         <Picker.Item label="Mango" value="Mango" />
+        <Picker.Item label="Banana" value="Banana" />
       </Picker>
 
       <Text style={styles.label}>Select Fertilizer</Text>
