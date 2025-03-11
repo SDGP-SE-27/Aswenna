@@ -7,6 +7,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
@@ -79,7 +80,8 @@ const SeasonalReport = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Seasonal Report</Text>
       </View>
-            
+
+      <ScrollView>    
       <View style={styles.mainContainer}>
       <View style={styles.subcontainer}>
 
@@ -113,7 +115,8 @@ const SeasonalReport = () => {
         </View>
       ) : null}
       </View>
-    </View>
+      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 50, 
+    paddingLeft: 35, 
   },
   backButton: { 
     marginRight: 10,

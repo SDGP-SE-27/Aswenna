@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'; 
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
@@ -30,6 +30,7 @@ const ShopItemsScreen = () => {
           <Text style={styles.headerTitle}>Buyer Items</Text>
       </View>
 
+    <ScrollView>  
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Choose Your Crop Types</Text>
       </View>
@@ -47,8 +48,10 @@ const ShopItemsScreen = () => {
               <Text style={styles.itemText}>{item.name}</Text>
             </TouchableOpacity>
           
-      ))}
-    </View>
+        ))}
+      </View>
+    </ScrollView>
+
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate("Homepage")}>
           <Image source={require("../assets/images/home_icon.png")} style={styles.footerIcon} />
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 70, 
+    paddingLeft: 50, 
   },
   backButton: { 
     marginRight: 10,

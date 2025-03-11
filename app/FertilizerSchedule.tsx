@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "bold", 
     flex: 1, 
-    paddingLeft: 50, 
+    paddingLeft: 30, 
   },
   backButton: { 
     marginRight: 10,

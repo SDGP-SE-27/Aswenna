@@ -397,8 +397,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chartImage: {
-    width: 350,
-    height: 350,
+    width: 900,
+    height: 600,
     resizeMode: "contain",
   },
   buttonContainer: {
