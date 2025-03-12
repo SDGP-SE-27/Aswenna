@@ -102,7 +102,10 @@ const handleLogin = async () => {
           navigateBasedOnRole(data.role);
       } else if (response.status === 401) {
           console.log("Login Failed");
-          setErrors({ ...newErrors, password: "Incorrect password. Please try again." });
+          setErrors({
+            username: "Incorrect username. Please try again.",
+            password: "Incorrect password. Please try again."
+        });
           Alert.alert("Login Failed", "Invalid credentials. Please try again.");
       } else {
           Alert.alert("Error", "Something went wrong. Please try again later.");
