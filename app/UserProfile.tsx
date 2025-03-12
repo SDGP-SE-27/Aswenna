@@ -3,7 +3,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from 'react-native';
-import { verticalScale, moderateScale } from "react-native-size-matters";
 import {
   View,
   Text,
@@ -271,7 +270,6 @@ const UserProfile = () => {
 
       <View>
       <TouchableOpacity onPress={handlePasswordReset}>
-        {/* <Text style={styles.buttonText}>Reset Password</Text> */}
         {showPasswordInput ? (
           <>
             <TextInput
