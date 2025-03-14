@@ -29,6 +29,7 @@ const Chooserole = () => {
     address = "",
     district = "",
   } = route.params || {};
+  const [successMessage, setSuccessMessage] = useState("");
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -53,8 +54,7 @@ const Chooserole = () => {
         role: "farmer", // ✅ Pass role as "farmer"
       });
     } else if (!selectedRole) {
-      Alert.alert("Error", "Please select a role before continuing.");
-      return;
+      setSuccessMessage("❌ Please select a user role.");
     }
   };
 
@@ -91,6 +91,8 @@ const Chooserole = () => {
           <Text style={styles.next}> Next </Text>
         </Pressable>
       </View>
+
+       {successMessage ? <Text style={styles.successMessage}>{successMessage}</Text> : null}
 
       {/* Image */}
       <Image
@@ -217,6 +219,14 @@ const styles = StyleSheet.create({
     padding: 20,
     height: 100,
     width: "100%",
+  },
+
+  successMessage: {
+    marginTop: 15,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#2E7D32", 
   },
 });
 
