@@ -14,7 +14,6 @@ import {
   Image,
   ScrollView
 } from "react-native";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -115,19 +114,6 @@ const UserProfile = () => {
       console.error("Error fetching farmland details:", error);
       Alert.alert("Error", "Something went wrong. Try again.");
     }
-  };
-
-  const handleEditToggle = async () => {
-    if (isEditing) {
-      // Save updated profile
-      try {
-        await axios.put("https://api.aswenna.site/api/user-profile", userData);
-        alert("Profile updated successfully!");
-      } catch (error) {
-        console.error("Error updating profile:", error);
-      }
-    }
-    setIsEditing(!isEditing);
   };
 
   // Reset password functionality
@@ -297,15 +283,6 @@ const UserProfile = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[styles.button, styles.editButton]}
-        onPress={handleEditToggle}
-      >
-        <Text style={styles.buttonText}>
-          {isEditing ? "Save Changes" : "Edit Profile"}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
         style={[styles.button, { backgroundColor: "red" }]}
         onPress={handleLogout}
       >
@@ -399,9 +376,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     marginTop: 10,
-  },
-  editButton: {
-    backgroundColor: "#1b9a2c",
   },
   buttonText: {
     color: "#fff",
