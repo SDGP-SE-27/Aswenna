@@ -7,8 +7,7 @@ export type RootStackParamList = {
   PersonalTrackerExpense: undefined;
 
   TransactionHistory : undefined;
-
-  NotifiScreen: undefined; 
+   
   UserProfile: undefined;
 
   commonregistration1 : {
