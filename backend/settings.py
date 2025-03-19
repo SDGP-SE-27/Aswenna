@@ -86,7 +86,7 @@ LOGIN_URL = '/api/users/login/'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8081",
     "https://app.aswenna.site",
-    "https://aswenna-market-forecast-admin.vercel.appS",
+    "https://aswenna-market-forecast-admin.vercel.app",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
