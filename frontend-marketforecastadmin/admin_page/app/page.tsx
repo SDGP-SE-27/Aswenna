@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Constants for API and crop types
-const API_BASE_URL = "http://127.0.0.1:8000/admin_dashboard";
+const API_BASE_URL = "api.aswenna.site/admin_dashboard";
 const CROP_TYPES = [
   "Long Beans",
   "Bitter Gourd",
