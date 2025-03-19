@@ -72,7 +72,7 @@ urlpatterns = [
 
     path('reminder/' , include('reminder.urls')),
 
-    
+    path('admin_dashboard/' , include('admin_dashboard_page.urls')),
 ]
 
 # Serve media files during development

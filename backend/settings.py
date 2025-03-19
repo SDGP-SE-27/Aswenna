@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'shop',
     'reminder',
     'rest_framework.authtoken',
+    'admin_dashboard_page',
 ]
 
 MEDIA_URL = '/media/'
@@ -84,7 +85,8 @@ LOGIN_URL = '/api/users/login/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8081",
-    "https://app.aswenna.site"
+    "https://app.aswenna.site",
+    "https://aswenna-market-forecast-admin.vercel.appS",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

@@ -25,13 +25,13 @@ def get_data(model):
 def crop(request, crop):
     if request.method == 'GET':
         model_mapping = {
-            "long_beans": LongBeans,
-            "bitter_gourd": BitterGourd,
-            "snake_gourd": SnakeGourd,
-            "lady_finger_okra": LadyFingerOkra,
-            "brinjals": Brinjals,
-            "pineapple": Pineapple,
-            "papaya": Papaya
+            "market_price_long_beans": LongBeans,
+            "market_price_bitter_gourd": BitterGourd,
+            "market_price_snake_gourd": SnakeGourd,
+            "market_price_lady_finger_okra": LadyFingerOkra,
+            "market_price_brinjals": Brinjals,
+            "market_price_pineapple": Pineapple,
+            "market_price_papaya": Papaya
         }
 
         model = model_mapping.get(crop)
