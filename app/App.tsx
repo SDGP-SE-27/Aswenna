@@ -23,8 +23,7 @@ import DiseaseIdentification2 from "./DiseaseIdentification2";
 import WeeklyReport from "./WeeklyReport";
 import MonthlyReport from "./MonthlyReport";
 import SeasonalReport from "./SeasonalReport";
-import WeatherForecast from "./WeatherForecast"
-import NotifiScreen from "./NotifiScreen";
+import WeatherForecast from "./WeatherForecast";
 import shopItem from "./shopItem";
 import ItemDetails from "./ItemDetails";
 import buyergomap from "./buyergomap";
@@ -65,7 +64,6 @@ const App = () => {
         <Stack.Screen name = "MonthlyReport" component={MonthlyReport}/>
         <Stack.Screen name = "SeasonalReport" component={SeasonalReport}/>
         <Stack.Screen name = "WeatherForecast" component = {WeatherForecast}/>
-        <Stack.Screen name="NotifiScreen" component={NotifiScreen} />
         <Stack.Screen name= "shopItem" component={shopItem}/>
         <Stack.Screen name= "ItemDetails" component={ItemDetails}/>
         <Stack.Screen name= "buyergomap" component={buyergomap}/>
