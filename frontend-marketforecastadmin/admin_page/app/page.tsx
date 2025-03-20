@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Constants for API and crop types
-const API_BASE_URL = "api.aswenna.site/admin_dashboard";
+const API_BASE_URL = "https://api.aswenna.site/admin_dashboard";
 const CROP_TYPES = [
   "Long Beans",
   "Bitter Gourd",
@@ -177,7 +177,9 @@ export default function Home() {
     setLoading(true);
     setError(null);
     const formattedCropName = formatCropName(cropType);
-    const apiUrl = `${API_BASE_URL}/${encodeURIComponent(formattedCropName)}`;
+    const apiUrl = `${API_BASE_URL}/"admin_"${encodeURIComponent(
+      formattedCropName
+    )}`;
 
     try {
       const response = await axios.get<{ prices: PriceEntry[] }>(apiUrl);
