@@ -12,13 +12,13 @@ from .models import (
 )
 
 MODEL_MAPPING = {
-    "long_beans": LongBeans,
-    "bitter_gourd": BitterGourd,
-    "snake_gourd": SnakeGourd,
-    "lady_finger_okra": LadyFingerOkra,
-    "brinjals": Brinjals,
-    "pineapple": Pineapple,
-    "papaya": Papaya
+    "admin_long_beans": LongBeans,
+    "admin_bitter_gourd": BitterGourd,
+    "admin_snake_gourd": SnakeGourd,
+    "admin_lady_finger_okra": LadyFingerOkra,
+    "admin_brinjals": Brinjals,
+    "admin_pineapple": Pineapple,
+    "admin_papaya": Papaya
 }
 
 def validate_price_data(data):
