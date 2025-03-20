@@ -17,11 +17,18 @@ def get_data(model):
                 status=200
             )
 
+        # Ensure retail_price and predicted_price are float or null
+        for price in prices:
+            # Convert retail_price and predicted_price to float, handle null values
+            price['retail_price'] = float(price['retail_price']) if price['retail_price'] is not None else None
+            price['predicted_price'] = float(price['predicted_price']) if price['predicted_price'] is not None else None
+
         return JsonResponse({"prices": list(prices)}, status=200)
 
     except Exception as e:
         logger.error(f"Error fetching data for {model.__name__}: {str(e)}")
         return JsonResponse({"error": "Internal server error"}, status=500)
+
 
 def crop(request, crop):
     if request.method == 'GET':
