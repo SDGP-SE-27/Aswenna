@@ -13,31 +13,31 @@ class DBTables(models.Model):
         
 class LongBeans(DBTables):
     class Meta:
-        db_table = "market_price_long_beans"
+        db_table = "user_long_beans"
         
 class BitterGourd(DBTables):
     class Meta:
-        db_table = "market_price_bitter_gourd"
+        db_table = "user_bitter_gourd"
         
         
 class SnakeGourd(DBTables):
     class Meta:
-        db_table = "market_price_snake_gourd"
+        db_table = "user_snake_gourd"
         
 
 class LadyFingerOkra(DBTables):
     class Meta:
-        db_table = "market_price_ladys_finger_okra"
+        db_table = "user_ladys_finger_okra"
         
         
 class Brinjals(DBTables):
     class Meta:
-        db_table = "market_price_brinjals"
+        db_table = "user_brinjals"
         
 class Pineapple(DBTables):
     class Meta:
-        db_table = "market_price_pineapple"
+        db_table = "user_pineapple"
         
 class Papaya(DBTables):
     class Meta:
-        db_table = "market_price_papaya"
+        db_table = "user_papaya"

@@ -1,26 +1,27 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-# from django.contrib.auth.decorators import login_required
+import logging
 
 from .models import LongBeans, BitterGourd, SnakeGourd, LadyFingerOkra, Brinjals, Pineapple, Papaya  # Import all relevant models
 
-# @login_required  # Ensures only logged-in users can access this view
+# Configure logging
+logger = logging.getLogger(__name__)
+
 def get_data(model):
     try:
-        prices = list(
-            model.objects.values("date", "retail_price", "predicted_price")
-        )
-
+        prices = model.objects.values("date", "retail_price", "predicted_price").order_by("date")  # Sort by latest date
+        
         if not prices:
             return JsonResponse(
                 {"message": f"No data available for {model.__name__}", "prices": []},
                 status=200
             )
 
-        return JsonResponse({"prices": prices}, status=200)
+        return JsonResponse({"prices": list(prices)}, status=200)
 
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        logger.error(f"Error fetching data for {model.__name__}: {str(e)}")
+        return JsonResponse({"error": "Internal server error"}, status=500)
 
 def crop(request, crop):
     if request.method == 'GET':
@@ -34,8 +35,10 @@ def crop(request, crop):
             "papaya": Papaya
         }
 
-        model = model_mapping.get(crop)
+        model = model_mapping.get(crop.lower())  # Ensure case insensitivity
         if model:
             return get_data(model)
         else:
             return JsonResponse({"error": "Invalid crop name"}, status=400)
+    else:
+        return JsonResponse({"error": "Method not allowed"}, status=405)  # Handle non-GET requests

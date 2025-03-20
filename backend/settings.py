@@ -87,6 +87,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8081",
     "https://app.aswenna.site",
     "https://aswenna-market-forecast-admin.vercel.app",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
