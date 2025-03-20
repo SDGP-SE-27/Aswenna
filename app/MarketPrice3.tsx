@@ -23,8 +23,8 @@ type MarketPrice3ScreenProp = NativeStackNavigationProp<
 
 interface PriceEntry {
   date: string; // e.g., "2024-01"
-  retail_price: number;
-  predicted_price: number;
+  retail_price: number | null;
+  predicted_price: number | null;
 }
 
 const MarketPrice3 = () => {
@@ -63,14 +63,16 @@ const MarketPrice3 = () => {
         `https://api.aswenna.site/marketPrice/${encodeURIComponent(
           formattedCropName
         )}/`
-      ) // Replace with your actual API endpoint
+      )
       .then((response) => {
         setPrices(response.data.prices); // Extract the "prices" array
-        // console.log("Data fetched:", response.data.prices);
+        console.log("Data fetched:", response.data.prices);
+        console.log("Prices fetched:", prices);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        console.log("Error here");
         setLoading(false);
       });
   }, [formattedCropName]);
@@ -157,6 +159,14 @@ const MarketPrice3 = () => {
 
   const { currentMonthPrice, lastMonthPrice } = getCurrentAndLastMonthPrices();
 
+  // Ensure we don't pass invalid data to the chart
+  const validPrices = getSelectedData().map((entry) => {
+    return {
+      date: entry.date.slice(0, 7), // format "YYYY-MM"
+      retail_price: entry.retail_price ?? 0, // Replace null with 0 for invalid prices
+    };
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity
@@ -194,45 +204,45 @@ const MarketPrice3 = () => {
       </View>
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
-      <ScrollView horizontal={true}>
-        <View style={[styles.chart, { minHeight: 500 }]}>
-          <LineChart
-            data={{
-              labels: getSelectedData().map((entry) => entry.date.slice(0, 7)),
-              datasets: [
-                {
-                  data: getSelectedData().map((entry) => entry.retail_price),
-                  color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
-                  strokeWidth: 3,
+        <ScrollView horizontal={true}>
+          <View style={[styles.chart, { minHeight: 500 }]}>
+            <LineChart
+              data={{
+                labels: validPrices.map((entry) => entry.date),
+                datasets: [
+                  {
+                    data: validPrices.map((entry) => entry.retail_price),
+                    color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+                    strokeWidth: 3,
+                  },
+                ],
+              }}
+              width={extendedWidth}
+              height={400}
+              yAxisLabel="LKR "
+              yAxisInterval={1}
+              chartConfig={{
+                backgroundGradientFrom: "#f9f9f9",
+                backgroundGradientTo: "#ffffff",
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                style: {
+                  borderRadius: 16,
                 },
-              ],
-            }}
-            width={extendedWidth}
-            height={400}
-            yAxisLabel="LKR "
-            yAxisInterval={1}
-            chartConfig={{
-              backgroundGradientFrom: "#f9f9f9",
-              backgroundGradientTo: "#ffffff",
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              style: {
+                propsForDots: {
+                  r: "6",
+                  strokeWidth: "2",
+                  stroke: "#ffa726",
+                },
+              }}
+              bezier
+              style={{
+                marginVertical: 10,
                 borderRadius: 16,
-              },
-              propsForDots: {
-                r: "6",
-                strokeWidth: "2",
-                stroke: "#ffa726",
-              },
-            }}
-            bezier
-            style={{
-              marginVertical: 10,
-              borderRadius: 16,
-            }}
-          />
-        </View>
+              }}
+            />
+          </View>
         </ScrollView>
       </ScrollView>
 
@@ -336,136 +346,74 @@ const MarketPrice3 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
-    paddingBottom: 100,
+    padding: 10,
+    backgroundColor: "#fff",
   },
   header: {
     flexDirection: "row",
+    justifyContent: "flex-start",
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    backgroundColor: "#FFFFFF",
-    borderBottomWidth: 1,
-    borderBottomColor: "#d3d3d3",
-    fontSize: 25,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    flex: 1,
-    paddingLeft: 70,
   },
   backButton: {
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 50,
     marginRight: 10,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: "#DDD",
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 6,
-    paddingLeft: 13,
-    paddingRight: 15,
-    paddingBottom: 5,
-    textAlign: "center",
   },
   backText: {
-    fontSize: 25,
+    fontSize: 18,
+  },
+  headerTitle: {
+    fontSize: 24,
     fontWeight: "bold",
   },
   productInfo: {
-    backgroundColor: "#F0FFF0",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginBottom: 10,
-  },
-  productName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000000",
+    marginTop: 20,
   },
   priceText: {
     fontSize: 18,
-    color: "#000000",
-    marginTop: 5,
+    marginBottom: 10,
   },
-  chartContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  chartImage: {
-    width: 900,
-    height: 600,
-    resizeMode: "contain",
+  chart: {
+    marginTop: 20,
+    marginBottom: 10,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 10,
-    marginTop: 10,
+    marginTop: 20,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#ddd",
     padding: 10,
-    borderRadius: 10,
-    width: 100,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#000",
+    borderRadius: 5,
+  },
+  activeButton: {
+    backgroundColor: "#4CAF50",
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#000000",
-  },
-  activeButton: {
-    backgroundColor: "#FFDEAD",
   },
   activeButtonText: {
-    color: "#000000",
+    color: "#fff",
   },
   description: {
-    textAlign: "center",
-    marginBottom: 5,
-    color: "#000000",
     fontSize: 16,
-    padding: 10,
+    marginTop: 10,
+    textAlign: "center",
   },
-  
   footer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 12,
-    backgroundColor: "#DFFFD8",
-    position: "absolute",
-    width: "90%",
-    bottom: 15,
-    alignSelf: "center",
-    borderRadius: 30,
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    backgroundColor: "#fff",
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   footerIcon: {
     width: 30,
     height: 30,
-  },
-  chart: {
-    marginTop: 10,
-    margin: 2,
-    width: "100%",
-    height: 400,
-    backgroundColor: "white",
-    marginBottom: 20,
-    borderRadius: 20,
-    shadowColor: "#000",
-    paddingRight: 5,
   },
 });
 
