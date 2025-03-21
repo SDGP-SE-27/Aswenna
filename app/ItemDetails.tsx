@@ -110,7 +110,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
           <Text style={styles.headerTitle}>Item Details</Text>
       </View>
     <View style={styles.container}>
-      <Text style={styles.label}>Price:</Text>
+      <Text style={styles.label}>Price(Rs.):</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"
@@ -118,7 +118,7 @@ const ItemDetails = ({ route }: { route: ItemDetailsScreenRouteProp }) => {
         onChangeText={setPrice}
       />
 
-      <Text style={styles.label}>Stock:</Text>
+      <Text style={styles.label}>Stock(kg):</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"

@@ -96,7 +96,9 @@ export type RootStackParamList = {
   shopItem : undefined;
 
   ItemDetails: { 
-    item: { id: number; price: number; stock: number; availability: boolean } 
+    item: {
+       id: number; price: number; stock: number; availability: boolean 
+} 
   };
 
   buyergomap : undefined;
