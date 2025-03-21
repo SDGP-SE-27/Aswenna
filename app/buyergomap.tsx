@@ -72,7 +72,7 @@ const ShopScreen = () => {
       }
   
       // Make API request with proper headers
-      const response = await fetch('https://api.aswenna.site/shop/shops/', {
+      const response = await fetch('https://api.aswenna.site/shop/get_shops/', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token.trim()}`,  // Ensure no extra spaces
