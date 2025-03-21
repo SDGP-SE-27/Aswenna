@@ -6,4 +6,5 @@ urlpatterns = [
     path('<str:crop_name>/add', views.add_price, name='add_price'),
     path('<str:crop_name>/update', views.update_price, name='update_price'),
     path('<str:crop_name>/delete/<str:date>', views.delete_price, name='delete_price'),
+    path('predict/<str:crop_name>', views.predict_price, name='predict_price'),
 ]

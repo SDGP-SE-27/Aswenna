@@ -5,6 +5,9 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
+import pandas as pd
+import joblib
+from pathlib import Path
 
 from .models import (
     LongBeans, BitterGourd, SnakeGourd, 
@@ -168,3 +171,223 @@ def delete_price(request, crop_name, date):
         })
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def predict_price(request, crop_name):
+    if request.method != 'POST':
+        return JsonResponse({"error": "Only POST method is allowed"}, status=405)
+    
+    try:
+        # Handle both wrapped and unwrapped data formats
+        if 'data' in request.data:
+            data = request.data['data']
+        else:
+            data = request.data
+        
+        # Convert single values to lists
+        required_fields = ['ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+        date_field = 'date' if 'date' in data else 'dates'  # Handle both date and dates field names
+        
+        # Validate and convert fields
+        processed_data = {}
+        for field in required_fields:
+            if field not in data:
+                return JsonResponse({"error": f"Missing required field: {field}"}, status=400)
+            value = data[field]
+            processed_data[field] = [value] if not isinstance(value, list) else value
+        
+        # Handle dates
+        if date_field not in data:
+            return JsonResponse({"error": "Missing required field: date/dates"}, status=400)
+        date_value = data[date_field]
+        processed_data['date'] = [date_value] if not isinstance(date_value, list) else date_value
+        
+        # Ensure all lists have the same length
+        list_lengths = [len(value) for value in processed_data.values()]
+        if len(set(list_lengths)) != 1:
+            return JsonResponse({"error": "All input values must have the same length"}, status=400)
+        
+        # Convert dates to ordinal
+        ordinal_dates = convert_dates_to_ordinal(processed_data['date'])
+        
+        # Create DataFrame
+        df = convert_to_dataframe(
+            ncpi_food=processed_data['ncpi_food'],
+            ncpi_non_food=processed_data['ncpi_non_food'],
+            ncpi_all_items=processed_data['ncpi_all_items'],
+            date=ordinal_dates
+        )
+        
+        # Get predictions based on crop name
+        if crop_name.lower() == 'long_beans':
+            predictions = predict_long_beans(df)
+
+        elif crop_name.lower() == 'bitter_gourd':
+            predictions = predict_bitter_gourd(df)
+
+        elif crop_name.lower() == 'papaya':
+            predictions = predict_papaya(df)
+
+        elif crop_name.lower() == 'okra':
+            predictions = predict_okra(df)
+
+        elif crop_name.lower() == 'brinjals':
+            predictions = predict_brinjals(df)
+
+        elif crop_name.lower() == 'pineapple':
+            predictions = predict_pineapple(df)
+
+        elif crop_name.lower() == 'snake_gourd':
+            predictions = predict_snake_gourd(df)
+            
+        else:
+            return JsonResponse({"error": f"Predictions not available for {crop_name}"}, status=400)
+        
+        # Return predictions with corresponding dates
+        response_data = {
+            "data": {
+                "predictions": predictions,
+                "dates": processed_data['date']
+            }
+        }
+        
+        return JsonResponse(response_data)
+        
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON format"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+def convert_dates_to_ordinal(dates):
+    dates_series = pd.to_datetime(dates)
+    ordinal_dates = dates_series.map(lambda x: x.toordinal()).tolist()
+    return ordinal_dates
+
+def convert_to_dataframe(ncpi_food, ncpi_non_food, ncpi_all_items, date):
+    df = pd.DataFrame({
+        'ncpi_food': ncpi_food,
+        'ncpi_non_food': ncpi_non_food,
+        'ncpi_all_items': ncpi_all_items,
+        'date': date
+    })
+    return df
+
+# --------------------------------
+# ✅ Long Beans Prediction Endpoint
+# --------------------------------
+def predict_long_beans(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_long_beans_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    features = df[['ncpi_food', 'ncpi_non_food', 'ncpi_all_items', 'date']]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Brinjals Prediction Endpoint
+# --------------------------------
+def predict_brinjals(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_brinjals_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Okra Prediction Endpoint
+# --------------------------------
+def predict_okra(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_okra_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    # Ensure features are in the correct order as used during training
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Pineapple Prediction Endpoint
+# --------------------------------
+def predict_pineapple(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_pineapple_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Snake Gourd Prediction Endpoint
+# --------------------------------
+def predict_snake_gourd(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_snake_gourd_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Bitter Gourd Prediction Endpoint
+# --------------------------------
+def predict_bitter_gourd(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_bitter_gourd_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
+
+# --------------------------------
+# ✅ Papaya Prediction Endpoint
+# --------------------------------
+def predict_papaya(df):
+    model_path = Path(__file__).parent / 'ml_models' / 'etr_papaya_model.pkl'
+    try:
+        model = joblib.load(model_path)
+    except FileNotFoundError:
+        raise Exception("Model file not found")
+    
+    # Make predictions
+    feature_order = ['date', 'ncpi_food', 'ncpi_non_food', 'ncpi_all_items']
+    features = df[feature_order]
+    predictions = model.predict(features)
+    
+    return predictions.tolist()
