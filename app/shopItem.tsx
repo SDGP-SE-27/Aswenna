@@ -23,8 +23,8 @@ const ShopItemsScreen = () => {
   const items = [
     { id: 1, name: 'URIA'},
     { id: 2, name: 'POSPATA'},
-    { id: 2, name: 'NITROGEN'},
-    { id: 2, name: 'AMMONIA'},
+    { id: 3, name: 'NITROGEN'},
+    { id: 4, name: 'AMMONIA'},
   ];
 
   const handleLogout = async () => {
