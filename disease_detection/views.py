@@ -28,7 +28,7 @@ def make_prediction(model_path, image_data, disease_classes):
     max_confidence = float(np.max(predictions))
     predicted_class = disease_classes[np.argmax(predictions)]
 
-    CONFIDENCE_THRESHOLD = 0.6  # Adjust based on model performance
+    CONFIDENCE_THRESHOLD = 0.75  # Set the confidence threshold
 
     try:
         # Handle cases based on confidence level
@@ -141,9 +141,3 @@ def predict_okra(request):
 
     result = make_prediction(model_path, image_data, disease_classes)
     return JsonResponse(result)
-
-# ✅ Home View
-# @api_view(['GET'])
-# @permission_classes([AllowAny])
-# def home(request):
-#     return Response({"message": "Welcome to Disease Detection API"})
