@@ -76,7 +76,7 @@ const MarketPrice3 = () => {
   useEffect(() => {
     axios
       .get<{ prices: PriceEntry[] }>(
-        `http://127.0.0.1:8000/marketPrice/${encodeURIComponent(
+        `https://api.aswenna.site/marketPrice/${encodeURIComponent(
           formattedCropName
         )}/`
       )
