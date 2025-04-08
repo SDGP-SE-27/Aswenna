@@ -28,7 +28,7 @@ def make_prediction(model_path, image_data, disease_classes):
     max_confidence = float(np.max(predictions))
     predicted_class = disease_classes[np.argmax(predictions)]
 
-    CONFIDENCE_THRESHOLD = 0.75  # Set the confidence threshold
+    CONFIDENCE_THRESHOLD = 0.6  # Set the confidence threshold
 
     try:
         # Handle cases based on confidence level
