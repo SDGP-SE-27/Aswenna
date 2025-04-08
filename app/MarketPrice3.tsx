@@ -44,6 +44,22 @@ const MarketPrice3 = () => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  const getFuturePredictions = () => {
+    if (!prices.length) return [];
+    
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    return prices.filter(entry => {
+      const [year, month] = entry.date.split('-').map(Number);
+      return (year > currentYear || (year === currentYear && month > currentMonth)) && entry.predicted_price !== null;
+    }).map(entry => ({
+      date: entry.date,
+      price: entry.predicted_price
+    }));
+  };
+
   const formattedCropName = String(cropName);
   const nameMapping = {
     long_beans: "Long Beans",
@@ -60,7 +76,7 @@ const MarketPrice3 = () => {
   useEffect(() => {
     axios
       .get<{ prices: PriceEntry[] }>(
-        `https://api.aswenna.site/marketPrice/${encodeURIComponent(
+        `http://127.0.0.1:8000/marketPrice/${encodeURIComponent(
           formattedCropName
         )}/`
       )
@@ -201,6 +217,16 @@ const MarketPrice3 = () => {
             ? `${(currentMonthPrice - lastMonthPrice).toFixed(2)} LKR`
             : "N/A"}
         </Text>
+        <Text style={styles.priceText}>Predicted Prices:</Text>
+        {getFuturePredictions().length > 0 ? (
+          getFuturePredictions().map((prediction, index) => (
+            <Text key={index} style={styles.predictionText}>
+              {prediction.date}: {prediction.price && prediction.price > 0 ? `${prediction.price.toFixed(2)} LKR` : "No prediction yet."}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.predictionText}>No predictions yet.</Text>
+        )}
       </View>
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
@@ -371,8 +397,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   priceText: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 16,
+    marginVertical: 5,
+    color: "#333",
+  },
+  predictionText: {
+    fontSize: 14,
+    marginLeft: 20,
+    marginVertical: 2,
+    color: "#666",
   },
   chart: {
     marginTop: 20,
