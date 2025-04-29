@@ -16,4 +16,4 @@ dj_database_url~=2.3.0
 twilio~=9.4.6
 pandas~=2.2.3
 joblib~=1.4.2
-scikit-learn~=1.4.2
+scikit-learn~=1.6.1
